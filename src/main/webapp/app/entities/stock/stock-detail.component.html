@@ -1,0 +1,53 @@
+
+<div *ngIf="stock">
+    <h2><span jhiTranslate="g2SitApp.stock.detail.title">Stock</span> {{stock.id}}</h2>
+    <hr>
+    <jhi-alert-error></jhi-alert-error>
+    <dl class="row-md jh-entity-details">
+        <dt><span jhiTranslate="g2SitApp.stock.quantite">Quantite</span></dt>
+        <dd>
+            <span>{{stock.quantite}}</span>
+        </dd>
+        <dt><span jhiTranslate="g2SitApp.stock.description">Description</span></dt>
+        <dd>
+            <span>{{stock.description}}</span>
+        </dd>
+        <dt><span jhiTranslate="g2SitApp.stock.dateentrer">Dateentrer</span></dt>
+        <dd>
+            <span>{{stock.dateentrer | date:'medium'}}</span>
+        </dd>
+        <dt><span jhiTranslate="g2SitApp.stock.retour">Retour</span></dt>
+        <dd>
+            <span>{{stock.retour}}</span>
+        </dd>
+        <dt><span jhiTranslate="g2SitApp.stock.comment">Comment</span></dt>
+        <dd>
+            <span>{{stock.comment}}</span>
+        </dd>
+        <dt><span jhiTranslate="g2SitApp.stock.produit">Produit</span></dt>
+        <dd>
+            <div *ngIf="stock.produit">
+                <a [routerLink]="['/produits', stock.produit?.id]">{{stock.produit?.id}}</a>
+            </div>
+        </dd>
+        <dt><span jhiTranslate="g2SitApp.stock.operantst">Operantst</span></dt>
+        <dd>
+            <div *ngIf="stock.operantst">
+                <a [routerLink]="['/operant', stock.operantst?.id]">{{stock.operantst?.fistname}}</a>
+            </div>
+        </dd>
+    </dl>
+
+    <button type="submit"
+            (click)="previousState()"
+            class="btn btn-info">
+        <span class="fa fa-arrow-left"></span>&nbsp;<span jhiTranslate="entity.action.back"> Back</span>
+    </button>
+
+    <button type="button"
+            [routerLink]="['/', { outlets: { popup: 'stock/'+ stock.id + '/edit'} }]"
+            replaceUrl="true"
+            class="btn btn-primary">
+        <span class="fa fa-pencil"></span>&nbsp;<span jhiTranslate="entity.action.edit"> Edit</span>
+    </button>
+</div>

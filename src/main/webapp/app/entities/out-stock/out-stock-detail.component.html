@@ -1,0 +1,53 @@
+
+<div *ngIf="outStock">
+    <h2><span jhiTranslate="g2SitApp.outStock.detail.title">Out Stock</span> {{outStock.id}}</h2>
+    <hr>
+    <jhi-alert-error></jhi-alert-error>
+    <dl class="row-md jh-entity-details">
+        <dt><span jhiTranslate="g2SitApp.outStock.quantite">Quantite</span></dt>
+        <dd>
+            <span>{{outStock.quantite}}</span>
+        </dd>
+        <dt><span jhiTranslate="g2SitApp.outStock.datesortir">Datesortir</span></dt>
+        <dd>
+            <span>{{outStock.datesortir | date:'medium'}}</span>
+        </dd>
+        <dt><span jhiTranslate="g2SitApp.outStock.projet">Projet</span></dt>
+        <dd>
+            <span>{{outStock.projet}}</span>
+        </dd>
+        <dt><span jhiTranslate="g2SitApp.outStock.client">Client</span></dt>
+        <dd>
+            <span>{{outStock.client}}</span>
+        </dd>
+        <dt><span jhiTranslate="g2SitApp.outStock.cause">Cause</span></dt>
+        <dd>
+            <span>{{outStock.cause}}</span>
+        </dd>
+        <dt><span jhiTranslate="g2SitApp.outStock.operantos">Operantos</span></dt>
+        <dd>
+            <div *ngIf="outStock.operantos">
+                <a [routerLink]="['/operant', outStock.operantos?.id]">{{outStock.operantos?.fistname}}</a>
+            </div>
+        </dd>
+        <dt><span jhiTranslate="g2SitApp.outStock.produit">Produit</span></dt>
+        <dd>
+            <div *ngIf="outStock.produit">
+                <a [routerLink]="['/produits', outStock.produit?.id]">{{outStock.produit?.nameProduit}}</a>
+            </div>
+        </dd>
+    </dl>
+
+    <button type="submit"
+            (click)="previousState()"
+            class="btn btn-info">
+        <span class="fa fa-arrow-left"></span>&nbsp;<span jhiTranslate="entity.action.back"> Back</span>
+    </button>
+
+    <button type="button"
+            [routerLink]="['/', { outlets: { popup: 'out-stock/'+ outStock.id + '/edit'} }]"
+            replaceUrl="true"
+            class="btn btn-primary">
+        <span class="fa fa-pencil"></span>&nbsp;<span jhiTranslate="entity.action.edit"> Edit</span>
+    </button>
+</div>

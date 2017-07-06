@@ -1,0 +1,48 @@
+{
+    "fluentMethods": true,
+    "relationships": [
+        {
+            "relationshipType": "many-to-one",
+            "relationshipName": "operantos",
+            "otherEntityName": "operant",
+            "otherEntityField": "fistname"
+        },
+        {
+            "relationshipType": "many-to-one",
+            "relationshipValidateRules": "required",
+            "relationshipName": "produit",
+            "otherEntityName": "produits",
+            "otherEntityField": "nameProduit"
+        }
+    ],
+    "fields": [
+        {
+            "fieldName": "quantite",
+            "fieldType": "BigDecimal",
+            "fieldValidateRules": [
+                "required"
+            ]
+        },
+        {
+            "fieldName": "datesortir",
+            "fieldType": "ZonedDateTime"
+        },
+        {
+            "fieldName": "projet",
+            "fieldType": "String"
+        },
+        {
+            "fieldName": "client",
+            "fieldType": "String"
+        },
+        {
+            "fieldName": "cause",
+            "fieldType": "String"
+        }
+    ],
+    "changelogDate": "20170705121518",
+    "entityTableName": "out_stock",
+    "dto": "no",
+    "pagination": "pager",
+    "service": "serviceClass"
+}

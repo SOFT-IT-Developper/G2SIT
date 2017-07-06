@@ -1,0 +1,10 @@
+{
+    "g2SitApp": {
+        "Etats" : {
+            "null": "",
+            "BON": "BON",
+            "REPARATION": "REPARATION",
+            "GATER": "GATER"
+        }
+    }
+}

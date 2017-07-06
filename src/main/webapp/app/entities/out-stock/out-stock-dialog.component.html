@@ -1,0 +1,81 @@
+<form name="editForm" role="form" novalidate (ngSubmit)="save()" #editForm="ngForm">
+
+    <div class="modal-header">
+        <h4 class="modal-title" id="myOutStockLabel" jhiTranslate="g2SitApp.outStock.home.createOrEditLabel">Create or edit a Out Stock</h4>
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true"
+                (click)="clear()">&times;</button>
+    </div>
+    <div class="modal-body">
+        <jhi-alert-error></jhi-alert-error>
+        <div class="form-group" [hidden]="!outStock.id">
+            <label for="id" jhiTranslate="global.field.id">ID</label>
+            <input type="text" class="form-control" id="id" name="id"
+                   [(ngModel)]="outStock.id" readonly />
+        </div>
+        <div class="form-group">
+            <label class="form-control-label" jhiTranslate="g2SitApp.outStock.quantite" for="field_quantite">Quantite</label>
+            <input type="number" class="form-control" name="quantite" id="field_quantite"
+                [(ngModel)]="outStock.quantite" required />
+            <div [hidden]="!(editForm.controls.quantite?.dirty && editForm.controls.quantite?.invalid)">
+                <small class="form-text text-danger"
+                   [hidden]="!editForm.controls.quantite?.errors?.required" jhiTranslate="entity.validation.required">
+                   This field is required.
+                </small>
+                <small class="form-text text-danger"
+                    [hidden]="!editForm.controls.quantite?.errors?.number" jhiTranslate="entity.validation.number">
+                    This field should be a number.
+                </small>
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="form-control-label" jhiTranslate="g2SitApp.outStock.datesortir" for="field_datesortir">Datesortir</label>
+            <div class="d-flex">
+                <input id="field_datesortir" type="datetime-local" class="form-control" name="datesortir" [(ngModel)]="outStock.datesortir"
+                  />
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="form-control-label" jhiTranslate="g2SitApp.outStock.projet" for="field_projet">Projet</label>
+            <input type="text" class="form-control" name="projet" id="field_projet"
+                [(ngModel)]="outStock.projet"  />
+        </div>
+        <div class="form-group">
+            <label class="form-control-label" jhiTranslate="g2SitApp.outStock.client" for="field_client">Client</label>
+            <input type="text" class="form-control" name="client" id="field_client"
+                [(ngModel)]="outStock.client"  />
+        </div>
+        <div class="form-group">
+            <label class="form-control-label" jhiTranslate="g2SitApp.outStock.cause" for="field_cause">Cause</label>
+            <input type="text" class="form-control" name="cause" id="field_cause"
+                [(ngModel)]="outStock.cause"  />
+        </div>
+
+        <div class="form-group">
+            <label jhiTranslate="g2SitApp.outStock.operantos" for="field_operantos">Operantos</label>
+            <select class="form-control" id="field_operantos" name="operantos" [(ngModel)]="outStock.operantos" >
+                <option [ngValue]="null"></option>
+                <option [ngValue]="operantOption.id === outStock.operantos?.id ? outStock.operantos : operantOption" *ngFor="let operantOption of operants; trackBy: trackOperantById">{{operantOption.fistname}}</option>
+            </select>
+        </div>
+        <div class="form-group">
+            <label jhiTranslate="g2SitApp.outStock.produit" for="field_produit">Produit</label>
+            <select class="form-control" id="field_produit" name="produit" [(ngModel)]="outStock.produit"  required>
+                <option [ngValue]="produitsOption.id === outStock.produit?.id ? outStock.produit : produitsOption" *ngFor="let produitsOption of produits; trackBy: trackProduitsById">{{produitsOption.nameProduit}}</option>
+            </select>
+        </div>
+        <div [hidden]="!(editForm.controls.produit?.dirty && editForm.controls.produit?.invalid)">
+            <small class="form-text text-danger"
+                [hidden]="!editForm.controls.produit?.errors?.required" jhiTranslate="entity.validation.required">
+                This field is required.
+            </small>
+        </div>
+    </div>
+    <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal" (click)="clear()">
+            <span class="fa fa-ban"></span>&nbsp;<span jhiTranslate="entity.action.cancel">Cancel</span>
+        </button>
+        <button type="submit" [disabled]="editForm.form.invalid || isSaving" class="btn btn-primary">
+            <span class="fa fa-save"></span>&nbsp;<span jhiTranslate="entity.action.save">Save</span>
+        </button>
+    </div>
+</form>

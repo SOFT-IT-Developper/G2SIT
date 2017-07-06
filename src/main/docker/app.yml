@@ -1,0 +1,19 @@
+version: '2'
+services:
+    g2sit-app:
+        image: g2sit
+        environment:
+            - SPRING_PROFILES_ACTIVE=prod,swagger
+            - SPRING_DATASOURCE_URL=jdbc:mysql://g2sit-mysql:3306/g2sit?useUnicode=true&characterEncoding=utf8&useSSL=false
+            - JHIPSTER_SLEEP=10 # gives time for the database to boot before the application
+            - SPRING_DATA_ELASTICSEARCH_CLUSTER_NODES=g2sit-elasticsearch:9300
+        ports:
+            - 8080:8080
+    g2sit-mysql:
+        extends:
+            file: mysql.yml
+            service: g2sit-mysql
+    g2sit-elasticsearch:
+        extends:
+            file: elasticsearch.yml
+            service: g2sit-elasticsearch

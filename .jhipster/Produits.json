@@ -1,0 +1,62 @@
+{
+    "fluentMethods": true,
+    "relationships": [
+        {
+            "relationshipType": "one-to-many",
+            "relationshipName": "stock",
+            "otherEntityName": "outStock",
+            "otherEntityRelationshipName": "produit"
+        },
+        {
+            "relationshipType": "one-to-one",
+            "relationshipValidateRules": "required",
+            "relationshipName": "stock",
+            "otherEntityName": "stock",
+            "ownerSide": false,
+            "otherEntityRelationshipName": "produit"
+        },
+        {
+            "relationshipType": "many-to-one",
+            "relationshipValidateRules": "required",
+            "relationshipName": "categorie",
+            "otherEntityName": "categorie",
+            "otherEntityField": "nameCategorie"
+        }
+    ],
+    "fields": [
+        {
+            "fieldName": "nameProduit",
+            "fieldType": "String",
+            "fieldValidateRules": [
+                "required"
+            ]
+        },
+        {
+            "fieldName": "reference",
+            "fieldType": "String"
+        },
+        {
+            "fieldName": "emplacement",
+            "fieldType": "String"
+        },
+        {
+            "fieldName": "description",
+            "fieldType": "String"
+        },
+        {
+            "fieldName": "capture",
+            "fieldType": "byte[]",
+            "fieldTypeBlobContent": "image"
+        },
+        {
+            "fieldName": "etat",
+            "fieldType": "Etats",
+            "fieldValues": "BON,REPARATION,GATER"
+        }
+    ],
+    "changelogDate": "20170705121515",
+    "entityTableName": "produits",
+    "dto": "no",
+    "pagination": "pager",
+    "service": "serviceClass"
+}

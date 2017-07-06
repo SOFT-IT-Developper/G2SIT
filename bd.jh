@@ -1,0 +1,66 @@
+/*
+ * This is an example model
+ */
+entity Categorie {
+	nameCategorie String required,
+    fournisseur String,
+	description String
+}
+
+entity Produits {
+	nameProduit String required,
+    reference String,
+    emplacement String,
+	description String ,
+	capture ImageBlob,
+    etat Etats
+}
+enum Etats{
+	BON, REPARATION, GATER
+}
+
+entity Stock {
+	quantite BigDecimal,
+	description String,
+	date_entrer ZonedDateTime,
+    retour Boolean,
+    comment String
+}
+entity Operant{
+	fistname String,
+	lastname String,
+    telephone Long
+}
+entity OutStock{
+	quantite BigDecimal required,
+	date_sortir ZonedDateTime,
+	projet String,
+    client String,
+    cause String
+}
+
+/**
+ * Entity Historiques
+ */
+entity Historiques {
+	operation String,//type operation
+	date ZonedDateTime
+}
+relationship OneToOne{
+	  Stock{produit} to Produits{stock(nameProduit) required}
+}
+
+relationship OneToMany {
+	Categorie{produit} to Produits{categorie(nameCategorie) required}
+}
+relationship OneToMany {
+	Produits{stock} to OutStock{produit(nameProduit) required}
+}
+relationship ManyToOne {
+    Stock{operantst(fistname)} to Operant{stocks},
+    OutStock{operantos(fistname)} to Operant{stocke}
+}
+
+
+paginate all with pager
+service * with serviceClass

@@ -1,0 +1,33 @@
+
+<div *ngIf="operant">
+    <h2><span jhiTranslate="g2SitApp.operant.detail.title">Operant</span> {{operant.id}}</h2>
+    <hr>
+    <jhi-alert-error></jhi-alert-error>
+    <dl class="row-md jh-entity-details">
+        <dt><span jhiTranslate="g2SitApp.operant.fistname">Fistname</span></dt>
+        <dd>
+            <span>{{operant.fistname}}</span>
+        </dd>
+        <dt><span jhiTranslate="g2SitApp.operant.lastname">Lastname</span></dt>
+        <dd>
+            <span>{{operant.lastname}}</span>
+        </dd>
+        <dt><span jhiTranslate="g2SitApp.operant.telephone">Telephone</span></dt>
+        <dd>
+            <span>{{operant.telephone}}</span>
+        </dd>
+    </dl>
+
+    <button type="submit"
+            (click)="previousState()"
+            class="btn btn-info">
+        <span class="fa fa-arrow-left"></span>&nbsp;<span jhiTranslate="entity.action.back"> Back</span>
+    </button>
+
+    <button type="button"
+            [routerLink]="['/', { outlets: { popup: 'operant/'+ operant.id + '/edit'} }]"
+            replaceUrl="true"
+            class="btn btn-primary">
+        <span class="fa fa-pencil"></span>&nbsp;<span jhiTranslate="entity.action.edit"> Edit</span>
+    </button>
+</div>

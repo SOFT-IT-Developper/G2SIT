@@ -1,0 +1,36 @@
+{
+    "fluentMethods": true,
+    "relationships": [
+        {
+            "relationshipType": "one-to-many",
+            "relationshipName": "stocks",
+            "otherEntityName": "stock",
+            "otherEntityRelationshipName": "operantst"
+        },
+        {
+            "relationshipType": "one-to-many",
+            "relationshipName": "stocke",
+            "otherEntityName": "outStock",
+            "otherEntityRelationshipName": "operantos"
+        }
+    ],
+    "fields": [
+        {
+            "fieldName": "fistname",
+            "fieldType": "String"
+        },
+        {
+            "fieldName": "lastname",
+            "fieldType": "String"
+        },
+        {
+            "fieldName": "telephone",
+            "fieldType": "Long"
+        }
+    ],
+    "changelogDate": "20170705121517",
+    "entityTableName": "operant",
+    "dto": "no",
+    "pagination": "pager",
+    "service": "serviceClass"
+}
