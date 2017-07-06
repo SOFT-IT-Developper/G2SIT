@@ -40,18 +40,6 @@ public class CacheConfiguration {
             cm.createCache(bj.softit.g2sit.domain.User.class.getName(), jcacheConfiguration);
             cm.createCache(bj.softit.g2sit.domain.Authority.class.getName(), jcacheConfiguration);
             cm.createCache(bj.softit.g2sit.domain.User.class.getName() + ".authorities", jcacheConfiguration);
-            cm.createCache(bj.softit.g2sit.domain.Categorie.class.getName(), jcacheConfiguration);
-            cm.createCache(bj.softit.g2sit.domain.Categorie.class.getName() + ".produits", jcacheConfiguration);
-            cm.createCache(bj.softit.g2sit.domain.Produits.class.getName(), jcacheConfiguration);
-            cm.createCache(bj.softit.g2sit.domain.Produits.class.getName() + ".stocks", jcacheConfiguration);
-            cm.createCache(bj.softit.g2sit.domain.Stock.class.getName(), jcacheConfiguration);
-            cm.createCache(bj.softit.g2sit.domain.Stock.class.getName() + ".operantsts", jcacheConfiguration);
-            cm.createCache(bj.softit.g2sit.domain.Operant.class.getName(), jcacheConfiguration);
-            cm.createCache(bj.softit.g2sit.domain.OutStock.class.getName(), jcacheConfiguration);
-            cm.createCache(bj.softit.g2sit.domain.OutStock.class.getName() + ".operantos", jcacheConfiguration);
-            cm.createCache(bj.softit.g2sit.domain.Historiques.class.getName(), jcacheConfiguration);
-            cm.createCache(bj.softit.g2sit.domain.Operant.class.getName() + ".stocks", jcacheConfiguration);
-            cm.createCache(bj.softit.g2sit.domain.Operant.class.getName() + ".stockes", jcacheConfiguration);
             // jhipster-needle-ehcache-add-entry
         };
     }
