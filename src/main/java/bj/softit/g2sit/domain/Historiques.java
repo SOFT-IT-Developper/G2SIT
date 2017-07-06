@@ -6,6 +6,7 @@ import org.hibernate.annotations.CacheConcurrencyStrategy;
 import org.springframework.data.elasticsearch.annotations.Document;
 
 import javax.persistence.*;
+import javax.validation.constraints.*;
 import java.io.Serializable;
 import java.time.ZonedDateTime;
 import java.util.Objects;
@@ -31,6 +32,10 @@ public class Historiques implements Serializable {
 
     @Column(name = "jhi_date")
     private ZonedDateTime date;
+
+    @ManyToOne(optional = false)
+    @NotNull
+    private User user;
 
     public Long getId() {
         return id;
@@ -64,6 +69,19 @@ public class Historiques implements Serializable {
 
     public void setDate(ZonedDateTime date) {
         this.date = date;
+    }
+
+    public User getUser() {
+        return user;
+    }
+
+    public Historiques user(User user) {
+        this.user = user;
+        return this;
+    }
+
+    public void setUser(User user) {
+        this.user = user;
     }
 
     @Override

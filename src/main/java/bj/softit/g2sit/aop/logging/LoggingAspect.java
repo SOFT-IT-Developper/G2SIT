@@ -62,10 +62,8 @@ public class LoggingAspect {
             log.error("Exception in {}.{}() with cause = \'{}\' and exception = \'{}\'", joinPoint.getSignature().getDeclaringTypeName(),
                 joinPoint.getSignature().getName(), e.getCause() != null? e.getCause() : "NULL", e.getMessage(), e);
 
-        } else {
-            log.error("Exception in {}.{}() with cause = {}", joinPoint.getSignature().getDeclaringTypeName(),
-                joinPoint.getSignature().getName(), e.getCause() != null? e.getCause() : "NULL");
-        }
+        } else log.error("Exception in {}.{}() with cause = {}", joinPoint.getSignature().getDeclaringTypeName(),
+            joinPoint.getSignature().getName(), e.getCause() != null ? e.getCause() : "NULL");
     }
 
     /**

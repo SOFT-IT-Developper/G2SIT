@@ -2,6 +2,7 @@ import { NgModule, CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import { RouterModule } from '@angular/router';
 
 import { G2SitSharedModule } from '../../shared';
+import { G2SitAdminModule } from '../../admin/admin.module';
 import {
     HistoriquesService,
     HistoriquesPopupService,
@@ -24,6 +25,7 @@ const ENTITY_STATES = [
 @NgModule({
     imports: [
         G2SitSharedModule,
+        G2SitAdminModule,
         RouterModule.forRoot(ENTITY_STATES, { useHash: true })
     ],
     declarations: [

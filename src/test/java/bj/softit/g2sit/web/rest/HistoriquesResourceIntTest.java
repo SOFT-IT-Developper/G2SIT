@@ -3,6 +3,7 @@ package bj.softit.g2sit.web.rest;
 import bj.softit.g2sit.G2SitApp;
 
 import bj.softit.g2sit.domain.Historiques;
+import bj.softit.g2sit.domain.User;
 import bj.softit.g2sit.repository.HistoriquesRepository;
 import bj.softit.g2sit.service.HistoriquesService;
 import bj.softit.g2sit.repository.search.HistoriquesSearchRepository;
@@ -95,6 +96,11 @@ public class HistoriquesResourceIntTest {
         Historiques historiques = new Historiques()
             .operation(DEFAULT_OPERATION)
             .date(DEFAULT_DATE);
+        // Add required entity
+        User user = UserResourceIntTest.createEntity(em);
+        em.persist(user);
+        em.flush();
+        historiques.setUser(user);
         return historiques;
     }
 

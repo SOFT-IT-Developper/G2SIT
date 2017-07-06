@@ -1,7 +1,11 @@
 package bj.softit.g2sit.service;
 
 import bj.softit.g2sit.domain.Historiques;
+import bj.softit.g2sit.domain.OutStock;
+import bj.softit.g2sit.domain.Produits;
+import bj.softit.g2sit.domain.Stock;
 import bj.softit.g2sit.repository.HistoriquesRepository;
+import bj.softit.g2sit.repository.ProduitsRepository;
 import bj.softit.g2sit.repository.search.HistoriquesSearchRepository;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -10,6 +14,9 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+
+import java.time.ZonedDateTime;
+import java.util.List;
 
 import static org.elasticsearch.index.query.QueryBuilders.*;
 
@@ -23,12 +30,16 @@ public class HistoriquesService {
     private final Logger log = LoggerFactory.getLogger(HistoriquesService.class);
 
     private final HistoriquesRepository historiquesRepository;
-
+    private final ProduitsRepository produitsRepository;
     private final HistoriquesSearchRepository historiquesSearchRepository;
+    private final UserService userService;
 
-    public HistoriquesService(HistoriquesRepository historiquesRepository, HistoriquesSearchRepository historiquesSearchRepository) {
+
+    public HistoriquesService(HistoriquesRepository historiquesRepository, ProduitsRepository produitsRepository, HistoriquesSearchRepository historiquesSearchRepository, UserService userService) {
         this.historiquesRepository = historiquesRepository;
+        this.produitsRepository = produitsRepository;
         this.historiquesSearchRepository = historiquesSearchRepository;
+        this.userService = userService;
     }
 
     /**
@@ -39,7 +50,8 @@ public class HistoriquesService {
      */
     public Historiques save(Historiques historiques) {
         log.debug("Request to save Historiques : {}", historiques);
-        Historiques result = historiquesRepository.save(historiques);
+        Historiques result = historiquesRepository.save(historiques.user(userService.getUserWithAuthorities()));
+        historiquesSearchRepository.save(result);
         historiquesSearchRepository.save(result);
         return result;
     }
@@ -53,7 +65,12 @@ public class HistoriquesService {
     @Transactional(readOnly = true)
     public Page<Historiques> findAll(Pageable pageable) {
         log.debug("Request to get all Historiques");
-        return historiquesRepository.findAll(pageable);
+        return historiquesRepository.findAllByOrderByDateDesc(pageable);
+    }
+
+    public List<Historiques> findAllByOrderByDate() {
+        log.debug("Request to get all Historiques");
+        return historiquesRepository.findAllByOrderByDateDesc();
     }
 
     /**
@@ -91,5 +108,28 @@ public class HistoriquesService {
         log.debug("Request to search for a page of Historiques for query {}", query);
         Page<Historiques> result = historiquesSearchRepository.search(queryStringQuery(query), pageable);
         return result;
+    }
+
+    public void addHistOut(OutStock outStock) {
+
+        historiquesRepository.save(new Historiques().operation("Sortir de stock")
+            .date(ZonedDateTime.now()).user(userService.getUserWithAuthorities()));
+        Produits produits = produitsRepository.findOne(outStock.getProduit().getId());
+        //BigDecimal a= outStock.getQuantite().negate();
+        produits.getStock().setQuantite(produits.getStock().getQuantite().add(outStock.getQuantite().negate()));
+    }
+
+    public void addHistEnter(Stock stock) {
+        historiquesRepository.save(new Historiques()
+            .date(ZonedDateTime.now())
+            .operation("Entrer de stock")
+            .user(userService.getUserWithAuthorities()));
+        Produits produits = produitsRepository.findOne(stock.getProduit().getId());
+        //BigDecimal a= outStock.getQuantite().negate();
+        // produits.getStock().setQuantite(produits.getStock().getQuantite().add(stock.getQuantite()));
+    }
+
+    public void addHist(String s) {
+        historiquesRepository.save(new Historiques().date(ZonedDateTime.now()).operation(s).user(userService.getUserWithAuthorities()));
     }
 }
