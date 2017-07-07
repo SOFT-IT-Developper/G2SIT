@@ -1,5 +1,6 @@
 package bj.softit.g2sit.web.rest;
 
+import bj.softit.g2sit.service.HistoriquesService;
 import com.codahale.metrics.annotation.Timed;
 import bj.softit.g2sit.domain.OutStock;
 import bj.softit.g2sit.service.OutStockService;
@@ -22,9 +23,6 @@ import java.net.URISyntaxException;
 
 import java.util.List;
 import java.util.Optional;
-import java.util.stream.StreamSupport;
-
-import static org.elasticsearch.index.query.QueryBuilders.*;
 
 /**
  * REST controller for managing OutStock.
@@ -38,9 +36,11 @@ public class OutStockResource {
     private static final String ENTITY_NAME = "outStock";
 
     private final OutStockService outStockService;
+    private final HistoriquesService historiquesService;
 
-    public OutStockResource(OutStockService outStockService) {
+    public OutStockResource(OutStockService outStockService, HistoriquesService historiquesService) {
         this.outStockService = outStockService;
+        this.historiquesService = historiquesService;
     }
 
     /**
@@ -57,6 +57,7 @@ public class OutStockResource {
         if (outStock.getId() != null) {
             return ResponseEntity.badRequest().headers(HeaderUtil.createFailureAlert(ENTITY_NAME, "idexists", "A new outStock cannot already have an ID")).body(null);
         }
+        historiquesService.addHistOut(outStock);
         OutStock result = outStockService.save(outStock);
         return ResponseEntity.created(new URI("/api/out-stocks/" + result.getId()))
             .headers(HeaderUtil.createEntityCreationAlert(ENTITY_NAME, result.getId().toString()))

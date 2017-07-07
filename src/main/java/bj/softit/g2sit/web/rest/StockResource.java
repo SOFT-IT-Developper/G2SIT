@@ -1,5 +1,6 @@
 package bj.softit.g2sit.web.rest;
 
+import bj.softit.g2sit.service.HistoriquesService;
 import com.codahale.metrics.annotation.Timed;
 import bj.softit.g2sit.domain.Stock;
 import bj.softit.g2sit.service.StockService;
@@ -21,9 +22,6 @@ import java.net.URISyntaxException;
 
 import java.util.List;
 import java.util.Optional;
-import java.util.stream.StreamSupport;
-
-import static org.elasticsearch.index.query.QueryBuilders.*;
 
 /**
  * REST controller for managing Stock.
@@ -38,8 +36,12 @@ public class StockResource {
 
     private final StockService stockService;
 
-    public StockResource(StockService stockService) {
+
+    private final HistoriquesService historiquesService;
+
+    public StockResource(StockService stockService, HistoriquesService historiquesService) {
         this.stockService = stockService;
+        this.historiquesService = historiquesService;
     }
 
     /**
@@ -56,6 +58,8 @@ public class StockResource {
         if (stock.getId() != null) {
             return ResponseEntity.badRequest().headers(HeaderUtil.createFailureAlert(ENTITY_NAME, "idexists", "A new stock cannot already have an ID")).body(null);
         }
+//        Stock result = stockService.save(stock);
+        historiquesService.addHistEnter(stock);
         Stock result = stockService.save(stock);
         return ResponseEntity.created(new URI("/api/stocks/" + result.getId()))
             .headers(HeaderUtil.createEntityCreationAlert(ENTITY_NAME, result.getId().toString()))
@@ -79,6 +83,7 @@ public class StockResource {
             return createStock(stock);
         }
         Stock result = stockService.save(stock);
+        historiquesService.addHist("Mise ajour stock");
         return ResponseEntity.ok()
             .headers(HeaderUtil.createEntityUpdateAlert(ENTITY_NAME, stock.getId().toString()))
             .body(result);
@@ -94,6 +99,7 @@ public class StockResource {
     @Timed
     public ResponseEntity<List<Stock>> getAllStocks(@ApiParam Pageable pageable) {
         log.debug("REST request to get a page of Stocks");
+        historiquesService.addHist("Consultation du stock");
         Page<Stock> page = stockService.findAll(pageable);
         HttpHeaders headers = PaginationUtil.generatePaginationHttpHeaders(page, "/api/stocks");
         return new ResponseEntity<>(page.getContent(), headers, HttpStatus.OK);

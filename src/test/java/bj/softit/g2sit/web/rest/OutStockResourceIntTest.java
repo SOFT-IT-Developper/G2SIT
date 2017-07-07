@@ -5,6 +5,7 @@ import bj.softit.g2sit.G2SitApp;
 import bj.softit.g2sit.domain.OutStock;
 import bj.softit.g2sit.domain.Produits;
 import bj.softit.g2sit.repository.OutStockRepository;
+import bj.softit.g2sit.service.HistoriquesService;
 import bj.softit.g2sit.service.OutStockService;
 import bj.softit.g2sit.repository.search.OutStockSearchRepository;
 import bj.softit.g2sit.web.rest.errors.ExceptionTranslator;
@@ -80,16 +81,23 @@ public class OutStockResourceIntTest {
     private ExceptionTranslator exceptionTranslator;
 
     @Autowired
+    private final HistoriquesService historiquesService;
+
+    @Autowired
     private EntityManager em;
 
     private MockMvc restOutStockMockMvc;
 
     private OutStock outStock;
 
+    public OutStockResourceIntTest(HistoriquesService historiquesService) {
+        this.historiquesService = historiquesService;
+    }
+
     @Before
     public void setup() {
         MockitoAnnotations.initMocks(this);
-        OutStockResource outStockResource = new OutStockResource(outStockService);
+        OutStockResource outStockResource = new OutStockResource(outStockService, historiquesService);
         this.restOutStockMockMvc = MockMvcBuilders.standaloneSetup(outStockResource)
             .setCustomArgumentResolvers(pageableArgumentResolver)
             .setControllerAdvice(exceptionTranslator)
