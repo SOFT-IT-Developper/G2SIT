@@ -92,4 +92,9 @@ public class StockService {
         Page<Stock> result = stockSearchRepository.search(queryStringQuery(query), pageable);
         return result;
     }
+
+    public Stock findByProduitId(Long id) {
+        log.debug("Request to get Stock produit id : {}", id);
+        return stockRepository.findByProduit_Id(id);
+    }
 }

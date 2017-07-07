@@ -1,12 +1,12 @@
 <div>
     <h2>
         <span jhiTranslate="g2SitApp.historiques.home.title">Historiques</span>
-        <button class="btn btn-primary float-right create-historiques" [routerLink]="['/', { outlets: { popup: ['historiques-new'] } }]">
+       <!-- <button class="btn btn-primary float-right create-historiques" [routerLink]="['/', { outlets: { popup: ['historiques-new'] } }]">
             <span class="fa fa-plus"></span>
             <span class="hidden-sm-down"  jhiTranslate="g2SitApp.historiques.home.createLabel">
             Create new Historiques
             </span>
-        </button>
+        </button>-->
     </h2>
     <jhi-alert></jhi-alert>
     <div class="row">
@@ -52,7 +52,7 @@
                             <span class="fa fa-eye"></span>
                             <span class="hidden-md-down" jhiTranslate="entity.action.view">View</span>
                         </button>
-                        <button type="submit"
+                     <!--   <button type="submit"
                                 [routerLink]="['/', { outlets: { popup: 'historiques/'+ historiques.id + '/edit'} }]"
                                 replaceUrl="true"
                                 class="btn btn-primary btn-sm">
@@ -65,7 +65,7 @@
                                 class="btn btn-danger btn-sm">
                             <span class="fa fa-remove"></span>
                             <span class="hidden-md-down" jhiTranslate="entity.action.delete">Delete</span>
-                        </button>
+                        </button>-->
                     </div>
                 </td>
             </tr>

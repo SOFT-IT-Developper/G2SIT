@@ -3,7 +3,7 @@
         "outStock" : {
             "home": {
                 "title": "OutStocks",
-                "createLabel": "Créer un nouveau Out Stock",
+                "createLabel": "Enrégister une sortir",
                 "createOrEditLabel": "Créer ou éditer un Out Stock",
                 "search": "Recherche pour Out Stock"
             },
@@ -11,17 +11,18 @@
             "updated": "Le Out Stock avec l'identifiant {{ param }} a été mis à jour",
             "deleted": "Le Out Stock avec l'identifiant {{ param }} a été supprimé",
             "delete": {
-                "question": "Etes-vous certain de vouloir supprimer le Out Stock {{ id }} ?"
+                "question": "Etes-vous certain de vouloir supprimer le cette sortir{{ id }} ?"
             },
             "detail": {
-                "title": "Out Stock"
+                "title": "Sortir de stock"
             },
             "quantite": "Quantite",
-            "datesortir": "Datesortir",
+            "quantitedispo": "Quantite disponible",
+            "datesortir": "Date de sortir",
             "projet": "Projet",
             "client": "Client",
             "cause": "Cause",
-            "operantos": "Operantos",
+            "operantos": "Atributaire ",
             "produit": "Produit"
         }
     }

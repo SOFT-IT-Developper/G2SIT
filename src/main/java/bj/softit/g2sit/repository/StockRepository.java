@@ -12,5 +12,6 @@ import org.springframework.data.jpa.repository.*;
 @SuppressWarnings("unused")
 @Repository
 public interface StockRepository extends JpaRepository<Stock,Long> {
-    
+
+    Stock findByProduit_Id(Long id);
 }

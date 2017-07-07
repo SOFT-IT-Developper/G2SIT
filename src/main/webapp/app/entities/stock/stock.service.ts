@@ -11,6 +11,7 @@ export class StockService {
 
     private resourceUrl = 'api/stocks';
     private resourceSearchUrl = 'api/_search/stocks';
+    private resourceUrlcustom = 'produitid';
 
     constructor(private http: Http, private dateUtils: JhiDateUtils) { }
 
@@ -35,6 +36,14 @@ export class StockService {
     find(id: number): Observable<Stock> {
         return this.http.get(`${this.resourceUrl}/${id}`).map((res: Response) => {
             const jsonResponse = res.json();
+            this.convertItemFromServer(jsonResponse);
+            return jsonResponse;
+        });
+    }
+    findByProduitId(id: number): Observable<Stock> {
+        return this.http.get(`${this.resourceUrl}/${this.resourceUrlcustom}/${id}`).map((res: Response) => {
+            const jsonResponse = res.json();
+
             this.convertItemFromServer(jsonResponse);
             return jsonResponse;
         });

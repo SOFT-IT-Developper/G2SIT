@@ -7,10 +7,16 @@
     </div>
     <div class="modal-body">
         <jhi-alert-error></jhi-alert-error>
-        <div class="form-group" [hidden]="!produits.id">
+      <!--  <div class="form-group" [hidden]="!produits.id">
             <label for="id" jhiTranslate="global.field.id">ID</label>
             <input type="text" class="form-control" id="id" name="id"
                    [(ngModel)]="produits.id" readonly />
+        </div>-->
+        <div class="form-group">
+            <label jhiTranslate="g2SitApp.produits.categorie" for="field_categorie">Categorie</label>
+            <select class="form-control" id="field_categorie" name="categorie" [(ngModel)]="produits.categorie"  required>
+                <option [ngValue]="categorieOption.id === produits.categorie?.id ? produits.categorie : categorieOption" *ngFor="let categorieOption of categories; trackBy: trackCategorieById">{{categorieOption.nameCategorie}}</option>
+            </select>
         </div>
         <div class="form-group">
             <label class="form-control-label" jhiTranslate="g2SitApp.produits.nameProduit" for="field_nameProduit">Name Produit</label>
@@ -35,8 +41,8 @@
         </div>
         <div class="form-group">
             <label class="form-control-label" jhiTranslate="g2SitApp.produits.description" for="field_description">Description</label>
-            <input type="text" class="form-control" name="description" id="field_description"
-                [(ngModel)]="produits.description"  />
+            <textarea type="text" class="form-control" name="description" id="field_description"
+                [(ngModel)]="produits.description" rows="3" ></textarea>
         </div>
         <div class="form-group">
             <label class="form-control-label" jhiTranslate="g2SitApp.produits.capture" for="field_capture">Capture</label>
@@ -70,12 +76,7 @@
                 This field is required.
             </small>
         </div>
-        <div class="form-group">
-            <label jhiTranslate="g2SitApp.produits.categorie" for="field_categorie">Categorie</label>
-            <select class="form-control" id="field_categorie" name="categorie" [(ngModel)]="produits.categorie"  required>
-                <option [ngValue]="categorieOption.id === produits.categorie?.id ? produits.categorie : categorieOption" *ngFor="let categorieOption of categories; trackBy: trackCategorieById">{{categorieOption.nameCategorie}}</option>
-            </select>
-        </div>
+
         <div [hidden]="!(editForm.controls.categorie?.dirty && editForm.controls.categorie?.invalid)">
             <small class="form-text text-danger"
                 [hidden]="!editForm.controls.categorie?.errors?.required" jhiTranslate="entity.validation.required">

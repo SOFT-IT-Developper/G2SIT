@@ -12,6 +12,7 @@ import { OutStockService } from './out-stock.service';
 import { Operant, OperantService } from '../operant';
 import { Produits, ProduitsService } from '../produits';
 import { ResponseWrapper } from '../../shared';
+import {Stock, StockService } from '../stock';
 
 @Component({
     selector: 'jhi-out-stock-dialog',
@@ -27,12 +28,16 @@ export class OutStockDialogComponent implements OnInit {
 
     produits: Produits[];
 
+    stock: Stock[];
+
     constructor(
-        public activeModal: NgbActiveModal,
+        public activeModal:
+            NgbActiveModal,
         private alertService: JhiAlertService,
         private outStockService: OutStockService,
         private operantService: OperantService,
         private produitsService: ProduitsService,
+        private stockService: StockService,
         private eventManager: JhiEventManager
     ) {
     }
@@ -44,6 +49,7 @@ export class OutStockDialogComponent implements OnInit {
             .subscribe((res: ResponseWrapper) => { this.operants = res.json; }, (res: ResponseWrapper) => this.onError(res.json));
         this.produitsService.query()
             .subscribe((res: ResponseWrapper) => { this.produits = res.json; }, (res: ResponseWrapper) => this.onError(res.json));
+
     }
 
     clear() {
@@ -52,6 +58,7 @@ export class OutStockDialogComponent implements OnInit {
 
     save() {
         this.isSaving = true;
+
         if (this.outStock.id !== undefined) {
             this.subscribeToSaveResponse(
                 this.outStockService.update(this.outStock), false);
@@ -75,6 +82,13 @@ export class OutStockDialogComponent implements OnInit {
         this.eventManager.broadcast({ name: 'outStockListModification', content: 'OK'});
         this.isSaving = false;
         this.activeModal.dismiss(result);
+    }
+    onChange(produitsOption) {
+        console.log( produitsOption)
+        console.log( produitsOption.id)
+        this.stockService.findByProduitId(produitsOption.id)
+            .subscribe((res: ResponseWrapper) => { this.stock = res.json; console.log(this.stock) }, (res: ResponseWrapper) => {this.onError(res.json); console.log(res.json);} );
+
     }
 
     private onSaveError(error) {
@@ -129,4 +143,5 @@ export class OutStockPopupComponent implements OnInit, OnDestroy {
     ngOnDestroy() {
         this.routeSub.unsubscribe();
     }
+
 }

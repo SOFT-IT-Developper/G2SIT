@@ -118,6 +118,13 @@ public class StockResource {
         Stock stock = stockService.findOne(id);
         return ResponseUtil.wrapOrNotFound(Optional.ofNullable(stock));
     }
+    @GetMapping("/stocks/produitid/{id}")
+    @Timed
+    public ResponseEntity<Stock> getStockProduitId(@PathVariable Long id) {
+        log.debug("REST request to get Stock : {}", id);
+        Stock stock = stockService.findByProduitId(id);
+        return ResponseUtil.wrapOrNotFound(Optional.ofNullable(stock));
+    }
 
     /**
      * DELETE  /stocks/:id : delete the "id" stock.
