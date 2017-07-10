@@ -15,6 +15,7 @@ import {
     stockPopupRoute,
     StockResolvePagingParams,
 } from './';
+import { NewStockComponent } from './new-stock/new-stock.component';
 
 const ENTITY_STATES = [
     ...stockRoute,
@@ -33,6 +34,7 @@ const ENTITY_STATES = [
         StockDeleteDialogComponent,
         StockPopupComponent,
         StockDeletePopupComponent,
+        NewStockComponent,
     ],
     entryComponents: [
         StockComponent,

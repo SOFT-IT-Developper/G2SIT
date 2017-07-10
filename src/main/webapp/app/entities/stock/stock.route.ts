@@ -10,6 +10,7 @@ import { StockPopupComponent } from './stock-dialog.component';
 import { StockDeletePopupComponent } from './stock-delete-dialog.component';
 
 import { Principal } from '../../shared';
+import {NewStockComponent} from "./new-stock/new-stock.component";
 
 @Injectable()
 export class StockResolvePagingParams implements Resolve<any> {
@@ -42,6 +43,14 @@ export const stockRoute: Routes = [
     }, {
         path: 'stock/:id',
         component: StockDetailComponent,
+        data: {
+            authorities: ['ROLE_USER'],
+            pageTitle: 'g2SitApp.stock.home.title'
+        },
+        canActivate: [UserRouteAccessService]
+    }, {
+        path: 'stock-new2',
+        component: NewStockComponent,
         data: {
             authorities: ['ROLE_USER'],
             pageTitle: 'g2SitApp.stock.home.title'

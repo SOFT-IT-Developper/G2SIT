@@ -23,7 +23,7 @@
             <label class="form-control-label" jhiTranslate="g2SitApp.outStock.quantite" for="field_quantite">Quantite</label>
             <input type="number" class="form-control" name="quantite" id="field_quantite"
                 [(ngModel)]="outStock.quantite" required />
-            <div [hidden]="!(editForm.controls.quantite?.dirty && editForm.controls.quantite?.invalid)">
+            <div [hidden]="!(editForm.controls.quantite?.dirty && editForm.controls.quantite?.invalid || isqtvalid)">
                 <small class="form-text text-danger"
                    [hidden]="!editForm.controls.quantite?.errors?.required" jhiTranslate="entity.validation.required">
                    This field is required.
@@ -31,6 +31,10 @@
                 <small class="form-text text-danger"
                     [hidden]="!editForm.controls.quantite?.errors?.number" jhiTranslate="entity.validation.number">
                     This field should be a number.
+                </small>
+                <small class="form-text text-danger"
+                    [hidden]="!isqtvalid" >
+                   la quantité demander est indisponible il ne reste que {{oldqt}}
                 </small>
             </div>
         </div>

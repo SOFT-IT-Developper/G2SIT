@@ -1,7 +1,8 @@
 <div>
     <h2>
         <span jhiTranslate="g2SitApp.stock.home.title">Stocks</span>
-        <button class="btn btn-primary float-right create-stock" [routerLink]="['/', { outlets: { popup: ['stock-new'] } }]">
+        <button class="btn btn-primary float-right create-stock" [routerLink]="['/stock-new2']">
+        <!--<button class="btn btn-primary float-right create-stock" [routerLink]="['/', { outlets: { popup: ['stock-new'] } }]">-->
             <span class="fa fa-plus"></span>
             <span class="hidden-sm-down"  jhiTranslate="g2SitApp.stock.home.createLabel">
             Create new Stock
@@ -50,7 +51,7 @@
                 <td>{{stock.comment}}</td>
                 <td>
                     <div *ngIf="stock.produit">
-                        <a [routerLink]="['../produits', stock.produit?.id ]" >{{stock.produit?.id}}</a>
+                        <a [routerLink]="['../produits', stock.produit?.id ]" >{{stock.produit?.nameProduit}}</a>
                     </div>
                 </td>
                 <td>
