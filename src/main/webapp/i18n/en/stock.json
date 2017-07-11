@@ -22,7 +22,10 @@
             "retour": "Retour",
             "comment": "Comment",
             "produit": "Produit",
-            "operantst": "Operantst"
+            "operantst": "Operantst",
+            "new_quantite" : "Quantitée à ajouter",
+            "ex_quantite" : "Quantitée existant",
+            "update" : "Mettre à jour"
         }
     }
 }

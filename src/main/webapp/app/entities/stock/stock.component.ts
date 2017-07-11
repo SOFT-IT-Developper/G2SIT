@@ -10,7 +10,10 @@ import { PaginationConfig } from '../../blocks/config/uib-pagination.config';
 
 @Component({
     selector: 'jhi-stock',
-    templateUrl: './stock.component.html'
+    templateUrl: './stock.component.html',
+    styleUrls: [
+        'stock.component.scss'
+    ]
 })
 export class StockComponent implements OnInit, OnDestroy {
 
@@ -135,6 +138,18 @@ currentAccount: any;
             result.push('id');
         }
         return result;
+    }
+    levelStock(qt) :boolean {
+        if(qt < 5){
+            return true
+        }
+        return false;
+    }
+   stockIsFinish(qt) :boolean {
+        if(qt === 0){
+            return true
+        }
+        return false;
     }
 
     private onSuccess(data, headers) {

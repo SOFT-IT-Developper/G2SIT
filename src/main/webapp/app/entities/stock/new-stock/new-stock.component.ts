@@ -13,6 +13,7 @@ import {StockService} from "../stock.service";
 import {ProduitsService} from "../../produits/produits.service";
 import {OperantService} from "../../operant/operant.service";
 import {ResponseWrapper} from "../../../shared/model/response-wrapper.model";
+import {forEach} from "@angular/router/src/utils/collection";
 
 
 @Component({
@@ -49,6 +50,7 @@ export class NewStockComponent implements OnInit {
             .subscribe((res: ResponseWrapper) => {
                 if (!this.stock.produit || !this.stock.produit.id) {
                     this.produits = res.json;
+
                 } else {
                     this.produitsService
                         .find(this.stock.produit.id)
@@ -109,6 +111,8 @@ export class NewStockComponent implements OnInit {
             .subscribe(res => {
               //  this.stock = res;
                 if(res != null){
+                    console.log(res)
+                   // this.produits = res.produit;
                     return true
                 }
                 return false;

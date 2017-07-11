@@ -26,6 +26,7 @@ export class StockDialogComponent implements OnInit {
     produits: Produits[];
 
     operants: Operant[];
+    new_quantite: number;
 
     constructor(
         public activeModal: NgbActiveModal,
@@ -64,7 +65,9 @@ export class StockDialogComponent implements OnInit {
     save() {
         this.isSaving = true;
         if (this.stock.id !== undefined) {
+            this.stock.quantite = this.stock.quantite + this.new_quantite;
             this.subscribeToSaveResponse(
+
                 this.stockService.update(this.stock), false);
         } else {
             this.subscribeToSaveResponse(

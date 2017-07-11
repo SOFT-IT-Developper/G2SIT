@@ -42,7 +42,7 @@
             </tr>
             </thead>
             <tbody>
-            <tr *ngFor="let stock of stocks ;trackBy: trackId">
+            <tr *ngFor="let stock of stocks ; trackBy: trackId" [ngClass]="{'bg-danger': levelStock(stock.quantite), 'stockfinish': stockIsFinish(stock.quantite),'bg-success': stock.quantite > 50}" >
                 <td><a [routerLink]="['../stock', stock.id ]">{{stock.id}}</a></td>
                 <td>{{stock.quantite}}</td>
                 <td>{{stock.description}}</td>
@@ -72,9 +72,9 @@
                                 replaceUrl="true"
                                 class="btn btn-primary btn-sm">
                             <span class="fa fa-pencil"></span>
-                            <span class="hidden-md-down" jhiTranslate="entity.action.edit">Edit</span>
+                            <span class="hidden-md-down" jhiTranslate="g2SitApp.stock.update">Edit</span>
                         </button>
-                        <button type="submit"
+                        <button type="submit" *jhiHasAnyAuthority="'ROLE_ADMIN'"
                                 [routerLink]="['/', { outlets: { popup: 'stock/'+ stock.id + '/delete'} }]"
                                 replaceUrl="true"
                                 class="btn btn-danger btn-sm">

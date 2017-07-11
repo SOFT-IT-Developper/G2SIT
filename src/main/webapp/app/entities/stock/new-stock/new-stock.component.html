@@ -18,7 +18,9 @@
             <label jhiTranslate="g2SitApp.stock.produit" for="field_produit">Produit</label>
             <select class="form-control" id="field_produit" name="produit" [(ngModel)]="stock.produit">
                 <option [ngValue]="null" ></option>
-                <option [ngValue]="produitsOption.id === stock.produit?.id ? stock.produit : produitsOption" *ngFor="let produitsOption of produits; trackBy: trackProduitsById"><span *ngIf="!onChange(produitsOption)">{{produitsOption.nameProduit}}</span></option>
+                <option [ngValue]="produitsOption.id === stock.produit?.id ? stock.produit : produitsOption" *ngFor="let produitsOption of produits; trackBy: trackProduitsById">
+                    <span >{{produitsOption.nameProduit}}</span>
+                </option>
             </select>
         </div>
         <div class="form-group">
