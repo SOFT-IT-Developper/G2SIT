@@ -6,7 +6,7 @@
             "home": "Accueil",
             "jhipster-needle-menu-add-element": "JHipster will add additional menu entries here (do not translate!)",
             "entities": {
-                "main": "Entités",
+                "main": "Opération",
                 "categorie": "Categorie",
                 "produits": "Produits",
                 "stock": "Stock",
@@ -140,7 +140,7 @@
         "categorie" :"Catégorie",
         "view" :"Consulter",
         "produit" : "Produits",
-        "stockenter" : "Stock",
-        "stocksortir" : "Stock"
+        "stockenter" : "Entrer Stock",
+        "stocksortir" : "Sortir Stock"
     }
 }

@@ -1,3 +1,92 @@
-<p>
-  rapport works!
-</p>
+<div>
+    <h2>
+        <span jhiTranslate="g2SitApp.outStock.home.title">Out Stocks</span>
+    </h2>
+    <jhi-alert></jhi-alert>
+    <div class="row">
+        <div class="col-sm-12">
+            <form name="searchForm" class="form-inline">
+                <div class="input-group w-100 mt-3">
+                    <input type="text" class="form-control" [(ngModel)]="currentSearch" id="currentSearch" name="currentSearch" placeholder="{{ 'g2SitApp.outStock.home.search' | translate }}">
+                    <button class="input-group-addon btn btn-info" (click)="search(currentSearch)">
+                        <span class="fa fa-search"></span>
+                    </button>
+                    <button class="input-group-addon btn btn-danger" (click)="clear()" *ngIf="currentSearch">
+                        <span class="fa fa-trash-o"></span>
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+    <br/>
+    <div class="table-responsive" *ngIf="outStocks">
+        <table class="table table-striped">
+            <thead>
+            <tr jhiSort [(predicate)]="predicate" [(ascending)]="reverse" [callback]="transition.bind(this)">
+                <th jhiSortBy="id"><span jhiTranslate="global.field.id">ID</span> <span class="fa fa-sort"></span></th>
+                <th jhiSortBy="quantite"><span jhiTranslate="g2SitApp.outStock.quantite">Quantite</span> <span class="fa fa-sort"></span></th>
+                <th jhiSortBy="datesortir"><span jhiTranslate="g2SitApp.outStock.datesortir">Datesortir</span> <span class="fa fa-sort"></span></th>
+                <th jhiSortBy="projet"><span jhiTranslate="g2SitApp.outStock.projet">Projet</span> <span class="fa fa-sort"></span></th>
+                <th jhiSortBy="client"><span jhiTranslate="g2SitApp.outStock.client">Client</span> <span class="fa fa-sort"></span></th>
+                <th jhiSortBy="cause"><span jhiTranslate="g2SitApp.outStock.cause">Cause</span> <span class="fa fa-sort"></span></th>
+                <th jhiSortBy="operantos.fistname"><span jhiTranslate="g2SitApp.outStock.operantos">Operantos</span> <span class="fa fa-sort"></span></th>
+                <th jhiSortBy="produit.nameProduit"><span jhiTranslate="g2SitApp.outStock.produit">Produit</span> <span class="fa fa-sort"></span></th>
+                <th></th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr *ngFor="let outStock of outStocks ;trackBy: trackId">
+                <td><a [routerLink]="['../out-stock', outStock.id ]">{{outStock.id}}</a></td>
+                <td>{{outStock.quantite}}</td>
+                <td>{{outStock.datesortir | date:'medium'}}</td>
+                <td>{{outStock.projet}}</td>
+                <td>{{outStock.client}}</td>
+                <td>{{outStock.cause}}</td>
+                <td>
+                    <div *ngIf="outStock.operantos">
+                        <a [routerLink]="['../operant', outStock.operantos?.id ]" >{{outStock.operantos?.fistname}}</a>
+                    </div>
+                </td>
+                <td>
+                    <div *ngIf="outStock.produit">
+                        <a [routerLink]="['../produits', outStock.produit?.id ]" >{{outStock.produit?.nameProduit}}</a>
+                    </div>
+                </td>
+                <!--  <td class="text-right">
+                    <div class="btn-group flex-btn-group-container">
+                         <button type="submit"
+                                 [routerLink]="['../out-stock', outStock.id ]"
+                                 class="btn btn-info btn-sm">
+                             <span class="fa fa-eye"></span>
+                             <span class="hidden-md-down" jhiTranslate="entity.action.view">View</span>
+                         </button>
+                         <button type="submit"
+                                 [routerLink]="['/', { outlets: { popup: 'out-stock/'+ outStock.id + '/edit'} }]"
+                                 replaceUrl="true"
+                                 class="btn btn-primary btn-sm">
+                             <span class="fa fa-pencil"></span>
+                             <span class="hidden-md-down" jhiTranslate="entity.action.edit">Edit</span>
+                         </button>
+                         <button type="submit"
+                                 [routerLink]="['/', { outlets: { popup: 'out-stock/'+ outStock.id + '/delete'} }]"
+                                 replaceUrl="true"
+                                 class="btn btn-danger btn-sm">
+                             <span class="fa fa-remove"></span>
+                             <span class="hidden-md-down" jhiTranslate="entity.action.delete">Delete</span>
+                         </button>
+                     </div>
+                </td>-->
+            </tr>
+            </tbody>
+        </table>
+    </div>
+    <!-- Pager is not implemented yet, so this is normal pagination instead -->
+    <div *ngIf="outStocks && outStocks.length">
+        <div class="row justify-content-center">
+            <jhi-item-count [page]="page" [total]="queryCount" [itemsPerPage]="itemsPerPage"></jhi-item-count>
+        </div>
+        <div class="row justify-content-center">
+            <ngb-pagination [collectionSize]="totalItems" [(page)]="page"  (pageChange)="loadPage(page)"></ngb-pagination>
+        </div>
+    </div>
+</div>

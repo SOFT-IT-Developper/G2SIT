@@ -11,6 +11,9 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 
+import java.time.ZonedDateTime;
+import java.util.List;
+
 import static org.elasticsearch.index.query.QueryBuilders.*;
 
 /**
@@ -96,5 +99,9 @@ public class StockService {
     public Stock findByProduitId(Long id) {
         log.debug("Request to get Stock produit id : {}", id);
         return stockRepository.findByProduit_Id(id);
+    }
+
+    public List<Stock> findByBetwenToDate(ZonedDateTime d1, ZonedDateTime d2) {
+       return stockRepository.findByDateentrerBetween(d1,d2);
     }
 }

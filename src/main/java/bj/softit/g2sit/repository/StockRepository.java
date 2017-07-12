@@ -5,6 +5,7 @@ import org.springframework.stereotype.Repository;
 
 import org.springframework.data.jpa.repository.*;
 
+import java.time.ZonedDateTime;
 import java.util.List;
 
 
@@ -17,4 +18,5 @@ public interface StockRepository extends JpaRepository<Stock,Long> {
 
     Stock findByProduit_Id(Long id);
     List<Stock> findAllByProduit_Id(long id);
+    List<Stock> findByDateentrerBetween(ZonedDateTime d1, ZonedDateTime d2);
 }

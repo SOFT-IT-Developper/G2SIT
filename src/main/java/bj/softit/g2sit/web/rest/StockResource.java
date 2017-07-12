@@ -20,6 +20,7 @@ import org.springframework.web.bind.annotation.*;
 import java.net.URI;
 import java.net.URISyntaxException;
 
+import java.time.ZonedDateTime;
 import java.util.List;
 import java.util.Optional;
 
@@ -103,6 +104,26 @@ public class StockResource {
         Page<Stock> page = stockService.findAll(pageable);
         HttpHeaders headers = PaginationUtil.generatePaginationHttpHeaders(page, "/api/stocks");
         return new ResponseEntity<>(page.getContent(), headers, HttpStatus.OK);
+    }
+
+ /*   @GetMapping("/stocks/twodate/{d1},{d2}")
+    @Timed
+    public List<Stock> getAllStocksByBetweenTwoDate(@PathVariable("dateentrer") ZonedDateTime d1,@PathVariable("dateentrer") ZonedDateTime d2) {
+        log.debug("REST request to get a page of Stocks");
+
+       *//* historiquesService.addHist("Consultation du stock");
+        Page<Stock> page = stockService.findAll(PathVariable pageable);
+        HttpHeaders headers = PaginationUtil.generatePaginationHttpHeaders(page, "/api/stocks");
+        return new ResponseEntity<>(page.getContent(), headers, HttpStatus.OK);*//*
+    return stockService.findByBetwenToDate(d1,d2);
+    }*/
+    @GetMapping("/stocks/twodate/{dateentrer},{dateentrer}")
+    @Timed
+    public List<Stock> getAllStocksByBetweenTwoDate(@PathVariable("dateentrer") ZonedDateTime d1) {
+        log.debug("REST request to get a page of Stocks");
+
+
+    return stockService.findByBetwenToDate(ZonedDateTime.now(),ZonedDateTime.now());
     }
 
     /**

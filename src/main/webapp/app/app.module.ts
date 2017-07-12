@@ -25,8 +25,8 @@ import {
     ActiveMenuDirective,
     ErrorComponent
 } from './layouts';
-import { RapportComponent } from './rapport/rapport.component';
-import {SidebarComponent} from "./shared/sidebar/sidebar.component";
+import {SidebarComponent} from './shared/sidebar/sidebar.component';
+import {G2SitRapportModule} from './rapport/rapport.module';
 
 @NgModule({
     imports: [
@@ -38,6 +38,7 @@ import {SidebarComponent} from "./shared/sidebar/sidebar.component";
         G2SitAdminModule,
         G2SitAccountModule,
         G2SitEntityModule,
+        G2SitRapportModule,
         // jhipster-needle-angular-add-module JHipster will add new module here
     ],
     declarations: [
@@ -47,7 +48,6 @@ import {SidebarComponent} from "./shared/sidebar/sidebar.component";
         PageRibbonComponent,
         ActiveMenuDirective,
         FooterComponent,
-        RapportComponent,
         SidebarComponent
     ],
     providers: [

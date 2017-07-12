@@ -1,46 +1,96 @@
 <nav class="sidebar" [ngClass]="{sidebarPushRight: isActive}">
     <ul class="list-group">
-        <a routerLink="/" routerLinkActive="active" class="list-group-item">
+        <a routerLink="/" routerLinkActive="active" class="list-group-item dropdown-item"
+           [routerLinkActiveOptions]="{ exact: true }">
             <i class="fa fa-fw fa-dashboard"></i>
             <span jhiTranslate="dashboard.dhome">&nbsp;Dashboard tx</span>
 
         </a>
-
-        <div class="nested-menu">
-            <a class="list-group-item" (click)="addExpandClass('pages')">
+        <div class="nested-menu" [ngSwitch]="isAuthenticated()">
+            <a class="list-group-item" (click)="addExpandClass('pages0')" *ngSwitchCase="true">
                 <i class="fa fa-bath" aria-hidden="true"></i>
                 <span jhiTranslate="dashboard.categorie">&nbsp; Catégorie</span>
             </a>
-            <li class="nested" [class.expand]="showMenu === 'pages'">
+            <li class="nested" [class.expand]="showMenu === 'pages0'">
                 <ul class="submenu">
                     <li class="nav-item">
-                        <a [routerLink]="['/', { outlets: { popup: ['categorie-new'] } }]" routerLinkActive="active"
+                        <a class="dropdown-item" [routerLink]="['/', { outlets: { popup: ['categorie-new'] } }]"
+                           routerLinkActive="active"
                            [routerLinkActiveOptions]="{ exact: true }">
                             <i class="fa fa-plus"></i>
                             <span jhiTranslate="g2SitApp.categorie.home.createLabel"> </span></a>
                     </li>
                     <li class="nav-item">
-                        <a routerLink="categorie" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }"><span
-                            jhiTranslate="dashboard.view"> Consulter </span></a>
+                        <a class="dropdown-item" routerLink="categorie" routerLinkActive="active"
+                           [routerLinkActiveOptions]="{ exact: true }">
+                            <i class="fa fa-eye"></i>
+                            <span jhiTranslate="dashboard.view"> Consulter </span></a>
                     </li>
                 </ul>
             </li>
         </div>
-        <div class="nested-menu">
-            <a class="list-group-item" (click)="addExpandClass('pages')">
+
+        <div class="nested-menu" [ngSwitch]="isAuthenticated()">
+            <a class="list-group-item" (click)="addExpandClass('pages1')" *ngSwitchCase="true">
                 <i class="fa fa-product-hunt" aria-hidden="true"></i>
                 <span jhiTranslate="dashboard.produit">&nbsp; Produits</span>
             </a>
-            <li class="nested" [class.expand]="showMenu === 'pages'">
+            <li class="nested" [class.expand]="showMenu === 'pages1'">
                 <ul class="submenu">
                     <li class="nav-item">
-                        <a class="dropdown-item" [routerLink]="['/', { outlets: { popup: ['categorie-new'] } }]"
+                        <a class="dropdown-item" [routerLink]="['/', { outlets: { popup: ['produits-new'] } }]"
                            routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }">
                             <i class="fa fa-plus"></i>
-                            <span jhiTranslate="g2SitApp.categorie.home.createLabel"> </span></a>
+                            <span jhiTranslate="g2SitApp.produits.home.createLabel"> </span></a>
                     </li>
                     <li class="nav-item">
                         <a class="dropdown-item" routerLink="produits" routerLinkActive="active"
+                           [routerLinkActiveOptions]="{ exact: true }">
+                            <i class="fa fa-eye"></i>
+                            <span jhiTranslate="dashboard.view"> Consulter </span></a>
+                    </li>
+                </ul>
+            </li>
+        </div>
+        <!--  Entrer  stock  -->
+        <div class="nested-menu" [ngSwitch]="isAuthenticated()">
+            <a class="list-group-item" (click)="addExpandClass('pages2')" *ngSwitchCase="true">
+                <i class="fa fa-archive" aria-hidden="true"></i>
+                <span jhiTranslate="dashboard.stockenter">&nbsp; Produits</span>
+            </a>
+            <li class="nested" [class.expand]="showMenu === 'pages2'">
+                <ul class="submenu">
+                    <li class="nav-item">
+                        <a class="dropdown-item" [routerLink]="['/stock-new2']"
+                           routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }">
+                            <i class="fa fa-plus"></i>
+                            <span jhiTranslate="g2SitApp.stock.home.createLabel"> </span></a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="dropdown-item" routerLink="stock" routerLinkActive="active"
+                           [routerLinkActiveOptions]="{ exact: true }">
+                            <i class="fa fa-eye"></i>
+                            <span jhiTranslate="dashboard.view"> Consulter </span></a>
+                    </li>
+                </ul>
+            </li>
+        </div>
+        <!--  Sortir stock  -->
+        <div class="nested-menu" [ngSwitch]="isAuthenticated()">
+            <a class="list-group-item" (click)="addExpandClass('pages3')" *ngSwitchCase="true">
+                <i class="fa fa-archive" aria-hidden="true"></i>
+                <span jhiTranslate="dashboard.stocksortir">&nbsp; Produits</span>
+            </a>
+            <li class="nested" [class.expand]="showMenu === 'pages3'">
+                <ul class="submenu">
+                    <li class="nav-item">
+                        <a class="dropdown-item" [routerLink]="['/', { outlets: { popup: ['out-stock-new'] } }]"
+                           routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }">
+                            <i class="fa fa-plus"></i>
+                            <span jhiTranslate="g2SitApp.outStock.home.createLabel"> </span></a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="dropdown-item" routerLink="out-stock" routerLinkActive="active"
                            [routerLinkActiveOptions]="{ exact: true }">
                             <i class="fa fa-eye"></i>
                             <span jhiTranslate="dashboard.view"> Consulter </span></a>
@@ -55,22 +105,5 @@
             {{ 'moretheme' | translate }}
         </a>-->
     </ul>
-    <div class="admin-menu">
-        <ul id="side-admin-menu" class="side-menu list-unstyled">
-            <li> <a href="#pages-nav-list" data-toggle="collapse" aria-expanded="false"><i class="icon-interface-windows"></i><span>Dropdown</span>
-                <div class="arrow pull-right"><i class="fa fa-angle-down"></i></div></a>
-                <ul id="pages-nav-list" class="collapse list-unstyled">
-                    <li> <a href="#">Page 1</a></li>
-                    <li> <a href="#">Page 2</a></li>
-                    <li> <a href="#">Page 3</a></li>
-                    <li> <a href="#">Page 4</a></li>
-                </ul>
-            </li>
-            <li> <a href="#"> <i class="icon-screen"> </i><span>Demo</span></a></li>
-            <li> <a href="#"> <i class="icon-flask"> </i><span>Demo</span>
-                <div class="badge badge-info">Special</div></a></li>
-            <li> <a href=""> <i class="icon-flask"> </i><span>Demo</span></a></li>
-            <li> <a href=""> <i class="icon-picture"> </i><span>Demo</span></a></li>
-        </ul>
-    </div>
+
 </nav>
