@@ -15,6 +15,7 @@ import {
     HasAnyAuthorityDirective,
     JhiLoginModalComponent
 } from './';
+import { SidebarComponent } from './sidebar/sidebar.component';
 
 @NgModule({
     imports: [
@@ -23,7 +24,8 @@ import {
     ],
     declarations: [
         JhiLoginModalComponent,
-        HasAnyAuthorityDirective
+        HasAnyAuthorityDirective,
+
     ],
     providers: [
         LoginService,

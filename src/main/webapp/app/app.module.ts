@@ -26,6 +26,7 @@ import {
     ErrorComponent
 } from './layouts';
 import { RapportComponent } from './rapport/rapport.component';
+import {SidebarComponent} from "./shared/sidebar/sidebar.component";
 
 @NgModule({
     imports: [
@@ -46,7 +47,8 @@ import { RapportComponent } from './rapport/rapport.component';
         PageRibbonComponent,
         ActiveMenuDirective,
         FooterComponent,
-        RapportComponent
+        RapportComponent,
+        SidebarComponent
     ],
     providers: [
         ProfileService,
