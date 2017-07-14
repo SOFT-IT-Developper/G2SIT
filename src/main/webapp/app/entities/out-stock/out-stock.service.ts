@@ -75,4 +75,18 @@ export class OutStockService {
         copy.datesortir = this.dateUtils.toDate(outStock.datesortir);
         return copy;
     }
+    findByDate(req: any): Observable<Response> {
+        const params: URLSearchParams = new URLSearchParams();
+        params.set('fromDate', req.fromDate);
+        params.set('toDate', req.toDate);
+        params.set('page', req.page);
+        params.set('size', req.size);
+        params.set('sort', req.sort);
+
+        const options = {
+            search: params
+        };
+
+        return this.http.get(`api/outbydate`, options);
+    }
 }

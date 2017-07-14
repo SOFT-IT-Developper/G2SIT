@@ -1,8 +1,20 @@
+<!--
 <div>
     <h2>
         <span jhiTranslate="g2SitApp.outStock.home.title">Out Stocks</span>
     </h2>
     <jhi-alert></jhi-alert>
+    <div class="row">
+        <div class="col-md-5">
+            <h4 jhiTranslate="audits.filter.title">Filter by date</h4>
+            <p class="d-flex">
+                <span jhiTranslate="audits.filter.from" class="input-group-addon">from</span>
+                <input type="date" class="form-control" name="start" [(ngModel)]="fromDate" (ngModelChange)="onChangeDate($event)" required/>
+                <span jhiTranslate="audits.filter.to" class="input-group-addon">to</span>
+                <input type="date" class="form-control" name="end" [(ngModel)]="toDate" (ngModelChange)="onChangeDate($event)" required/>
+            </p>
+        </div>
+    </div>
     <div class="row">
         <div class="col-sm-12">
             <form name="searchForm" class="form-inline">
@@ -52,7 +64,7 @@
                         <a [routerLink]="['../produits', outStock.produit?.id ]" >{{outStock.produit?.nameProduit}}</a>
                     </div>
                 </td>
-                <!--  <td class="text-right">
+                &lt;!&ndash;  <td class="text-right">
                     <div class="btn-group flex-btn-group-container">
                          <button type="submit"
                                  [routerLink]="['../out-stock', outStock.id ]"
@@ -75,12 +87,12 @@
                              <span class="hidden-md-down" jhiTranslate="entity.action.delete">Delete</span>
                          </button>
                      </div>
-                </td>-->
+                </td>&ndash;&gt;
             </tr>
             </tbody>
         </table>
     </div>
-    <!-- Pager is not implemented yet, so this is normal pagination instead -->
+    &lt;!&ndash; Pager is not implemented yet, so this is normal pagination instead &ndash;&gt;
     <div *ngIf="outStocks && outStocks.length">
         <div class="row justify-content-center">
             <jhi-item-count [page]="page" [total]="queryCount" [itemsPerPage]="itemsPerPage"></jhi-item-count>
@@ -90,3 +102,50 @@
         </div>
     </div>
 </div>
+-->
+<div >
+    <h2 jhiTranslate="audits.title">Audits</h2>
+
+    <div class="row">
+        <div class="col-md-5">
+            <h4 jhiTranslate="audits.filter.title">Filter by date</h4>
+            <p class="d-flex">
+                <span jhiTranslate="audits.filter.from" class="input-group-addon">from</span>
+                <input type="date" class="form-control" name="start" [(ngModel)]="fromDate" (ngModelChange)="onChangeDate($event)" required/>
+                <span jhiTranslate="audits.filter.to" class="input-group-addon">to</span>
+                <input type="date" class="form-control" name="end" [(ngModel)]="toDate" (ngModelChange)="onChangeDate($event)" required/>
+            </p>
+        </div>
+    </div>
+
+    <div class="table-responsive">
+        <table class="table table-condensed table-striped table-bordered">
+            <thead>
+            <tr>
+                <th (click)="orderProp = 'timestamp'; reverse=!reverse"><span jhiTranslate="audits.table.header.date">Date</span></th>
+                <th (click)="orderProp = 'principal'; reverse=!reverse"><span jhiTranslate="audits.table.header.principal">User</span></th>
+                <th (click)="orderProp = 'type'; reverse=!reverse"><span jhiTranslate="audits.table.header.status">State</span></th>
+                <th (click)="orderProp = 'data.message'; reverse=!reverse"><span jhiTranslate="audits.table.header.data">Extra data</span></th>
+            </tr>
+            </thead>
+            <tr *ngFor="let audit of getAudits()">
+                <td><span>{{audit.datesortir| date:'medium'}}</span></td>
+                <td><small>{{audit.quantite}}</small></td>
+                <td>{{audit.type}}</td>
+                <td>
+                    <span *ngIf="audit.produit" ng-show="audit.data.message">{{audit.produit.nameProduit}}</span>
+                    <span *ngIf="audit.produit" ng-show="audit.data.remoteAddress"><span jhiTranslate="audits.table.data.remoteAddress">Remote Address</span> {{audit.produit.nameProduit}}</span>
+                </td>
+            </tr>
+        </table>
+    </div>
+    <div *ngIf="audits">
+        <div class="row justify-content-center">
+            <jhi-item-count [page]="page" [total]="totalItems" [itemsPerPage]="itemsPerPage"></jhi-item-count>
+        </div>
+        <div class="row justify-content-center">
+            <ngb-pagination [collectionSize]="totalItems" [(page)]="page" (pageChange)="loadPage(page)"></ngb-pagination>
+        </div>
+    </div>
+</div>
+

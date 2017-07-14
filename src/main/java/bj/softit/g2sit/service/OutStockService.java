@@ -11,6 +11,8 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 
+import java.time.Instant;
+
 import static org.elasticsearch.index.query.QueryBuilders.*;
 
 /**
@@ -92,4 +94,18 @@ public class OutStockService {
         Page<OutStock> result = outStockSearchRepository.search(queryStringQuery(query), pageable);
         return result;
     }
+
+    public Page<OutStock> findByDates(Instant fromDate, Instant toDate, Pageable pageable) {
+      return   outStockSearchRepository.findAllByDatesortirBetween(fromDate, toDate, pageable);
+    }
+ /*   public List<OutStock> convertToAuditEvent(Iterable<PersistentAuditEvent> persistentAuditEvents) {
+        if (persistentAuditEvents == null) {
+            return Collections.emptyList();
+        }
+        List<OutStock> auditEvents = new ArrayList<>();
+        for (PersistentAuditEvent persistentAuditEvent : persistentAuditEvents) {
+            auditEvents.add(convertToAuditEvent(persistentAuditEvent));
+        }
+        return auditEvents;
+    }*/
 }

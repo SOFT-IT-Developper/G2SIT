@@ -1,22 +1,22 @@
 
-<div class="page home-page">
+<div class="page home-page" [ngSwitch]="isAuthenticated()">
 
    <!-- <div class="col-md-3">
         <span class="hipster img-fluid img-rounded"></span>
     </div>-->
         <h1 class="display-4" jhiTranslate="home.title">Welcome, Java Hipster!</h1>
-        <div class="row">
+        <div class="row" *ngSwitchCase="true">
             <div class="col-xl-3 col-lg-6">
-                <jhi-stat [bgClass]="'card-primary'" [icon]="'fa-comments'" [count]="26" [label]="'New Comments!'" ></jhi-stat>
+                <jhi-stat [bgClass]="'card-primary'" [icon]="'fa-comments'" [count]="26" [label]="'Nombre de produit'" ></jhi-stat>
             </div>
             <div class="col-xl-3 col-lg-6">
-                <jhi-stat [bgClass]="'card-info'" [icon]="'fa-tasks'" [count]="12" [label]="'New task!'" ></jhi-stat>
+                <jhi-stat [bgClass]="'card-info'" [icon]="'fa-tasks'" [count]="12" [label]="'Stock disponible'" ></jhi-stat>
             </div>
             <div class="col-xl-3 col-lg-6">
-                <jhi-stat [bgClass]="'card-success'" [icon]="'fa-shopping-cart'" [count]="124" [label]="'New Orders!'" ></jhi-stat>
+                <jhi-stat [bgClass]="'card-success'" [icon]="'fa-shopping-cart'" [count]="124" [label]="'Nombre de sortir effectué'" ></jhi-stat>
             </div>
             <div class="col-xl-3 col-lg-6">
-                <jhi-stat [bgClass]="'card-danger'" [icon]="'fa-support'" [count]="13" [label]="'New Tickets!'"></jhi-stat>
+                <jhi-stat [bgClass]="'card-danger'" [icon]="'fa-support'" [count]="13" [label]="'Produit manquant'"></jhi-stat>
             </div>
 
         <!--<p class="lead" jhiTranslate="home.subtitle">This is your homepage</p>-->

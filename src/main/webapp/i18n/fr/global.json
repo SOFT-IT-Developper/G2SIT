@@ -141,6 +141,7 @@
         "view" :"Consulter",
         "produit" : "Produits",
         "stockenter" : "Entrer Stock",
-        "stocksortir" : "Sortir Stock"
+        "stocksortir" : "Sortir Stock",
+        "rapport" : "Rapport"
     }
 }

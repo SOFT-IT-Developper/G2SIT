@@ -8,6 +8,9 @@ import {ActivatedRoute, Router} from "@angular/router";
 import {PaginationConfig} from "../blocks/config/uib-pagination.config";
 import {ITEMS_PER_PAGE} from "../shared/constants/pagination.constants";
 import {ResponseWrapper} from "../shared/model/response-wrapper.model";
+import {Audit} from "../admin/audits/audit.model";
+import {DatePipe} from "@angular/common";
+import {AuditsService} from "../admin/audits/audits.service";
 
 @Component({
   selector: 'jhi-rapport',
@@ -15,140 +18,90 @@ import {ResponseWrapper} from "../shared/model/response-wrapper.model";
   styles: []
 })
 
-export class RapportComponent implements OnInit, OnDestroy {
+export class RapportComponent implements OnInit {
 
-    currentAccount: any;
-    outStocks: OutStock[];
-    error: any;
-    success: any;
-    eventSubscriber: Subscription;
-    currentSearch: string;
-    routeData: any;
-    links: any;
-    totalItems: any;
-    queryCount: any;
+    // audits: Audit[];
+    out_rapport: OutStock[]
+    fromDate: string;
     itemsPerPage: any;
-    page: any;
-    predicate: any;
-    previousPage: any;
-    reverse: any;
+    links: any;
+    page: number;
+    orderProp: string;
+    reverse: boolean;
+    toDate: string;
+    totalItems: number;
 
     constructor(
-        private outStockService: OutStockService,
+        private outService: OutStockService,
         private parseLinks: JhiParseLinks,
-        private alertService: JhiAlertService,
-        private principal: Principal,
-        private activatedRoute: ActivatedRoute,
-        private router: Router,
-        private eventManager: JhiEventManager,
-        private paginationUtil: JhiPaginationUtil,
-        private paginationConfig: PaginationConfig
+        private paginationConfig: PaginationConfig,
+        private datePipe: DatePipe
     ) {
         this.itemsPerPage = ITEMS_PER_PAGE;
-        this.routeData = this.activatedRoute.data.subscribe((data) => {
-            this.page = data['pagingParams'].page;
-            this.previousPage = data['pagingParams'].page;
-            this.reverse = data['pagingParams'].ascending;
-            this.predicate = data['pagingParams'].predicate;
-        });
-        this.currentSearch = activatedRoute.snapshot.params['search'] ? activatedRoute.snapshot.params['search'] : '';
+        this.page = 1;
+        this.reverse = false;
+        this.orderProp = 'timestamp';
     }
 
-    loadAll() {
-        if (this.currentSearch) {
-            this.outStockService.search({
-                query: this.currentSearch,
-                size: this.itemsPerPage,
-                sort: this.sort()}).subscribe(
-                (res: ResponseWrapper) => this.onSuccess(res.json, res.headers),
-                (res: ResponseWrapper) => this.onError(res.json)
-            );
-            return;
-        }
-        this.outStockService.query({
-            page: this.page - 1,
-            size: this.itemsPerPage,
-            sort: this.sort()}).subscribe(
-            (res: ResponseWrapper) => this.onSuccess(res.json, res.headers),
-            (res: ResponseWrapper) => this.onError(res.json)
-        );
+    getAudits() {
+        return this.sortAudits(this.out_rapport);
     }
+
     loadPage(page: number) {
-        if (page !== this.previousPage) {
-            this.previousPage = page;
-            this.transition();
-        }
+        this.page = page;
+        this.onChangeDate();
     }
-    transition() {
-        this.router.navigate(['/out-stock'], {queryParams:
-            {
-                page: this.page,
-                size: this.itemsPerPage,
-                search: this.currentSearch,
-                sort: this.predicate + ',' + (this.reverse ? 'asc' : 'desc')
+
+    ngOnInit() {
+        this.today();
+        this.previousMonth();
+        this.onChangeDate();
+    }
+
+    onChangeDate() {
+        this.outService.findByDate({page: this.page - 1, size: this.itemsPerPage,
+            fromDate: this.fromDate, toDate: this.toDate}).subscribe((res) => {
+
+            this.out_rapport = res.json();
+            this.links = this.parseLinks.parse(res.headers.get('link'));
+            this.totalItems = + res.headers.get('X-Total-Count');
+        });
+    }
+
+    previousMonth() {
+        const dateFormat = 'yyyy-MM-dd';
+        let fromDate: Date = new Date();
+
+        if (fromDate.getMonth() === 0) {
+            fromDate = new Date(fromDate.getFullYear() - 1, 11, fromDate.getDate());
+        } else {
+            fromDate = new Date(fromDate.getFullYear(), fromDate.getMonth() - 1, fromDate.getDate());
+        }
+
+        this.fromDate = this.datePipe.transform(fromDate, dateFormat);
+    }
+
+    today() {
+        const dateFormat = 'yyyy-MM-dd';
+        // Today + 1 day - needed if the current day must be included
+        const today: Date = new Date();
+        today.setDate(today.getDate() + 1);
+        const date = new Date(today.getFullYear(), today.getMonth(), today.getDate());
+        this.toDate = this.datePipe.transform(date, dateFormat);
+    }
+
+    private sortAudits(audits: OutStock[]) {
+        console.log(audits)
+        audits = audits.slice(0).sort((a, b) => {
+            if (a[this.orderProp] < b[this.orderProp]) {
+                return -1;
+            } else if ([b[this.orderProp] < a[this.orderProp]]) {
+                return 1;
+            } else {
+                return 0;
             }
         });
-        this.loadAll();
-    }
 
-    clear() {
-        this.page = 0;
-        this.currentSearch = '';
-        this.router.navigate(['/out-stock', {
-            page: this.page,
-            sort: this.predicate + ',' + (this.reverse ? 'asc' : 'desc')
-        }]);
-        this.loadAll();
+        return this.reverse ? audits.reverse() : audits;
     }
-    search(query) {
-        if (!query) {
-            return this.clear();
-        }
-        this.page = 0;
-        this.currentSearch = query;
-        this.router.navigate(['/out-stock', {
-            search: this.currentSearch,
-            page: this.page,
-            sort: this.predicate + ',' + (this.reverse ? 'asc' : 'desc')
-        }]);
-        this.loadAll();
-    }
-    ngOnInit() {
-        this.loadAll();
-        this.principal.identity().then((account) => {
-            this.currentAccount = account;
-        });
-        this.registerChangeInOutStocks();
-    }
-
-    ngOnDestroy() {
-        this.eventManager.destroy(this.eventSubscriber);
-    }
-
-    trackId(index: number, item: OutStock) {
-        return item.id;
-    }
-    registerChangeInOutStocks() {
-        this.eventSubscriber = this.eventManager.subscribe('outStockListModification', (response) => this.loadAll());
-    }
-
-    sort() {
-        const result = [this.predicate + ',' + (this.reverse ? 'asc' : 'desc')];
-        if (this.predicate !== 'id') {
-            result.push('id');
-        }
-        return result;
-    }
-
-    private onSuccess(data, headers) {
-        this.links = this.parseLinks.parse(headers.get('link'));
-        this.totalItems = headers.get('X-Total-Count');
-        this.queryCount = this.totalItems;
-        // this.page = pagingParams.page;
-        this.outStocks = data;
-    }
-    private onError(error) {
-        this.alertService.error(error.message, null, null);
-    }
-
 }

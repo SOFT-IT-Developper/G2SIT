@@ -117,14 +117,14 @@ public class StockResource {
         return new ResponseEntity<>(page.getContent(), headers, HttpStatus.OK);*//*
     return stockService.findByBetwenToDate(d1,d2);
     }*/
-    @GetMapping("/stocks/twodate/{dateentrer},{dateentrer}")
+   /* @GetMapping("/stocks/twodate/{'dateentrer':}")
     @Timed
     public List<Stock> getAllStocksByBetweenTwoDate(@PathVariable("dateentrer") ZonedDateTime d1) {
         log.debug("REST request to get a page of Stocks");
 
 
     return stockService.findByBetwenToDate(ZonedDateTime.now(),ZonedDateTime.now());
-    }
+    }*/
 
     /**
      * GET  /stocks/:id : get the "id" stock.

@@ -21,6 +21,8 @@ import javax.validation.Valid;
 import java.net.URI;
 import java.net.URISyntaxException;
 
+import java.time.LocalDate;
+import java.time.ZoneId;
 import java.util.List;
 import java.util.Optional;
 
@@ -98,6 +100,20 @@ public class OutStockResource {
         log.debug("REST request to get a page of OutStocks");
         Page<OutStock> page = outStockService.findAll(pageable);
         HttpHeaders headers = PaginationUtil.generatePaginationHttpHeaders(page, "/api/out-stocks");
+        return new ResponseEntity<>(page.getContent(), headers, HttpStatus.OK);
+    }
+    @GetMapping(path = "/outbydate",params = {"fromDate", "toDate"})
+    @Timed
+    public ResponseEntity<List<OutStock>> getAllOutStocksByDate(@RequestParam(value = "fromDate") LocalDate fromDate,
+                                                                @RequestParam(value = "toDate") LocalDate toDate,
+                                                                @ApiParam Pageable pageable) {
+        log.debug("REST request to get a page of OutStocks by date ");
+
+        Page<OutStock> page = outStockService.findByDates(
+            fromDate.atStartOfDay(ZoneId.systemDefault()).toInstant(),
+            toDate.atStartOfDay(ZoneId.systemDefault()).plusDays(1).toInstant(),
+            pageable);;
+        HttpHeaders headers = PaginationUtil.generatePaginationHttpHeaders(page, "/api/outbydate");
         return new ResponseEntity<>(page.getContent(), headers, HttpStatus.OK);
     }
 
