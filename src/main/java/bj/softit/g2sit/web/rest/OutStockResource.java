@@ -112,7 +112,7 @@ public class OutStockResource {
         Page<OutStock> page = outStockService.findByDates(
             fromDate.atStartOfDay(ZoneId.systemDefault()).toInstant(),
             toDate.atStartOfDay(ZoneId.systemDefault()).plusDays(1).toInstant(),
-            pageable);;
+            pageable);
         HttpHeaders headers = PaginationUtil.generatePaginationHttpHeaders(page, "/api/outbydate");
         return new ResponseEntity<>(page.getContent(), headers, HttpStatus.OK);
     }

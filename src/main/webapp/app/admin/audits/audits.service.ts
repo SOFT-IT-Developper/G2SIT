@@ -17,7 +17,7 @@ export class AuditsService  {
         const options = {
             search: params
         };
-
+        console.log(options)
         return this.http.get('management/audits', options);
     }
 }

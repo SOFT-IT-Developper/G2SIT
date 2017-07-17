@@ -8,7 +8,7 @@ import {ActivatedRoute, Router} from "@angular/router";
 import {PaginationConfig} from "../blocks/config/uib-pagination.config";
 import {ITEMS_PER_PAGE} from "../shared/constants/pagination.constants";
 import {ResponseWrapper} from "../shared/model/response-wrapper.model";
-import {Audit} from "../admin/audits/audit.model";
+
 import {DatePipe} from "@angular/common";
 import {AuditsService} from "../admin/audits/audits.service";
 
@@ -40,7 +40,7 @@ export class RapportComponent implements OnInit {
         this.itemsPerPage = ITEMS_PER_PAGE;
         this.page = 1;
         this.reverse = false;
-        this.orderProp = 'timestamp';
+        this.orderProp = 'datesortir';
     }
 
     getAudits() {
@@ -59,9 +59,11 @@ export class RapportComponent implements OnInit {
     }
 
     onChangeDate() {
+        console.log(this.fromDate)
+        console.log(this.toDate)
         this.outService.findByDate({page: this.page - 1, size: this.itemsPerPage,
             fromDate: this.fromDate, toDate: this.toDate}).subscribe((res) => {
-
+            console.log(res);
             this.out_rapport = res.json();
             this.links = this.parseLinks.parse(res.headers.get('link'));
             this.totalItems = + res.headers.get('X-Total-Count');

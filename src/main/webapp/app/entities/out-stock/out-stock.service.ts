@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { Http, Response } from '@angular/http';
+import { Http, Response, URLSearchParams } from '@angular/http';
 import { Observable } from 'rxjs/Rx';
 import { JhiDateUtils } from 'ng-jhipster';
 
@@ -86,7 +86,8 @@ export class OutStockService {
         const options = {
             search: params
         };
-
-        return this.http.get(`api/outbydate`, options);
+        console.log(options)
+        return this.http.get(`api/outbydate`, options)
+            .map((res: Response) => res);
     }
 }
