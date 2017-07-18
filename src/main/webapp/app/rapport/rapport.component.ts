@@ -11,7 +11,7 @@ import {ResponseWrapper} from "../shared/model/response-wrapper.model";
 
 import {DatePipe} from "@angular/common";
 import {AuditsService} from "../admin/audits/audits.service";
-
+declare var $;
 @Component({
   selector: 'jhi-rapport',
   templateUrl: './rapport.component.html',
@@ -43,8 +43,8 @@ export class RapportComponent implements OnInit {
         this.orderProp = 'datesortir';
     }
 
-    getAudits() {
-        return this.sortAudits(this.out_rapport);
+    getRapport() {
+        return this.sortRapport(this.out_rapport);
     }
 
     loadPage(page: number) {
@@ -92,9 +92,9 @@ export class RapportComponent implements OnInit {
         this.toDate = this.datePipe.transform(date, dateFormat);
     }
 
-    private sortAudits(audits: OutStock[]) {
-        console.log(audits)
-        audits = audits.slice(0).sort((a, b) => {
+    private sortRapport(rapport: OutStock[]) {
+        console.log(rapport)
+        rapport = rapport.slice(0).sort((a, b) => {
             if (a[this.orderProp] < b[this.orderProp]) {
                 return -1;
             } else if ([b[this.orderProp] < a[this.orderProp]]) {
@@ -104,6 +104,6 @@ export class RapportComponent implements OnInit {
             }
         });
 
-        return this.reverse ? audits.reverse() : audits;
+        return this.reverse ? rapport.reverse() : rapport;
     }
 }

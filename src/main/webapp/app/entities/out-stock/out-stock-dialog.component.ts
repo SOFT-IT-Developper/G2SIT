@@ -64,7 +64,7 @@ export class OutStockDialogComponent implements OnInit {
 
     save() {
 
-        if (this.oldqt < this.outStock.quantite) {
+        if (this.oldqt < this.outStock.quantite || this.outStock.quantite > 0 ) {
             this.isqtvalid=true;
             console.log(this.oldqt -  this.outStock.quantite)
             let error= {message:"la quantitée démander est manquante il ne reste que " + this.oldqt
@@ -72,7 +72,17 @@ export class OutStockDialogComponent implements OnInit {
             }
             this.onError(error)
            // this.alertService.warning("la quantitée démander est manquante il ne reste que " + this.oldqt);
-        } else {
+        }
+        else if(this.outStock.quantite >= 0){
+            this.isqtvalid=true;
+            //console.log(this.oldqt -  this.outStock.quantite)
+            let error= {message:"Veuillez saisir une quantité valide "
+
+            }
+            this.onError(error)
+        }
+
+        else {
             this.isSaving = true;
             if (this.outStock.id !== undefined) {
                 this.subscribeToSaveResponse(

@@ -103,6 +103,8 @@
     </div>
 </div>
 -->
+
+
 <div >
     <h2 jhiTranslate="audits.title">Rapport</h2>
 
@@ -122,24 +124,31 @@
         <table class="table table-condensed table-striped table-bordered">
             <thead>
             <tr>
+                <th (click)="orderProp = 'datesortir'; reverse=!reverse"><span>Date de Sortir</span></th>
+                <th (click)="orderProp = 'produit.nameProduit'; reverse=!reverse"><span >Nom du produit </span></th>
+                <th (click)="orderProp = 'client'; reverse=!reverse"><span >Client</span></th>
+                <th (click)="orderProp = 'cause'; reverse=!reverse"><span >Projet</span></th>
+            </tr>
+            <!-- <tr>
                 <th (click)="orderProp = 'datesortir'; reverse=!reverse"><span jhiTranslate="audits.table.header.date">Date</span></th>
                 <th (click)="orderProp = 'produit.nameProduit'; reverse=!reverse"><span jhiTranslate="audits.table.header.principal">User</span></th>
                 <th (click)="orderProp = 'client'; reverse=!reverse"><span jhiTranslate="audits.table.header.status">State</span></th>
                 <th (click)="orderProp = 'cause'; reverse=!reverse"><span jhiTranslate="audits.table.header.data">Extra data</span></th>
-            </tr>
+            </tr>-->
             </thead>
-            <tr *ngFor="let audit of getAudits()">
-                <td><span>{{audit.datesortir| date:'medium'}}</span></td>
-                <td><small>{{audit.quantite}}</small></td>
-                <td>{{audit.type}}</td>
+            <tr *ngFor="let rapport of getRapport()">
+                <td><span>{{rapport.datesortir| date:'medium'}}</span></td>
+                <td><small>{{rapport.quantite}}</small></td>
+                <td>{{rapport.type}}</td>
                 <td>
-                    <span *ngIf="audit.produit" ng-show="audit.data.message">{{audit.produit.nameProduit}}</span>
-                    <span *ngIf="audit.produit" ng-show="audit.data.remoteAddress"><span jhiTranslate="audits.table.data.remoteAddress">Remote Address</span> {{audit.produit.nameProduit}}</span>
+                    <span *ngIf="rapport.produit">{{rapport.produit.nameProduit}}</span>
+                    <span *ngIf="rapport.produit" >{{rapport.produit.nameProduit}}</span>
                 </td>
             </tr>
         </table>
     </div>
-    <div *ngIf="audits">
+    <!--<div *ngIf="audits">-->
+    <div>
         <div class="row justify-content-center">
             <jhi-item-count [page]="page" [total]="totalItems" [itemsPerPage]="itemsPerPage"></jhi-item-count>
         </div>
