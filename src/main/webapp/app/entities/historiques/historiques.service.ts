@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { Http, Response } from '@angular/http';
+import { Http, Response, URLSearchParams } from '@angular/http';
 import { Observable } from 'rxjs/Rx';
 import { JhiDateUtils } from 'ng-jhipster';
 
@@ -74,5 +74,37 @@ export class HistoriquesService {
 
         copy.date = this.dateUtils.toDate(historiques.date);
         return copy;
+    }
+
+    findByDate(req: any): Observable<ResponseWrapper> {
+        const params: URLSearchParams = new URLSearchParams();
+        params.set('fromDate', req.fromDate);
+        params.set('toDate', req.toDate);
+        params.set('page', req.page);
+        params.set('size', req.size);
+        params.set('sort', req.sort);
+
+        const options = {
+            search: params
+        };
+        console.log(options)
+        return this.http.get(`api/historiqueBetwenToDate`, options)
+            .map((res: Response) => this.convertResponse(res));
+    }
+    findByDateAndProduit(req: any): Observable<ResponseWrapper> {
+        const params: URLSearchParams = new URLSearchParams();
+        params.set('fromDate', req.fromDate);
+        params.set('toDate', req.toDate);
+        params.set('produitId', req.produitId);
+        params.set('page', req.page);
+        params.set('size', req.size);
+        params.set('sort', req.sort);
+
+        const options = {
+            search: params
+        };
+        console.log(options)
+        return this.http.get(`api/historiqueBetwenToDateProduit`, options)
+            .map((res: Response) => this.convertResponse(res));
     }
 }

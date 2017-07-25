@@ -14,5 +14,17 @@
                                  referencedColumnNames="id"
                                  referencedTableName="jhi_user"/>
 
+        <addForeignKeyConstraint baseColumnNames="stocks_id"
+                                 baseTableName="historiques"
+                                 constraintName="fk_historiques_stocks_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="stock"/>
+
+        <addForeignKeyConstraint baseColumnNames="outs_id"
+                                 baseTableName="historiques"
+                                 constraintName="fk_historiques_outs_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="out_stock"/>
+
     </changeSet>
 </databaseChangeLog>

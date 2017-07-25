@@ -26,7 +26,7 @@ export class StockDialogComponent implements OnInit {
     produits: Produits[];
 
     operants: Operant[];
-    new_quantite: number;
+    new_quantite: number = 0;
 
     constructor(
         public activeModal: NgbActiveModal,

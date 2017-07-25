@@ -18,7 +18,9 @@
             },
             "operation": "Operation",
             "date": "Date",
-            "user": "User"
+            "user": "User",
+            "stocks": "Stocks",
+            "outs": "Outs"
         }
     }
 }

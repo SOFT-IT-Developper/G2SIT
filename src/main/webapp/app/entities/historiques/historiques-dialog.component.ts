@@ -10,6 +10,8 @@ import { Historiques } from './historiques.model';
 import { HistoriquesPopupService } from './historiques-popup.service';
 import { HistoriquesService } from './historiques.service';
 import { User, UserService } from '../../shared';
+import { Stock, StockService } from '../stock';
+import { OutStock, OutStockService } from '../out-stock';
 import { ResponseWrapper } from '../../shared';
 
 @Component({
@@ -24,11 +26,17 @@ export class HistoriquesDialogComponent implements OnInit {
 
     users: User[];
 
+    stocks: Stock[];
+
+    outstocks: OutStock[];
+
     constructor(
         public activeModal: NgbActiveModal,
         private alertService: JhiAlertService,
         private historiquesService: HistoriquesService,
         private userService: UserService,
+        private stockService: StockService,
+        private outStockService: OutStockService,
         private eventManager: JhiEventManager
     ) {
     }
@@ -38,6 +46,10 @@ export class HistoriquesDialogComponent implements OnInit {
         this.authorities = ['ROLE_USER', 'ROLE_ADMIN'];
         this.userService.query()
             .subscribe((res: ResponseWrapper) => { this.users = res.json; }, (res: ResponseWrapper) => this.onError(res.json));
+        this.stockService.query()
+            .subscribe((res: ResponseWrapper) => { this.stocks = res.json; }, (res: ResponseWrapper) => this.onError(res.json));
+        this.outStockService.query()
+            .subscribe((res: ResponseWrapper) => { this.outstocks = res.json; }, (res: ResponseWrapper) => this.onError(res.json));
     }
 
     clear() {
@@ -86,6 +98,14 @@ export class HistoriquesDialogComponent implements OnInit {
     }
 
     trackUserById(index: number, item: User) {
+        return item.id;
+    }
+
+    trackStockById(index: number, item: Stock) {
+        return item.id;
+    }
+
+    trackOutStockById(index: number, item: OutStock) {
         return item.id;
     }
 }

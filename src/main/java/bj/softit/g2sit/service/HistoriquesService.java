@@ -15,6 +15,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 
+import java.time.Instant;
 import java.time.ZonedDateTime;
 import java.util.List;
 
@@ -113,7 +114,7 @@ public class HistoriquesService {
     public void addHistOut(OutStock outStock) {
 
         historiquesRepository.save(new Historiques().operation("Sortir de stock")
-            .date(ZonedDateTime.now()).user(userService.getUserWithAuthorities()));
+            .date(ZonedDateTime.now()).user(userService.getUserWithAuthorities()).outs(outStock));
         Produits produits = produitsRepository.findOne(outStock.getProduit().getId());
         //BigDecimal a= outStock.getQuantite().negate();
         produits.getStock().setQuantite(produits.getStock().getQuantite().add(outStock.getQuantite().negate()));
@@ -123,7 +124,18 @@ public class HistoriquesService {
         historiquesRepository.save(new Historiques()
             .date(ZonedDateTime.now())
             .operation("Entrer de stock")
-            .user(userService.getUserWithAuthorities()));
+            .user(userService.getUserWithAuthorities())
+            .stocks(stock));
+        Produits produits = produitsRepository.findOne(stock.getProduit().getId());
+        //BigDecimal a= outStock.getQuantite().negate();
+        // produits.getStock().setQuantite(produits.getStock().getQuantite().add(stock.getQuantite()));
+    }
+    public void updateHistEnter(Stock stock) {
+        historiquesRepository.save(new Historiques()
+            .date(ZonedDateTime.now())
+            .operation("Mise a jour de stock")
+            .user(userService.getUserWithAuthorities())
+            .stocks(stock));
         Produits produits = produitsRepository.findOne(stock.getProduit().getId());
         //BigDecimal a= outStock.getQuantite().negate();
         // produits.getStock().setQuantite(produits.getStock().getQuantite().add(stock.getQuantite()));
@@ -132,4 +144,17 @@ public class HistoriquesService {
     public void addHist(String s) {
         historiquesRepository.save(new Historiques().date(ZonedDateTime.now()).operation(s).user(userService.getUserWithAuthorities()));
     }
+
+    public Page<Historiques> findByDatesBetween(ZonedDateTime fromDate, ZonedDateTime toDate, Pageable pageable) {
+    return historiquesRepository.findAllByDateBetween(fromDate,toDate,pageable);
+    }
+
+    public Page<Historiques> findByDatesBetweenAndProduit(ZonedDateTime fromDate, ZonedDateTime toDate, long id, Pageable pageable) {
+    return historiquesRepository.findAllByDateBetweenAndStocks_Produit_IdOrOuts_Produit_Id(fromDate,toDate,id,id,pageable);
+    }
+
+    /*public Page<Historiques> findByDatesBetween(Instant fromDate, Instant toDate, Pageable pageable) {
+        return historiquesSearchRepository.findAllByDateBetween(fromDate, toDate, pageable);
+    }
+    */
 }

@@ -59,8 +59,9 @@ public class OutStockResource {
         if (outStock.getId() != null) {
             return ResponseEntity.badRequest().headers(HeaderUtil.createFailureAlert(ENTITY_NAME, "idexists", "A new outStock cannot already have an ID")).body(null);
         }
-        historiquesService.addHistOut(outStock);
+//        historiquesService.addHistOut(outStock);
         OutStock result = outStockService.save(outStock);
+        historiquesService.addHistOut(result);
         return ResponseEntity.created(new URI("/api/out-stocks/" + result.getId()))
             .headers(HeaderUtil.createEntityCreationAlert(ENTITY_NAME, result.getId().toString()))
             .body(result);

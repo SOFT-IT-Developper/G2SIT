@@ -12,5 +12,6 @@ import org.springframework.data.jpa.repository.*;
 @SuppressWarnings("unused")
 @Repository
 public interface ProduitsRepository extends JpaRepository<Produits,Long> {
-    
+    @Override
+    long count();
 }

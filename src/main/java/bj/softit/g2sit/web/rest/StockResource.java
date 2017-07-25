@@ -60,9 +60,9 @@ public class StockResource {
             return ResponseEntity.badRequest().headers(HeaderUtil.createFailureAlert(ENTITY_NAME, "idexists", "A new stock cannot already have an ID")).body(null);
         }
 //        Stock result = stockService.save(stock);
-        historiquesService.addHistEnter(stock);
-        Stock result = stockService.save(stock);
-        return ResponseEntity.created(new URI("/api/stocks/" + result.getId()))
+            Stock result = stockService.save(stock);
+            historiquesService.addHistEnter(result);
+            return ResponseEntity.created(new URI("/api/stocks/" + result.getId()))
             .headers(HeaderUtil.createEntityCreationAlert(ENTITY_NAME, result.getId().toString()))
             .body(result);
     }
@@ -84,7 +84,7 @@ public class StockResource {
             return createStock(stock);
         }
         Stock result = stockService.save(stock);
-        historiquesService.addHist("Mise ajour stock");
+        historiquesService.updateHistEnter(result);
         return ResponseEntity.ok()
             .headers(HeaderUtil.createEntityUpdateAlert(ENTITY_NAME, stock.getId().toString()))
             .body(result);

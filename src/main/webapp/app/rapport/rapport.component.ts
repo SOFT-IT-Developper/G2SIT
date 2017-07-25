@@ -11,6 +11,10 @@ import {ResponseWrapper} from "../shared/model/response-wrapper.model";
 
 import {DatePipe} from "@angular/common";
 import {AuditsService} from "../admin/audits/audits.service";
+import {Historiques} from "../entities/historiques/historiques.model";
+import {HistoriquesService} from "../entities/historiques/historiques.service";
+import {ProduitsService} from "../entities/produits/produits.service";
+import {Produits} from "../entities/produits/produits.model";
 declare var $;
 @Component({
   selector: 'jhi-rapport',
@@ -21,7 +25,7 @@ declare var $;
 export class RapportComponent implements OnInit {
 
     // audits: Audit[];
-    out_rapport: OutStock[]
+    out_rapport: Historiques[];
     fromDate: string;
     itemsPerPage: any;
     links: any;
@@ -30,12 +34,20 @@ export class RapportComponent implements OnInit {
     reverse: boolean;
     toDate: string;
     totalItems: number;
+    findByTodate: boolean;
+    findByTodateAndProduit: boolean;
+    produits: Produits[];
+    produit: any;
+    showDate: any;
+
 
     constructor(
         private outService: OutStockService,
+        private produitsService: ProduitsService,
         private parseLinks: JhiParseLinks,
         private paginationConfig: PaginationConfig,
-        private datePipe: DatePipe
+        private datePipe: DatePipe,
+        private historiquesService: HistoriquesService
     ) {
         this.itemsPerPage = ITEMS_PER_PAGE;
         this.page = 1;
@@ -56,18 +68,44 @@ export class RapportComponent implements OnInit {
         this.today();
         this.previousMonth();
         this.onChangeDate();
+        this.produitsService.query()
+            .subscribe((res: ResponseWrapper) => {
+                this.produits = res.json;
+            }, (res: ResponseWrapper) => this.onError(res.json));
     }
 
     onChangeDate() {
         console.log(this.fromDate)
         console.log(this.toDate)
-        this.outService.findByDate({page: this.page - 1, size: this.itemsPerPage,
-            fromDate: this.fromDate, toDate: this.toDate}).subscribe((res) => {
+        if(this.produit != null){
+            this.historiquesService.findByDateAndProduit({page: this.page - 1, size: this.itemsPerPage,
+                fromDate: this.fromDate, toDate: this.toDate, produitId: this.produit}).subscribe((res: ResponseWrapper) => this.onSuccess(res.json, res.headers),
+                (res: ResponseWrapper) => this.onError(res.json)
+
+
+                /*(res) => {
             console.log(res);
             this.out_rapport = res.json();
             this.links = this.parseLinks.parse(res.headers.get('link'));
-            this.totalItems = + res.headers.get('X-Total-Count');
-        });
+            this.totalItems = + res.headers.get('X-Total-Count');*/
+            );
+
+        }else
+            {
+
+
+        this.historiquesService.findByDate({page: this.page - 1, size: this.itemsPerPage,
+            fromDate: this.fromDate, toDate: this.toDate}).subscribe((res: ResponseWrapper) => this.onSuccess(res.json, res.headers),
+            (res: ResponseWrapper) => this.onError(res.json)
+
+
+                /*(res) => {
+            console.log(res);
+            this.out_rapport = res.json();
+            this.links = this.parseLinks.parse(res.headers.get('link'));
+            this.totalItems = + res.headers.get('X-Total-Count');*/
+        );
+        }
     }
 
     previousMonth() {
@@ -92,8 +130,11 @@ export class RapportComponent implements OnInit {
         this.toDate = this.datePipe.transform(date, dateFormat);
     }
 
-    private sortRapport(rapport: OutStock[]) {
-        console.log(rapport)
+    private sortRapport(rapport: Historiques[]) {
+        if (!rapport || !rapport.length) {
+            return;
+        }
+        // console.log(rapport)
         rapport = rapport.slice(0).sort((a, b) => {
             if (a[this.orderProp] < b[this.orderProp]) {
                 return -1;
@@ -105,5 +146,51 @@ export class RapportComponent implements OnInit {
         });
 
         return this.reverse ? rapport.reverse() : rapport;
+    }
+
+    private onSuccess(data, headers) {
+        console.log(data);
+        this.links = this.parseLinks.parse(headers.get('link'));
+        this.totalItems = headers.get('X-Total-Count');
+        // console.log(res);
+        // this.out_rapport = res.json();
+        // this.links = this.parseLinks.parse(res.headers.get('link'));
+        // this.totalItems = + res.headers.get('X-Total-Count');
+        // this.queryCount = this.totalItems;
+        // this.page = pagingParams.page;
+        this.out_rapport = data;
+    }
+    private onError(error) {
+        // this.alertService.error(error.message, null, null);
+    }
+ /*   transition() {
+        this.router.navigate(['/rapport'], {queryParams:
+            {
+                page: this.page,
+                size: this.itemsPerPage,
+                search: this.currentSearch,
+                sort: this.predicate + ',' + (this.reverse ? 'asc' : 'desc')
+            }
+        });
+        this.onChangeDate();
+    }*/
+  /*  search(query) {
+        if (!query) {
+           // return this.clear();
+        }
+        this.page = 0;
+        this.currentSearch = query;
+        this.router.navigate(['/rapport', {
+            search: this.currentSearch,
+            page: this.page,
+            sort: this.predicate + ',' + (this.reverse ? 'asc' : 'desc')
+        }]);
+        this.loadAll();
+    }*/
+    onChange(event: string ): void {
+        this.produit = JSON.parse(event);
+        console.log('produit');
+        console.log(this.produit);
+        this.onChangeDate();
     }
 }
