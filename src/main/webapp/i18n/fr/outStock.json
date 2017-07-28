@@ -2,16 +2,16 @@
     "g2SitApp": {
         "outStock" : {
             "home": {
-                "title": "OutStocks",
+                "title": "Sortir stock",
                 "createLabel": "Enrégister une sortir",
-                "createOrEditLabel": "Créer ou éditer un Out Stock",
+                "createOrEditLabel": "Créer ou éditer sortir Stock",
                 "search": "Recherche pour Out Stock"
             },
-            "created": "Un nouveau Out Stock a été créé avec l'identifiant {{ param }}",
-            "updated": "Le Out Stock avec l'identifiant {{ param }} a été mis à jour",
-            "deleted": "Le Out Stock avec l'identifiant {{ param }} a été supprimé",
+            "created": "Une nouvelle  sortie a été créé avec l'identifiant {{ param }}",
+            "updated": "La sortir avec l'identifiant {{ param }} a été mis à jour",
+            "deleted": "La sortirk avec l'identifiant {{ param }} a été supprimé",
             "delete": {
-                "question": "Etes-vous certain de vouloir supprimer le cette sortir{{ id }} ?"
+                "question": "Etes-vous certain de vouloir supprimer cette sortir{{ id }} ?"
             },
             "detail": {
                 "title": "Sortir de stock"

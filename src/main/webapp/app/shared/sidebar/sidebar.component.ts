@@ -1,6 +1,5 @@
 import { Component } from '@angular/core';
-import {Principal} from "../auth/principal.service";
-
+import {Principal} from '../auth/principal.service';
 
 @Component({
     selector: 'jhi-sidebar',
@@ -10,7 +9,7 @@ import {Principal} from "../auth/principal.service";
 export class SidebarComponent {
     isActive = false;
     showMenu = '';
-    constructor( private principal: Principal ){
+    constructor( private principal: Principal ) {
 
     }
     eventCalled() {

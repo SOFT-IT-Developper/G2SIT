@@ -2,9 +2,8 @@ import { NgModule, CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import { RouterModule } from '@angular/router';
 
 import { G2SitSharedModule } from '../shared';
-import {RapportComponent} from "./rapport.component";
-import {RAPPORT_ROUTE} from "./rapport.route";
-
+import {RapportComponent} from './rapport.component';
+import {RAPPORT_ROUTE} from './rapport.route';
 
 @NgModule({
     imports: [

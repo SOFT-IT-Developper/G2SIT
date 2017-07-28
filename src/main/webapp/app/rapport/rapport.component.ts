@@ -1,20 +1,15 @@
-import {Component, OnDestroy, OnInit} from "@angular/core";
-import {OutStock} from "../entities/out-stock/out-stock.model";
-import {Subscription} from "rxjs/Subscription";
-import {OutStockService} from "../entities/out-stock/out-stock.service";
-import {JhiAlertService, JhiEventManager, JhiPaginationUtil, JhiParseLinks} from "ng-jhipster";
-import {Principal} from "../shared/auth/principal.service";
-import {ActivatedRoute, Router} from "@angular/router";
-import {PaginationConfig} from "../blocks/config/uib-pagination.config";
-import {ITEMS_PER_PAGE} from "../shared/constants/pagination.constants";
-import {ResponseWrapper} from "../shared/model/response-wrapper.model";
+import {Component, OnDestroy, OnInit} from '@angular/core';
+import {OutStockService} from '../entities/out-stock/out-stock.service';
+import {JhiParseLinks} from 'ng-jhipster';
+import {PaginationConfig} from '../blocks/config/uib-pagination.config';
+import {ITEMS_PER_PAGE} from '../shared/constants/pagination.constants';
+import {ResponseWrapper} from '../shared/model/response-wrapper.model';
 
-import {DatePipe} from "@angular/common";
-import {AuditsService} from "../admin/audits/audits.service";
-import {Historiques} from "../entities/historiques/historiques.model";
-import {HistoriquesService} from "../entities/historiques/historiques.service";
-import {ProduitsService} from "../entities/produits/produits.service";
-import {Produits} from "../entities/produits/produits.model";
+import {DatePipe} from '@angular/common';
+import {Historiques} from '../entities/historiques/historiques.model';
+import {HistoriquesService} from '../entities/historiques/historiques.service';
+import {ProduitsService} from '../entities/produits/produits.service';
+import {Produits} from '../entities/produits/produits.model';
 declare var $;
 @Component({
   selector: 'jhi-rapport',
@@ -39,7 +34,6 @@ export class RapportComponent implements OnInit {
     produits: Produits[];
     produit: any;
     showDate: any;
-
 
     constructor(
         private outService: OutStockService,
@@ -75,13 +69,12 @@ export class RapportComponent implements OnInit {
     }
 
     onChangeDate() {
-        console.log(this.fromDate)
-        console.log(this.toDate)
-        if(this.produit != null){
+        console.log(this.fromDate);
+        console.log(this.toDate);
+        if (this.produit != null) {
             this.historiquesService.findByDateAndProduit({page: this.page - 1, size: this.itemsPerPage,
                 fromDate: this.fromDate, toDate: this.toDate, produitId: this.produit}).subscribe((res: ResponseWrapper) => this.onSuccess(res.json, res.headers),
                 (res: ResponseWrapper) => this.onError(res.json)
-
 
                 /*(res) => {
             console.log(res);
@@ -90,14 +83,10 @@ export class RapportComponent implements OnInit {
             this.totalItems = + res.headers.get('X-Total-Count');*/
             );
 
-        }else
-            {
-
-
+        }else {
         this.historiquesService.findByDate({page: this.page - 1, size: this.itemsPerPage,
             fromDate: this.fromDate, toDate: this.toDate}).subscribe((res: ResponseWrapper) => this.onSuccess(res.json, res.headers),
             (res: ResponseWrapper) => this.onError(res.json)
-
 
                 /*(res) => {
             console.log(res);
@@ -187,6 +176,7 @@ export class RapportComponent implements OnInit {
         }]);
         this.loadAll();
     }*/
+
     onChange(event: string ): void {
         this.produit = JSON.parse(event);
         console.log('produit');

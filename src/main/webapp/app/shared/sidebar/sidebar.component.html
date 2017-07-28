@@ -106,15 +106,14 @@
             </a>
             <li class="nested" [class.expand]="showMenu === 'pages4'">
                 <ul class="submenu">
-                    <li class="nav-item">
+                   <!-- <li class="nav-item">
                         <a class="dropdown-item" [routerLink]="['rapport']"
                            routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }">
-                            <i class="fa fa-plus"></i>
+                            <i class="fa fa-eye"></i>
                             <span jhiTranslate="g2SitApp.outStock.home.createLabel"> </span></a>
-                    </li>
+                    </li>-->
                     <li class="nav-item">
-                        <a class="dropdown-item" routerLink="out-stock" routerLinkActive="active"
-                           [routerLinkActiveOptions]="{ exact: true }">
+                        <a class="dropdown-item" routerLinkActive="active" [routerLink]="['rapport']" [routerLinkActiveOptions]="{ exact: true }">
                             <i class="fa fa-eye"></i>
                             <span jhiTranslate="dashboard.view"> Consulter </span></a>
                     </li>

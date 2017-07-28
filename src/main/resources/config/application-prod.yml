@@ -21,9 +21,9 @@ spring:
             enabled: false
     datasource:
         type: com.zaxxer.hikari.HikariDataSource
-        url: jdbc:mysql://localhost:3306/G2SIT?useUnicode=true&characterEncoding=utf8&useSSL=false
-        username: root
-        password:
+        url: jdbc:mysql://localhost:3306/Gstock?useUnicode=true&characterEncoding=utf8&useSSL=false
+        username: softit
+        password: Softit123
         hikari:
             data-source-properties:
                 cachePrepStmts: true
@@ -43,12 +43,16 @@ spring:
     data:
         elasticsearch:
             cluster-name:
-            cluster-nodes: localhost:9300
+            cluster-nodes:
+            properties:
+                     path:
+                        logs: target/elasticsearch/log
+                        data: target/elasticsearch/data
     mail:
-        host: localhost
+        host: mail.softinnovation-tech.com
         port: 25
-        username:
-        password:
+        username: stagiaire@softinnovation-tech.com
+        password: SoftIT#stage
     thymeleaf:
         cache: true
 
@@ -73,7 +77,7 @@ liquibase:
 #        keyAlias: G2SIT
 # ===================================================================
 server:
-    port: 8080
+    port: 8181
     compression:
         enabled: true
         mime-types: text/html,text/xml,text/plain,text/css, application/javascript, application/json

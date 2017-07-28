@@ -162,5 +162,13 @@ public class OutStockResource {
         HttpHeaders headers = PaginationUtil.generateSearchPaginationHttpHeaders(query, page, "/api/_search/out-stocks");
         return new ResponseEntity<>(page.getContent(), headers, HttpStatus.OK);
     }
+    //custom
+    @GetMapping("/out-stocks/countAll")
+    @Timed
+    public long getCountOutStock() {
+        log.debug("REST request to get count stock");
+        long count  = outStockService.countAll();
+        return count;
+    }
 
 }

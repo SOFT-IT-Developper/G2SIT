@@ -177,5 +177,21 @@ public class StockResource {
         HttpHeaders headers = PaginationUtil.generateSearchPaginationHttpHeaders(query, page, "/api/_search/stocks");
         return new ResponseEntity<>(page.getContent(), headers, HttpStatus.OK);
     }
+    //custome
+    @GetMapping("/stocks/countAll")
+    @Timed
+    public long getCountStock() {
+        log.debug("REST request to get count stock");
+        long count  = stockService.countAll();
+        return count;
+    }
+
+    @GetMapping("/stocks/countAllManquant")
+    @Timed
+    public long getCountStockManquant() {
+        log.debug("REST request to get count manquant stock");
+        long count  = stockService.countAllManquant();
+        return count;
+    }
 
 }

@@ -84,4 +84,13 @@ export class StockService {
         copy.dateentrer = this.dateUtils.toDate(stock.dateentrer);
         return copy;
     }
+
+    /* custom   */
+    cont() {
+        return this.http.get(`${this.resourceUrl}/countAll`).map((res) => res.json());
+    }
+    contManquant() {
+        return this.http.get(`${this.resourceUrl}/countAllManquant`).map((res) => res.json());
+    }
+
 }

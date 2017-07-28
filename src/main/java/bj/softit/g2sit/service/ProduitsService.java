@@ -64,7 +64,7 @@ public class ProduitsService {
      *  get all the produits where Stock is null.
      *  @return the list of entities
      */
-    @Transactional(readOnly = true) 
+    @Transactional(readOnly = true)
     public List<Produits> findAllWhereStockIsNull() {
         log.debug("Request to get all produits where Stock is null");
         return StreamSupport
@@ -108,5 +108,9 @@ public class ProduitsService {
         log.debug("Request to search for a page of Produits for query {}", query);
         Page<Produits> result = produitsSearchRepository.search(queryStringQuery(query), pageable);
         return result;
+    }
+//cusome
+    public long count() {
+        return produitsRepository.count();
     }
 }
