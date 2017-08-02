@@ -1,4 +1,4 @@
-import { Component, OnInit, OnDestroy } from '@angular/core';
+import {Component, OnInit, OnDestroy, ViewChild, ElementRef} from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Subscription } from 'rxjs/Rx';
 import { JhiEventManager, JhiParseLinks, JhiPaginationUtil, JhiLanguageService, JhiAlertService } from 'ng-jhipster';
@@ -7,6 +7,7 @@ import { Stock } from './stock.model';
 import { StockService } from './stock.service';
 import { ITEMS_PER_PAGE, Principal, ResponseWrapper } from '../../shared';
 import { PaginationConfig } from '../../blocks/config/uib-pagination.config';
+import {EssenceNg2PrintComponent} from 'essence-ng2-print';
 
 @Component({
     selector: 'jhi-stock',
@@ -32,6 +33,17 @@ currentAccount: any;
     predicate: any;
     previousPage: any;
     reverse: any;
+    @ViewChild('print1') printComponent1: EssenceNg2PrintComponent;
+    @ViewChild('print2') printComponent2: EssenceNg2PrintComponent;
+
+    printDiv: any;
+    showHead = true;
+    hideTable1 = false;
+    datas: any[];
+    printCSS: string[];
+    printStyle: string;
+    modeimp: true;
+    // editorText = '<p style="text-align:center;line-height:150%"><strong><span style="font-family: Roboto;line-height: 150%;font-size: 21px"><span style="font-family:Roboto">sur</span>×××× division projets de références (lettre)</span></strong><span style="font-family: Times New Roman; font-size: 21px; text-indent: 315px;">&nbsp;</span></p><p style="line-height:150%"><strong><span style="font-family: Times New Roman;line-height: 150%;font-size: 16px">Haidian District, l\'eau Conservancy station de contrôle de la qualité：</span></strong></p><p style="text-indent:38px;line-height:150%"><span style=";font-family:Roboto;line-height:150%;font-size:16px">test</span></p><p style="text-indent:38px;line-height:150%"><span style=";font-family:Roboto;line-height:150%;font-size:16px"><span style="font-family:Roboto">test</p><p style="text-indent:38px;line-height:150%"></p>';
 
     constructor(
         private stockService: StockService,
@@ -42,7 +54,8 @@ currentAccount: any;
         private router: Router,
         private eventManager: JhiEventManager,
         private paginationUtil: JhiPaginationUtil,
-        private paginationConfig: PaginationConfig
+        private paginationConfig: PaginationConfig,
+        private elRef: ElementRef
     ) {
         this.itemsPerPage = ITEMS_PER_PAGE;
         this.routeData = this.activatedRoute.data.subscribe((data) => {
@@ -51,7 +64,15 @@ currentAccount: any;
             this.reverse = data['pagingParams'].ascending;
             this.predicate = data['pagingParams'].predicate;
         });
+        // this.printDiv = document.getElementById('print_section');
         this.currentSearch = activatedRoute.snapshot.params['search'] ? activatedRoute.snapshot.params['search'] : '';
+        this.printCSS = ['http://cdn.bootcss.com/bootstrap/3.3.7/css/bootstrap.min.css'];
+       /* this.printStyle =
+            `
+        th, td {
+            color: red !important;
+        }
+        `;*/
     }
 
     loadAll() {
@@ -139,15 +160,15 @@ currentAccount: any;
         }
         return result;
     }
-    levelStock(qt) :boolean {
-        if(qt < 5){
-            return true
+    levelStock(qt) : boolean {
+        if (qt < 5){
+            return true;
         }
         return false;
     }
-   stockIsFinish(qt) :boolean {
-        if(qt === 0){
-            return true
+   stockIsFinish(qt) : boolean {
+        if (qt === 0){
+            return true;
         }
         return false;
     }
@@ -162,4 +183,17 @@ currentAccount: any;
     private onError(error) {
         this.alertService.error(error.message, null, null);
     }
+
+
+    printComplete() {
+        console.log('L\'impression est terminée!！');
+        this.showHead = true;
+        this.hideTable1 = false;
+    }
+    starMode(event) {
+        console.log(event);
+        console.log(this.modeimp);
+
+};
+
 }
