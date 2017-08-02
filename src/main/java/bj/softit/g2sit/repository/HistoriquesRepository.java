@@ -29,6 +29,12 @@ public interface HistoriquesRepository extends JpaRepository<Historiques,Long> {
 //    Page<Historiques> findAllByDateBetween(Instant fromDate, Instant toDate, Pageable pageable);
 
     Page<Historiques> findAllByDateBetween(ZonedDateTime fromDate, ZonedDateTime toDate, Pageable pageable);
+//    Page<Historiques> findAllByDateBetweenOrderByDateDesc(ZonedDateTime fromDate, ZonedDateTime toDate, Pageable pageable);
     Page<Historiques> findAllByDateBetweenAndStocks_Produit_IdOrOuts_Produit_Id(ZonedDateTime fromDate, ZonedDateTime toDate, long id,Long prodId, Pageable pageable);
+    Page<Historiques> findAllByDateBetweenAndStocks_Produit_IdOrOuts_Produit_IdOrderByDateDesc(ZonedDateTime fromDate, ZonedDateTime toDate, long id,Long prodId, Pageable pageable);
+    Page<Historiques> findAllByDateBetweenAndStocks_Produit_IdOrOuts_Produit_IdAndOperationNotLike(ZonedDateTime fromDate, ZonedDateTime toDate, long id,Long prodId,String op, Pageable pageable);
 //    Page<Historiques> findAllByDateBetweenAndOuts_Produit_IdOrStocks_Produit_Id(ZonedDateTime fromDate, ZonedDateTime toDate, long id, Pageable pageable);
+
+        long countAllByDateBetween(ZonedDateTime fromDate, ZonedDateTime toDate);
+//        long countHistoriquesByDateBetweenAndStocksIsNotNull(ZonedDateTime fromDate, ZonedDateTime toDate);
 }

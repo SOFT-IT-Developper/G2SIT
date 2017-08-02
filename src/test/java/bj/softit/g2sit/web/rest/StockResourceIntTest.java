@@ -7,6 +7,7 @@ import bj.softit.g2sit.repository.StockRepository;
 import bj.softit.g2sit.service.HistoriquesService;
 import bj.softit.g2sit.service.StockService;
 import bj.softit.g2sit.repository.search.StockSearchRepository;
+import bj.softit.g2sit.service.StockServiceExtend;
 import bj.softit.g2sit.web.rest.errors.ExceptionTranslator;
 
 import org.junit.Before;
@@ -65,6 +66,8 @@ public class StockResourceIntTest {
     private StockRepository stockRepository;
 
     @Autowired
+    private StockServiceExtend stockServiceExtend;
+    @Autowired
     private StockService stockService;
 
     @Autowired
@@ -90,7 +93,7 @@ public class StockResourceIntTest {
     @Before
     public void setup() {
         MockitoAnnotations.initMocks(this);
-        StockResource stockResource = new StockResource(stockService, historiquesService);
+        StockResource stockResource = new StockResource(stockService, stockServiceExtend, historiquesService);
         this.restStockMockMvc = MockMvcBuilders.standaloneSetup(stockResource)
             .setCustomArgumentResolvers(pageableArgumentResolver)
             .setControllerAdvice(exceptionTranslator)

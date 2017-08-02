@@ -1,6 +1,6 @@
 {
     "home": {
-        "title": "Bienvenue dans G2SIT",
+        "title": "Bienvenue dans le gestionnaire de stock SOFT-IT ",
         "subtitle": "Ceci est votre page d'accueil",
         "logged": {
             "message": "Vous êtes connecté en tant que \"{{username}}\"."

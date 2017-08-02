@@ -7,6 +7,7 @@
             <span class="logo-img"></span>
             <span jhiTranslate="global.title" class="navbar-title">G2SIT</span> <span class="navbar-version">{{version}}</span>
         </a>
+
     </div>
     <div class="navbar-collapse collapse" id="navbarResponsive" [ngbCollapse]="isNavbarCollapsed" [ngSwitch]="isAuthenticated()">
         <ul class="navbar-nav ml-auto">
@@ -62,6 +63,12 @@
                         <a class="dropdown-item" routerLink="historiques" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }" (click)="collapseNavbar()">
                             <i class="fa fa-fw fa-asterisk" aria-hidden="true"></i>
                             <span jhiTranslate="global.menu.entities.historiques">Historiques</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a class="dropdown-item" routerLink="rapport" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }" (click)="collapseNavbar()">
+                            <i class="fa fa-fw fa-asterisk" aria-hidden="true"></i>
+                            <span  jhiTranslate="global.menu.entities.rapport" >Rapport</span>
                         </a>
                     </li>
                     <!-- jhipster-needle-add-entity-to-menu - JHipster will add entities to the menu here -->
@@ -183,4 +190,8 @@
             </li>
         </ul>
     </div>
+
+
+
 </nav>
+

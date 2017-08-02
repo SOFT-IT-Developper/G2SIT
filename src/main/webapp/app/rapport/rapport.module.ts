@@ -4,6 +4,7 @@ import { RouterModule } from '@angular/router';
 import { G2SitSharedModule } from '../shared';
 import {RapportComponent} from './rapport.component';
 import {RAPPORT_ROUTE} from './rapport.route';
+import {PrintComponent} from '../print/print.component';
 
 @NgModule({
     imports: [
@@ -12,6 +13,7 @@ import {RAPPORT_ROUTE} from './rapport.route';
     ],
     declarations: [
         RapportComponent,
+        PrintComponent,
     ],
     entryComponents: [
     ],

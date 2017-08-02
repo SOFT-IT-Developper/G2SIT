@@ -1,12 +1,19 @@
 <!--<jhi-page-ribbon></jhi-page-ribbon>-->
 <div>
+    <!--<jhi-navbar></jhi-navbar>-->
     <router-outlet name="navbar"></router-outlet>
+    <jhi-sidebar></jhi-sidebar>
 </div>
-
-<div class="row">
+<section class="card jh-card main-container">
+    <router-outlet></router-outlet>
+    <router-outlet name="popup"></router-outlet>
+    <jhi-footer></jhi-footer>
+</section>
+<!--<div class="row">
     <div class="col-2">
         <jhi-sidebar></jhi-sidebar>
     </div>
+
     <div class="col-10">
         <div class="card jh-card">
             <router-outlet></router-outlet>
@@ -14,4 +21,5 @@
         </div>
     </div>
     <jhi-footer></jhi-footer>
-</div>
+
+</div>-->

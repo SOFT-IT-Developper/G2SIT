@@ -30,7 +30,7 @@ public class HistoriquesService {
 
     private final Logger log = LoggerFactory.getLogger(HistoriquesService.class);
 
-    private final HistoriquesRepository historiquesRepository;
+    protected final HistoriquesRepository historiquesRepository;
     private final ProduitsRepository produitsRepository;
     private final HistoriquesSearchRepository historiquesSearchRepository;
     private final UserService userService;
@@ -150,6 +150,7 @@ public class HistoriquesService {
     }
 
     public Page<Historiques> findByDatesBetweenAndProduit(ZonedDateTime fromDate, ZonedDateTime toDate, long id, Pageable pageable) {
+//    return historiquesRepository.findAllByDateBetweenAndStocks_Produit_IdOrOuts_Produit_IdAndOperationNotLike(fromDate,toDate,id,id,"Mise a jour de stock",pageable);
     return historiquesRepository.findAllByDateBetweenAndStocks_Produit_IdOrOuts_Produit_Id(fromDate,toDate,id,id,pageable);
     }
 

@@ -105,9 +105,13 @@
 -->
 
 
-<div >
+<div>
+<!--<div [@routerTransition]>-->
     <h2 >Rapport</h2>
+
     <div class="row">
+
+        <!--<jhi-print [section]="'print-section'"></jhi-print>-->
         <div class="col-md-5">
             <h4 jhiTranslate="audits.filter.title">Filter by date</h4>
             <p class="d-flex">
@@ -117,11 +121,16 @@
                 <input type="date" class="form-control" name="end" [(ngModel)]="toDate" (ngModelChange)="onChangeDate($event)" required/>
                 <span  class="input-group-addon">Produits</span>
 
-                <select (ngModelChange)="onChange($event)"  class="custom-select mb-2 mr-sm-2 mb-sm-0" id="field_produit" name="produit" [(ngModel)]="produit"  required>
+                <select (ngModelChange)="onChange($event)"  class="custom-select mb-2 mr-sm-2 mb-sm-0" id="field_produit" name="produit" [(ngModel)]="produit" >
+                    <option value="all">Tous</option>
                     <option [ngValue]="produitsOption.id " *ngFor="let produitsOption of produits; trackBy: trackProduitsById">{{produitsOption.nameProduit}}</option>
                 </select>
 
             </p>
+        </div>
+        <div class="col-md-2 col-xl-2 col-2 col-lg-pull-5 imp">
+            <button class="btn btn-sm btn-primary " (click)="print()">Imprimer</button>
+
         </div>
 
     </div>
@@ -167,7 +176,7 @@
 -->
     <div>
         <jhi-alert></jhi-alert>
-        <div class="row">
+       <!-- <div class="row">
             <div class="col-sm-12">
                 <form name="searchForm" class="form-inline">
                     <div class="input-group w-100 mt-3">
@@ -181,43 +190,53 @@
                     </div>
                 </form>
             </div>
-        </div>
+        </div>-->
         <br/>
-        <div class="table-responsive" >
-            <table class="table table-striped">
-                <thead>
+
+
+        <div class="table-responsive"  id="print-section" >
+            <table class="table table-striped table-hover">
+                <thead class="thead-inverse">
                 <tr>
-                    <th (click)="orderProp = 'id'; reverse=!reverse"><span jhiTranslate="global.field.id">ID</span> <span class="fa fa-sort"></span></th>
+                    <th (click)="orderProp = 'i'; reverse=!reverse"><span >N°</span> <span class="fa fa-sort"></span></th>
+                    <!--<th (click)="orderProp = 'id'; reverse=!reverse"><span jhiTranslate="global.field.id">ID</span> <span class="fa fa-sort"></span></th>-->
                     <th (click)="orderProp = 'operation'; reverse=!reverse"><span jhiTranslate="g2SitApp.historiques.operation">Operation</span> <span class="fa fa-sort"></span></th>
-                    <th (click)="orderProp = 'date'; reverse=!reverse"><span jhiTranslate="g2SitApp.historiques.date">Date</span> <span class="fa fa-sort"></span></th>
+                    <th (click)="orderProp = 'outs.produit.da'; reverse=!reverse"><span >Date</span> <span class="fa fa-sort"></span></th>
+                    <!--<th (click)="orderProp = 'date'; reverse=!reverse"><span jhiTranslate="g2SitApp.historiques.date">Date</span> <span class="fa fa-sort"></span></th>-->
                     <th (click)="orderProp = 'user.login'; reverse=!reverse"><span jhiTranslate="g2SitApp.historiques.user">User</span> <span class="fa fa-sort"></span></th>
-                    <th (click)="orderProp = 'stocks.produit.nameProduit'; reverse=!reverse"><span jhiTranslate="g2SitApp.historiques.stocks">Stocks</span> <span class="fa fa-sort"></span></th>
-                    <th (click)="orderProp = 'outs.produit.nameProduit'; reverse=!reverse"><span jhiTranslate="g2SitApp.historiques.outs">Outs</span> <span class="fa fa-sort"></span></th>
-                    <th (click)="orderProp = 'outs.produit.da'; reverse=!reverse"><span >Date Entrer</span> <span class="fa fa-sort"></span></th>
+                    <th (click)="orderProp = 'historiques.stocks ?(historiques.stocks?.produit.nameProduit )  : historiques.outs?.produit.nameProduit'; reverse=!reverse"><span >Produits</span> <span class="fa fa-sort"></span></th>
+                    <th (click)="orderProp = 'historiques.stocks ?(historiques.stocks?.produit.categorie.nameCategorie )  : historiques.outs?.produit.categorie.nameCategorie'; reverse=!reverse"><span >Catégories</span> <span class="fa fa-sort"></span></th>
+                    <th (click)="orderProp = 'historiques.stocks ?(historiques.stocks?.operantst?.fistname )  : historiques.outs?.operantst?.fistname'; reverse=!reverse"><span >Personel</span> <span class="fa fa-sort"></span></th>
                     <th></th>
                 </tr>
                 </thead>
                 <tbody>
-                <tr *ngFor="let historiques of getRapport()">
-                    <td><a [routerLink]="['../historiques', historiques.id ]">{{historiques.id}}</a></td>
+                <tr *ngFor="let historiques of getRapport() let i=index ">
+                    <td>{{i+1}}</td>
+                    <!--<td><a [routerLink]="['../historiques', historiques.id ]">{{historiques.id}}</a></td>-->
                     <td>{{historiques.operation}}</td>
-                    <td>{{historiques.date | date:'medium'}}</td>
+                    <td>{{ historiques.stocks ?(historiques.stocks?.dateentrer | date:'medium' )  : historiques.outs?.datesortir | date:'medium'}}</td>
+
+                    <!--<td>{{historiques.date | date:'medium'}}</td>-->
                     <td>
                         {{historiques.user?.login}}
                     </td>
-                    <td>
+                    <td>{{ historiques.stocks ?(historiques.stocks?.produit.nameProduit )  : historiques.outs?.produit.nameProduit}}</td>
+                    <td>{{ historiques.stocks ?(historiques.stocks?.produit.categorie.nameCategorie )  : historiques.outs?.produit.categorie.nameCategorie}}</td>
+                    <td>{{ historiques.stocks ?(historiques.stocks?.operantst?.fistname )  : historiques.outs?.operantst?.fistname }}</td>
+                   <!-- <td>
                         <div *ngIf="historiques.stocks">
                             <a [routerLink]="['../stock', historiques.stocks?.id ]" >{{historiques.stocks?.produit.nameProduit}}</a>
+                            <a [routerLink]="['../stock', historiques.stocks?.id ]" >{{historiques.stocks?.produit.nameProduit}}</a>
                         </div>
-                    </td>
-                    <td>
+                    </td>-->
+                   <!-- <td>
                         <div *ngIf="historiques.outs">
                             <a [routerLink]="['../out-stock', historiques.outs?.id ]" >{{historiques.outs?.produit.nameProduit}}</a>
                         </div>
-                    </td>
-                    <td>{{ historiques.stocks ?(historiques.stocks?.dateentrer | date:'medium' )  : historiques.outs?.datesortir | date:'medium'}}</td>
+                    </td>-->
                     <!--<td>{{  historiques.stocks?.dateentrer ? historiques.outs?.datesortir : historiques.outs   | date:'medium'}}</td>-->
-                    <td class="text-right">
+                   <!-- <td class="text-right" [hidden]="isprintable" >
                         <div class="btn-group flex-btn-group-container">
                             <button type="submit"
                                     [routerLink]="['../historiques', historiques.id ]"
@@ -227,7 +246,7 @@
                             </button>
 
                         </div>
-                    </td>
+                    </td>-->
                 </tr>
                 </tbody>
             </table>

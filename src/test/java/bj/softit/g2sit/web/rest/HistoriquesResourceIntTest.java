@@ -5,6 +5,7 @@ import bj.softit.g2sit.G2SitApp;
 import bj.softit.g2sit.domain.Historiques;
 import bj.softit.g2sit.domain.User;
 import bj.softit.g2sit.repository.HistoriquesRepository;
+import bj.softit.g2sit.service.HistoriqueServiceExtend;
 import bj.softit.g2sit.service.HistoriquesService;
 import bj.softit.g2sit.repository.search.HistoriquesSearchRepository;
 import bj.softit.g2sit.web.rest.errors.ExceptionTranslator;
@@ -56,6 +57,8 @@ public class HistoriquesResourceIntTest {
 
     @Autowired
     private HistoriquesService historiquesService;
+    @Autowired
+    private HistoriqueServiceExtend historiqueServiceExtend;
 
     @Autowired
     private HistoriquesSearchRepository historiquesSearchRepository;
@@ -79,7 +82,7 @@ public class HistoriquesResourceIntTest {
     @Before
     public void setup() {
         MockitoAnnotations.initMocks(this);
-        HistoriquesResource historiquesResource = new HistoriquesResource(historiquesService);
+        HistoriquesResource historiquesResource = new HistoriquesResource(historiquesService, historiqueServiceExtend);
         this.restHistoriquesMockMvc = MockMvcBuilders.standaloneSetup(historiquesResource)
             .setCustomArgumentResolvers(pageableArgumentResolver)
             .setControllerAdvice(exceptionTranslator)

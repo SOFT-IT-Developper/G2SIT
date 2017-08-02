@@ -1,0 +1,15 @@
+/*#print-section th, td {
+    padding: 15px;
+    text-align: left;
+} {
+    color: #2aabd2;
+}
+#print-section .body .table {
+
+}*/
+body{
+    color: #2aabd2;
+}
+.imp{
+    margin-left: 20rem;
+}

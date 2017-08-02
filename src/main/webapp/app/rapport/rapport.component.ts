@@ -4,17 +4,23 @@ import {JhiParseLinks} from 'ng-jhipster';
 import {PaginationConfig} from '../blocks/config/uib-pagination.config';
 import {ITEMS_PER_PAGE} from '../shared/constants/pagination.constants';
 import {ResponseWrapper} from '../shared/model/response-wrapper.model';
-
 import {DatePipe} from '@angular/common';
 import {Historiques} from '../entities/historiques/historiques.model';
 import {HistoriquesService} from '../entities/historiques/historiques.service';
 import {ProduitsService} from '../entities/produits/produits.service';
 import {Produits} from '../entities/produits/produits.model';
+// import {routerTransition} from '../router.animations';
+
 declare var $;
+
 @Component({
-  selector: 'jhi-rapport',
-  templateUrl: './rapport.component.html',
-  styles: []
+    selector: 'jhi-rapport',
+    templateUrl: './rapport.component.html',
+    styles: [],
+    styleUrls: [
+        'style.css'
+    ]
+    // animations: [routerTransition()]
 })
 
 export class RapportComponent implements OnInit {
@@ -34,15 +40,14 @@ export class RapportComponent implements OnInit {
     produits: Produits[];
     produit: any;
     showDate: any;
+    isprintable = false;
 
-    constructor(
-        private outService: OutStockService,
-        private produitsService: ProduitsService,
-        private parseLinks: JhiParseLinks,
-        private paginationConfig: PaginationConfig,
-        private datePipe: DatePipe,
-        private historiquesService: HistoriquesService
-    ) {
+    constructor(private outService: OutStockService,
+                private produitsService: ProduitsService,
+                private parseLinks: JhiParseLinks,
+                private paginationConfig: PaginationConfig,
+                private datePipe: DatePipe,
+                private historiquesService: HistoriquesService) {
         this.itemsPerPage = ITEMS_PER_PAGE;
         this.page = 1;
         this.reverse = false;
@@ -72,8 +77,10 @@ export class RapportComponent implements OnInit {
         console.log(this.fromDate);
         console.log(this.toDate);
         if (this.produit != null) {
-            this.historiquesService.findByDateAndProduit({page: this.page - 1, size: this.itemsPerPage,
-                fromDate: this.fromDate, toDate: this.toDate, produitId: this.produit}).subscribe((res: ResponseWrapper) => this.onSuccess(res.json, res.headers),
+            this.historiquesService.findByDateAndProduit({
+                page: this.page - 1, size: this.itemsPerPage,
+                fromDate: this.fromDate, toDate: this.toDate, produitId: this.produit
+            }).subscribe((res: ResponseWrapper) => this.onSuccess(res.json, res.headers),
                 (res: ResponseWrapper) => this.onError(res.json)
 
                 /*(res) => {
@@ -83,17 +90,19 @@ export class RapportComponent implements OnInit {
             this.totalItems = + res.headers.get('X-Total-Count');*/
             );
 
-        }else {
-        this.historiquesService.findByDate({page: this.page - 1, size: this.itemsPerPage,
-            fromDate: this.fromDate, toDate: this.toDate}).subscribe((res: ResponseWrapper) => this.onSuccess(res.json, res.headers),
-            (res: ResponseWrapper) => this.onError(res.json)
+        } else {
+            this.historiquesService.findByDate({
+                page: this.page - 1, size: this.itemsPerPage,
+                fromDate: this.fromDate, toDate: this.toDate
+            }).subscribe((res: ResponseWrapper) => this.onSuccess(res.json, res.headers),
+                (res: ResponseWrapper) => this.onError(res.json)
 
                 /*(res) => {
             console.log(res);
             this.out_rapport = res.json();
             this.links = this.parseLinks.parse(res.headers.get('link'));
             this.totalItems = + res.headers.get('X-Total-Count');*/
-        );
+            );
         }
     }
 
@@ -149,38 +158,69 @@ export class RapportComponent implements OnInit {
         // this.page = pagingParams.page;
         this.out_rapport = data;
     }
+
     private onError(error) {
         // this.alertService.error(error.message, null, null);
     }
- /*   transition() {
-        this.router.navigate(['/rapport'], {queryParams:
-            {
-                page: this.page,
-                size: this.itemsPerPage,
-                search: this.currentSearch,
-                sort: this.predicate + ',' + (this.reverse ? 'asc' : 'desc')
-            }
-        });
-        this.onChangeDate();
-    }*/
-  /*  search(query) {
-        if (!query) {
-           // return this.clear();
-        }
-        this.page = 0;
-        this.currentSearch = query;
-        this.router.navigate(['/rapport', {
-            search: this.currentSearch,
-            page: this.page,
-            sort: this.predicate + ',' + (this.reverse ? 'asc' : 'desc')
-        }]);
-        this.loadAll();
-    }*/
 
-    onChange(event: string ): void {
-        this.produit = JSON.parse(event);
-        console.log('produit');
-        console.log(this.produit);
-        this.onChangeDate();
+    /*   transition() {
+           this.router.navigate(['/rapport'], {queryParams:
+               {
+                   page: this.page,
+                   size: this.itemsPerPage,
+                   search: this.currentSearch,
+                   sort: this.predicate + ',' + (this.reverse ? 'asc' : 'desc')
+               }
+           });
+           this.onChangeDate();
+       }*/
+
+    /*  search(query) {
+          if (!query) {
+             // return this.clear();
+          }
+          this.page = 0;
+          this.currentSearch = query;
+          this.router.navigate(['/rapport', {
+              search: this.currentSearch,
+              page: this.page,
+              sort: this.predicate + ',' + (this.reverse ? 'asc' : 'desc')
+          }]);
+          this.loadAll();
+      }*/
+
+    onChange(event: string): void {
+        console.log(' selected ' + event);
+        if (event !== 'all') {
+            console.log(this.produit);
+            this.produit = JSON.parse(event);
+            console.log('produit');
+            this.onChangeDate();
+        } else {
+            this.produit = null;
+            this.onChangeDate();
+        }
+
     }
+
+    print(): void {
+        this.isprintable = true;
+        let printContents, popupWin;
+        printContents = document.getElementById('print-section').innerHTML;
+        popupWin = window.open('', '_blank', 'top=0,left=0,height=100%,width=auto');
+        popupWin.document.open();
+        popupWin.document.write(`
+      <html>
+        <head>
+          <title>Rapport</title>
+          <!--<link rel="stylesheet" type="text/css" href="style.css" />-->
+    <link rel="stylesheet" href="node_modules/bootstrap/dist/css/bootstrap.css" media="all"/>
+      
+        </head>
+    <body onload="window.print();window.close()">${printContents}</body>
+      </html>`
+        );
+        popupWin.document.close();
+    }
+
 }

@@ -27,11 +27,13 @@ import {
 } from './layouts';
 import {SidebarComponent} from './shared/sidebar/sidebar.component';
 import {G2SitRapportModule} from './rapport/rapport.module';
+// import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 
 @NgModule({
     imports: [
         BrowserModule,
         LayoutRoutingModule,
+        // BrowserAnimationsModule,
         Ng2Webstorage.forRoot({ prefix: 'jhi', separator: '-'}),
         G2SitSharedModule,
         G2SitHomeModule,
@@ -48,7 +50,7 @@ import {G2SitRapportModule} from './rapport/rapport.module';
         PageRibbonComponent,
         ActiveMenuDirective,
         FooterComponent,
-        SidebarComponent
+        SidebarComponent,
     ],
     providers: [
         ProfileService,

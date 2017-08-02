@@ -2,7 +2,7 @@
     "g2SitApp": {
         "operant" : {
             "home": {
-                "title": "Operants",
+                "title": "Personel",
                 "createLabel": "Create a new Operant",
                 "createOrEditLabel": "Create or edit a Operant",
                 "search": "Search for Operant"
@@ -16,8 +16,8 @@
             "detail": {
                 "title": "Operant"
             },
-            "fistname": "Fistname",
-            "lastname": "Lastname",
+            "fistname": "Nom",
+            "lastname": "Prenom",
             "telephone": "Telephone",
             "stocks": "Stocks",
             "stocke": "Stocke"

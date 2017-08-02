@@ -1,8 +1,8 @@
 {
     "g2SitApp": {
-        "historiques" : {
+        "rapport" : {
             "home": {
-                "title": "Historiques",
+                "title": "Rapport",
                 "createLabel": "Créer un nouveau Historiques",
                 "createOrEditLabel": "Créer ou éditer un Historiques",
                 "search": "Recherche pour Historiques"

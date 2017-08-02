@@ -10,8 +10,9 @@
                 "categorie": "Categorie",
                 "produits": "Produits",
                 "stock": "Stock",
-                "operant": "Operant",
-                "outStock": "Out Stock",
+                "operant": "Personnel",
+                "outStock": "Sortir stock",
+                "rapport": "Rapport",
                 "historiques": "Historiques",
                 "jhipster-needle-menu-add-entry": "JHipster will add additional entities here (do not translate!)"
             },
@@ -142,6 +143,7 @@
         "produit" : "Produits",
         "stockenter" : "Entrer Stock",
         "stocksortir" : "Sortir Stock",
+        "creat" : "Ajouter",
         "rapport" : "Rapport"
     }
 }

@@ -119,9 +119,14 @@ $topnav-background-color: #353d47;
         }
     }
 }
+.dropdown-item {
+    padding: 3px 1.5rem !important;
+}
 @media screen and (max-width: 992px) {
     .sidebar {
         top: 54px;
-       // left: 10px;
+        //left: 10px;
+        width: auto;
+
     }
 }

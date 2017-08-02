@@ -12,6 +12,7 @@
                 "stock": "Stock",
                 "operant": "Operant",
                 "outStock": "Out Stock",
+                "rapport": "Repport",
                 "historiques": "Historiques",
                 "jhipster-needle-menu-add-entry": "JHipster will add additional entities here (do not translate!)"
             },

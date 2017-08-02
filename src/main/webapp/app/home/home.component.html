@@ -1,10 +1,10 @@
 
 <div class="page home-page" [ngSwitch]="isAuthenticated()">
-
+<jhi-print></jhi-print>
    <!-- <div class="col-md-3">
         <span class="hipster img-fluid img-rounded"></span>
     </div>-->
-        <h1 class="display-4" jhiTranslate="home.title">Welcome, Java Hipster!</h1>
+        <h1 class="display-4 center" jhiTranslate="home.title">Welcome Java G2SI</h1>
         <div class="row" *ngSwitchCase="true">
             <div class="col-xl-3 col-lg-6">
                 <jhi-stat [bgClass]="'card-primary'" [icon]="'fa-comments'" [count]="nbProduit" [label]="'Nombre de produit'" ></jhi-stat>

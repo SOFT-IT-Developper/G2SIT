@@ -1,5 +1,6 @@
 package bj.softit.g2sit.web.rest;
 
+import bj.softit.g2sit.service.HistoriqueServiceExtend;
 import com.codahale.metrics.annotation.Timed;
 import bj.softit.g2sit.domain.Historiques;
 import bj.softit.g2sit.service.HistoriquesService;
@@ -21,13 +22,8 @@ import java.net.URISyntaxException;
 
 import java.time.LocalDate;
 import java.time.ZoneId;
-import java.time.ZoneOffset;
-import java.time.ZonedDateTime;
 import java.util.List;
 import java.util.Optional;
-import java.util.stream.StreamSupport;
-
-import static org.elasticsearch.index.query.QueryBuilders.*;
 
 /**
  * REST controller for managing Historiques.
@@ -41,9 +37,11 @@ public class HistoriquesResource {
     private static final String ENTITY_NAME = "historiques";
 
     private final HistoriquesService historiquesService;
+    private final HistoriqueServiceExtend historiqueServiceExtend;
 
-    public HistoriquesResource(HistoriquesService historiquesService) {
+    public HistoriquesResource(HistoriquesService historiquesService, HistoriqueServiceExtend historiqueServiceExtend) {
         this.historiquesService = historiquesService;
+        this.historiqueServiceExtend = historiqueServiceExtend;
     }
 
     /**
@@ -170,7 +168,6 @@ public class HistoriquesResource {
                                                             @RequestParam(value = "toDate") LocalDate toDate,@RequestParam(value = "produitId") long id,
                                                             @ApiParam Pageable pageable) {
     log.debug("REST request to get a page of historique by date ");
-//        ZonedDateTime zdt = fromDate.atStartOfDay(ZoneId.systemDefault());
     Page<Historiques> page = historiquesService.findByDatesBetweenAndProduit(
         fromDate.atStartOfDay(ZoneId.systemDefault()),
         toDate.atStartOfDay(ZoneId.systemDefault()).plusDays(1),id,
@@ -179,5 +176,14 @@ public class HistoriquesResource {
         return new ResponseEntity<>(page.getContent(), headers, HttpStatus.OK);
    /* HttpHeaders headers = PaginationUtil.generatePaginationHttpHeaders(page, "/api/historiqueBetwenToDate");
     return new ResponseEntity<>(page.getContent(), headers, HttpStatus.OK);*/
+    }
+
+    @GetMapping(path = "/countAllRepportBetwenDate",params = {"fromDate", "toDate"})
+    @Timed
+   public long countAllReportBetwenToDate(@RequestParam(value = "fromDate") LocalDate fromDate,
+                                    @RequestParam(value = "toDate") LocalDate toDate){
+        long count = historiqueServiceExtend.countAllRepportBetwenToDate(fromDate.atStartOfDay(ZoneId.systemDefault()),
+           toDate.atStartOfDay(ZoneId.systemDefault()).plusDays(1));
+        return count;
     }
 }
