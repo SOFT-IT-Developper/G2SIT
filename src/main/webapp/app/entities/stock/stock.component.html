@@ -11,7 +11,7 @@
     </h2>
     <jhi-alert></jhi-alert>
     <div class="row">
-        <div class="col-sm-12">
+        <div class="col-sm-7">
             <form name="searchForm" class="form-inline">
                 <div class="input-group w-100 mt-3">
                     <input type="text" class="form-control" [(ngModel)]="currentSearch" id="currentSearch" name="currentSearch" placeholder="{{ 'g2SitApp.stock.home.search' | translate }}">
@@ -24,13 +24,31 @@
                 </div>
             </form>
         </div>
+        <div class=" col-sm-3 form-check custom-imp">
+            <label class="form-check-label">
+                <input class="form-check-input" type="checkbox"  [(ngModel)]="modeimp" (change)="starMode($event)" >
+               Mode impression
+            </label>
+        </div>
+        <div class="col-sm-2 " [hidden]="!modeimp" >
+            <essence-ng2-print
+                [btnText]="'Imprimer'"
+                [btnClass]="{'btn': true, 'btn-success': true, 'custom-imp':true}"
+                [printHTML]="print_section"
+                [printStyle]="printStyle"
+                [printCSS]="printCSS"
+                (printComplete)="printComplete()">
+            </essence-ng2-print>
+        </div>
     </div>
     <br/>
+    <div id="print_section" #print_section>
     <div class="table-responsive" *ngIf="stocks">
+
         <table class="table table-striped">
             <thead>
             <tr jhiSort [(predicate)]="predicate" [(ascending)]="reverse" [callback]="transition.bind(this)">
-            <th jhiSortBy="id"><span jhiTranslate="global.field.id">ID</span> <span class="fa fa-sort"></span></th>
+            <th jhiSortBy="id"><span jhiTranslate="global.field.id">#</span> <span class="fa fa-sort"></span></th>
             <th jhiSortBy="quantite"><span jhiTranslate="g2SitApp.stock.quantite">Quantite</span> <span class="fa fa-sort"></span></th>
             <th jhiSortBy="description"><span jhiTranslate="g2SitApp.stock.description">Description</span> <span class="fa fa-sort"></span></th>
             <th jhiSortBy="dateentrer"><span jhiTranslate="g2SitApp.stock.dateentrer">Dateentrer</span> <span class="fa fa-sort"></span></th>
@@ -42,8 +60,8 @@
             </tr>
             </thead>
             <tbody>
-            <tr *ngFor="let stock of stocks ; trackBy: trackId" [ngClass]="{'bg-danger': levelStock(stock.quantite), 'stockfinish': stockIsFinish(stock.quantite),'bg-success': stock.quantite > 50}" >
-                <td><a [routerLink]="['../stock', stock.id ]">{{stock.id}}</a></td>
+            <tr *ngFor="let stock of stocks ; trackBy: trackId; let  i=index" [ngClass]="{'bg-danger': levelStock(stock.quantite), 'stockfinish': stockIsFinish(stock.quantite),'bg-success': stock.quantite > 50}" >
+                <td><a [routerLink]="['../stock', stock.id ]">{{i+1}}</a></td>
                 <td>{{stock.quantite}}</td>
                 <td>{{stock.description}}</td>
                 <td>{{stock.dateentrer | date:'medium'}}</td>
@@ -59,7 +77,7 @@
                         <a [routerLink]="['../operant', stock.operantst?.id ]" >{{stock.operantst?.fistname}}</a>
                     </div>
                 </td>
-                <td class="text-right">
+                <td class="text-right" [hidden]="modeimp">
                     <div class="btn-group flex-btn-group-container">
                         <button type="submit"
                                 [routerLink]="['../stock', stock.id ]"
@@ -87,6 +105,8 @@
             </tbody>
         </table>
     </div>
+    </div>
+
         <!-- Pager is not implemented yet, so this is normal pagination instead -->
         <div *ngIf="stocks && stocks.length">
             <div class="row justify-content-center">
@@ -96,4 +116,6 @@
                 <ngb-pagination [collectionSize]="totalItems" [(page)]="page"  (pageChange)="loadPage(page)"></ngb-pagination>
             </div>
         </div>
+</div>
+
 </div>

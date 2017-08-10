@@ -19,6 +19,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.data.web.PageableHandlerMethodArgumentResolver;
 import org.springframework.http.MediaType;
 import org.springframework.http.converter.json.MappingJackson2HttpMessageConverter;
+import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
@@ -44,6 +45,8 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
  * @see OutStockResource
  */
 @RunWith(SpringRunner.class)
+//@RunWith(Parameterized.class)
+//@RunWith(SpringJUnit4ClassRunner.class)
 @SpringBootTest(classes = G2SitApp.class)
 public class OutStockResourceIntTest {
 
@@ -90,8 +93,9 @@ public class OutStockResourceIntTest {
 
     private OutStock outStock;
 
-    public OutStockResourceIntTest(HistoriquesService historiquesService) {
+    public OutStockResourceIntTest(HistoriquesService historiquesService, OutStockService outStockService) {
         this.historiquesService = historiquesService;
+        this.outStockService = outStockService;
     }
 
     @Before

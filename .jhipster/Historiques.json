@@ -8,6 +8,18 @@
             "otherEntityField": "login",
             "ownerSide": true,
             "otherEntityRelationshipName": "historiques"
+        },
+        {
+            "relationshipName": "stocks",
+            "otherEntityName": "stock",
+            "relationshipType": "many-to-one",
+            "otherEntityField": "id"
+        },
+        {
+            "relationshipName": "outs",
+            "otherEntityName": "outStock",
+            "relationshipType": "many-to-one",
+            "otherEntityField": "id"
         }
     ],
     "fields": [

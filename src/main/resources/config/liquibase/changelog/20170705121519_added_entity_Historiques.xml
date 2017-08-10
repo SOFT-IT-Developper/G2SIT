@@ -34,6 +34,14 @@
                 <constraints nullable="true" />
             </column>
 
+            <column name="stocks_id" type="bigint">
+                <constraints nullable="true" />
+            </column>
+
+            <column name="outs_id" type="bigint">
+                <constraints nullable="true" />
+            </column>
+
             <!-- jhipster-needle-liquibase-add-column - JHipster will add columns here, do not remove-->
         </createTable>
         <dropDefaultValue tableName="historiques" columnName="jhi_date" columnDataType="datetime"/>

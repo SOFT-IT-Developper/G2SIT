@@ -6,7 +6,23 @@ Bootstrap tweaks
 body, h1, h2, h3, h4 {
     font-weight: 300;
 }
+body{
+ //   background-color: #31b0d5;
+}
+.main-container{
+    margin-top: 60px;
+    //margin-left: 235px;
+    margin-top: 0px !important;
+    margin-left: 140px;
+    //margin-left: 235px;
+    padding: 15px;
+    -ms-overflow-x: hidden;
+    overflow-x: hidden;
+    overflow-y: scroll;
+    position: relative;
+    overflow: hidden;
 
+}
 
 /* ==========================================================================
 Browser Upgrade Prompt
@@ -68,6 +84,7 @@ Generic styles
 
 .footer {
     border-top: 1px solid rgba(0,0,0,.125);
+    margin-top: 25%;
 }
 
 /* ==========================================================================
@@ -169,7 +186,9 @@ entity detail page css
         margin-bottom: 15px;
     }
 }
-
+.thead-inverse{
+    background-color: #E2FF89 !important;
+}
 @media screen and (min-width: 768px) {
     .row.jh-entity-details > {
         dt {
@@ -181,6 +200,10 @@ entity detail page css
             margin-left: 0;
         }
     }
+
+    /*.sidebar {
+        right: -235px !important;
+    }*/
 }
 
 /* ==========================================================================
@@ -200,5 +223,10 @@ ui bootstrap tweaks
     outline: none;
 }
 
-
+.custom-imp{
+    margin-top: 16px;
+}
+.custom-imp-repport{
+    margin-top: 2em !important;
+}
 /* jhipster-needle-scss-add-main JHipster will add new css style */

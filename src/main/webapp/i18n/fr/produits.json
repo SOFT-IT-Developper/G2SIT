@@ -16,13 +16,12 @@
             "detail": {
                 "title": "Produits"
             },
-            "nameProduit": "Name Produit",
+            "nameProduit": "Nom ",
             "reference": "Reference",
             "emplacement": "Emplacement",
             "description": "Description",
             "capture": "Capture",
             "etat": "Etat",
-            "stock": "Stock",
             "stock": "Stock",
             "categorie": "Categorie"
         }

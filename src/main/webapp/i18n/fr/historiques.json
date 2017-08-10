@@ -18,7 +18,9 @@
             },
             "operation": "Operation",
             "date": "Date",
-            "user": "User"
+            "user": "Utilisateur",
+            "stocks": "Entrer Stock",
+            "outs": "Sortir stock"
         }
     }
 }

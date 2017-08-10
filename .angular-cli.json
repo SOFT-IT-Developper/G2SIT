@@ -9,7 +9,8 @@
         "assets": [
             "content",
             "i18n",
-            "favicon.ico"
+            "favicon.ico",
+            "node_modules/bootstrap/dist/css/bootstrap.min.css"
         ],
         "index": "index.html",
         "main": "app/app.main.ts",
@@ -20,9 +21,14 @@
         "mobile": false,
         "styles": [
             "content/scss/vendor.scss",
-            "content/scss/global.scss"
+            "content/scss/global.scss",
+            "./node_modules/datatables.net-dt/css/jquery.dataTables.css",
+             "../node_modules/bootstrap/dist/css/bootstrap.min.css"
+
         ],
-        "scripts": []
+        "scripts": [
+            "../node_modules/datatables.net/js/jquery.dataTables.js"
+        ]
     }],
     "addons": [],
     "packages": [],

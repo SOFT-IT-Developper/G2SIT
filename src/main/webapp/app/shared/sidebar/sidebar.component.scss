@@ -6,7 +6,7 @@ $topnav-background-color: #353d47;
     z-index: 1000;
     top: 55px;
     left: 235px;
-    width: 235px;
+    //width: 235px;
     margin-left: -235px;
     border: none;
     border-radius: 0;
@@ -119,9 +119,14 @@ $topnav-background-color: #353d47;
         }
     }
 }
+.dropdown-item {
+    padding: 3px 1.5rem !important;
+}
 @media screen and (max-width: 992px) {
     .sidebar {
         top: 54px;
-        left: 0px;
+        //left: 10px;
+        width: auto;
+
     }
 }

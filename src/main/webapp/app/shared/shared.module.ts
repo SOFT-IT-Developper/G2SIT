@@ -1,4 +1,4 @@
-import { NgModule, CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
+import {NgModule, CUSTOM_ELEMENTS_SCHEMA, LOCALE_ID} from '@angular/core';
 import { DatePipe } from '@angular/common';
 
 import {
@@ -16,6 +16,8 @@ import {
     JhiLoginModalComponent
 } from './';
 import { SidebarComponent } from './sidebar/sidebar.component';
+import {JhiLanguageHelper} from './language/language.helper';
+import {JhiLanguageService} from 'ng-jhipster';
 
 @NgModule({
     imports: [
@@ -36,7 +38,8 @@ import { SidebarComponent } from './sidebar/sidebar.component';
         CSRFService,
         AuthServerProvider,
         UserService,
-        DatePipe
+        DatePipe,
+        { provide: LOCALE_ID, useValue: 'fr-FR' }
     ],
     entryComponents: [JhiLoginModalComponent],
     exports: [

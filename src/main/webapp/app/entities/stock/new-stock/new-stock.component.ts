@@ -1,20 +1,18 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { Response } from '@angular/http';
-import {Router} from "@angular/router";
+import {Router} from '@angular/router';
 
 import { Observable } from 'rxjs/Rx';
 import { NgbActiveModal, NgbModalRef } from '@ng-bootstrap/ng-bootstrap';
 import { JhiEventManager, JhiAlertService } from 'ng-jhipster';
-import {Stock} from "../stock.model";
-import {Produits} from "../../produits/produits.model";
-import {Operant} from "../../operant/operant.model";
-import {StockService} from "../stock.service";
-import {ProduitsService} from "../../produits/produits.service";
-import {OperantService} from "../../operant/operant.service";
-import {ResponseWrapper} from "../../../shared/model/response-wrapper.model";
-import {forEach} from "@angular/router/src/utils/collection";
-
+import {Stock} from '../stock.model';
+import {Produits} from '../../produits/produits.model';
+import {Operant} from '../../operant/operant.model';
+import {StockService} from '../stock.service';
+import {ProduitsService} from '../../produits/produits.service';
+import {OperantService} from '../../operant/operant.service';
+import {ResponseWrapper} from '../../../shared/model/response-wrapper.model';
 
 @Component({
   selector: 'jhi-new-stock',
@@ -104,16 +102,16 @@ export class NewStockComponent implements OnInit {
         this.isSaving = false;
         this.onError(error);
     }
-    onChange(produitsOption) : boolean {
-        console.log(produitsOption)
-        console.log(produitsOption.id)
+    onChange(produitsOption): boolean {
+        console.log(produitsOption);
+        console.log(produitsOption.id);
         this.stockService.findByProduitId(produitsOption.id)
-            .subscribe(res => {
+            .subscribe((res) => {
               //  this.stock = res;
-                if(res != null){
-                    console.log(res)
+                if (res != null) {
+                    console.log(res);
                    // this.produits = res.produit;
-                    return true
+                    return true;
                 }
                 return false;
 

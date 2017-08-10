@@ -35,6 +35,12 @@ public class Historiques implements Serializable {
     @ManyToOne
     private User user;
 
+    @ManyToOne
+    private Stock stocks;
+
+    @ManyToOne
+    private OutStock outs;
+
     public Long getId() {
         return id;
     }
@@ -80,6 +86,32 @@ public class Historiques implements Serializable {
 
     public void setUser(User user) {
         this.user = user;
+    }
+
+    public Stock getStocks() {
+        return stocks;
+    }
+
+    public Historiques stocks(Stock stock) {
+        this.stocks = stock;
+        return this;
+    }
+
+    public void setStocks(Stock stock) {
+        this.stocks = stock;
+    }
+
+    public OutStock getOuts() {
+        return outs;
+    }
+
+    public Historiques outs(OutStock outStock) {
+        this.outs = outStock;
+        return this;
+    }
+
+    public void setOuts(OutStock outStock) {
+        this.outs = outStock;
     }
 
     @Override

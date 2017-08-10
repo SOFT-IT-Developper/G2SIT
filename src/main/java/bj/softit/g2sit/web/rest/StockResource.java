@@ -1,6 +1,7 @@
 package bj.softit.g2sit.web.rest;
 
 import bj.softit.g2sit.service.HistoriquesService;
+import bj.softit.g2sit.service.StockServiceExtend;
 import com.codahale.metrics.annotation.Timed;
 import bj.softit.g2sit.domain.Stock;
 import bj.softit.g2sit.service.StockService;
@@ -20,7 +21,8 @@ import org.springframework.web.bind.annotation.*;
 import java.net.URI;
 import java.net.URISyntaxException;
 
-import java.time.ZonedDateTime;
+import java.time.LocalDate;
+import java.time.ZoneId;
 import java.util.List;
 import java.util.Optional;
 
@@ -36,12 +38,13 @@ public class StockResource {
     private static final String ENTITY_NAME = "stock";
 
     private final StockService stockService;
-
+    private final StockServiceExtend stockServiceExtend;
 
     private final HistoriquesService historiquesService;
 
-    public StockResource(StockService stockService, HistoriquesService historiquesService) {
+    public StockResource(StockService stockService, StockServiceExtend stockServiceExtend, HistoriquesService historiquesService) {
         this.stockService = stockService;
+        this.stockServiceExtend = stockServiceExtend;
         this.historiquesService = historiquesService;
     }
 
@@ -60,9 +63,9 @@ public class StockResource {
             return ResponseEntity.badRequest().headers(HeaderUtil.createFailureAlert(ENTITY_NAME, "idexists", "A new stock cannot already have an ID")).body(null);
         }
 //        Stock result = stockService.save(stock);
-        historiquesService.addHistEnter(stock);
-        Stock result = stockService.save(stock);
-        return ResponseEntity.created(new URI("/api/stocks/" + result.getId()))
+            Stock result = stockService.save(stock);
+            historiquesService.addHistEnter(result);
+            return ResponseEntity.created(new URI("/api/stocks/" + result.getId()))
             .headers(HeaderUtil.createEntityCreationAlert(ENTITY_NAME, result.getId().toString()))
             .body(result);
     }
@@ -84,7 +87,7 @@ public class StockResource {
             return createStock(stock);
         }
         Stock result = stockService.save(stock);
-        historiquesService.addHist("Mise ajour stock");
+        historiquesService.updateHistEnter(result);
         return ResponseEntity.ok()
             .headers(HeaderUtil.createEntityUpdateAlert(ENTITY_NAME, stock.getId().toString()))
             .body(result);
@@ -100,7 +103,7 @@ public class StockResource {
     @Timed
     public ResponseEntity<List<Stock>> getAllStocks(@ApiParam Pageable pageable) {
         log.debug("REST request to get a page of Stocks");
-        historiquesService.addHist("Consultation du stock");
+//        historiquesService.addHist("Consultation du stock");
         Page<Stock> page = stockService.findAll(pageable);
         HttpHeaders headers = PaginationUtil.generatePaginationHttpHeaders(page, "/api/stocks");
         return new ResponseEntity<>(page.getContent(), headers, HttpStatus.OK);
@@ -176,6 +179,31 @@ public class StockResource {
         Page<Stock> page = stockService.search(query, pageable);
         HttpHeaders headers = PaginationUtil.generateSearchPaginationHttpHeaders(query, page, "/api/_search/stocks");
         return new ResponseEntity<>(page.getContent(), headers, HttpStatus.OK);
+    }
+    //custome
+    @GetMapping("/stocks/countAll")
+    @Timed
+    public long getCountStock() {
+        log.debug("REST request to get count stock");
+        long count  = stockService.countAll();
+        return count;
+    }
+
+    @GetMapping("/stocks/countAllManquant")
+    @Timed
+    public long getCountStockManquant() {
+        log.debug("REST request to get count manquant stock");
+        long count  = stockService.countAllManquant();
+        return count;
+    }
+    @GetMapping(path = "/stocks/countAllBetwenToDate",params = {"fromDate", "toDate"})
+    @Timed
+    public long getCountStockBetwen(@RequestParam(value = "fromDate") LocalDate fromDate,
+                                    @RequestParam(value = "toDate") LocalDate toDate) {
+//        log.debug("REST request to get count manquant stock");
+        long count  = stockServiceExtend.countAllStockBetwenToDate(fromDate.atStartOfDay(ZoneId.systemDefault()),
+            toDate.atStartOfDay(ZoneId.systemDefault()).plusDays(1));
+        return count;
     }
 
 }

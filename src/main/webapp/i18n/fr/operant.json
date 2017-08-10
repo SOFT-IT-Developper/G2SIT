@@ -2,23 +2,23 @@
     "g2SitApp": {
         "operant" : {
             "home": {
-                "title": "Operants",
-                "createLabel": "Créer un nouveau Operant",
-                "createOrEditLabel": "Créer ou éditer un Operant",
-                "search": "Recherche pour Operant"
+                "title": "Personnel",
+                "createLabel": "Créer un nouveau Personnel",
+                "createOrEditLabel": "Créer ou éditer un Personnel",
+                "search": "Recherche pour Personnel"
             },
-            "created": "Un nouveau Operant a été créé avec l'identifiant {{ param }}",
-            "updated": "Le Operant avec l'identifiant {{ param }} a été mis à jour",
-            "deleted": "Le Operant avec l'identifiant {{ param }} a été supprimé",
+            "created": "Un nouveau Personnel a été créé avec l'identifiant {{ param }}",
+            "updated": "Le Personnel avec l'identifiant {{ param }} a été mis à jour",
+            "deleted": "Le Personnel avec l'identifiant {{ param }} a été supprimé",
             "delete": {
-                "question": "Etes-vous certain de vouloir supprimer le Operant {{ id }} ?"
+                "question": "Etes-vous certain de vouloir supprimer cet Personnel {{ id }} ?"
             },
             "detail": {
-                "title": "Operant"
+                "title": "Personnel"
             },
-            "fistname": "Fistname",
-            "lastname": "Lastname",
-            "telephone": "Telephone",
+            "fistname": "Nom",
+            "lastname": "Prénom",
+            "telephone": "Télephone",
             "stocks": "Stocks",
             "stocke": "Stocke"
         }

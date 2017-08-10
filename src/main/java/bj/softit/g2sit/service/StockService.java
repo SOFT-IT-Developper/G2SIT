@@ -11,6 +11,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 
+import java.math.BigDecimal;
 import java.time.ZonedDateTime;
 import java.util.List;
 
@@ -95,6 +96,7 @@ public class StockService {
         Page<Stock> result = stockSearchRepository.search(queryStringQuery(query), pageable);
         return result;
     }
+//custome
 
     public Stock findByProduitId(Long id) {
         log.debug("Request to get Stock produit id : {}", id);
@@ -103,5 +105,11 @@ public class StockService {
 
     public List<Stock> findByBetwenToDate(ZonedDateTime d1, ZonedDateTime d2) {
        return stockRepository.findByDateentrerBetween(d1,d2);
+    }
+    public long countAll(){
+        return stockRepository.countAllByQuantiteIsAfter(BigDecimal.valueOf(5));
+    }
+    public long countAllManquant(){
+        return stockRepository.countAllByQuantiteIsBefore(BigDecimal.valueOf(5));
     }
 }

@@ -48,7 +48,7 @@ import {G2SitRapportModule} from './rapport/rapport.module';
         PageRibbonComponent,
         ActiveMenuDirective,
         FooterComponent,
-        SidebarComponent
+        SidebarComponent,
     ],
     providers: [
         ProfileService,

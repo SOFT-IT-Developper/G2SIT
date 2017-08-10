@@ -10,7 +10,7 @@
     </h2>
     <jhi-alert></jhi-alert>
     <div class="row">
-        <div class="col-sm-12">
+        <div class="col-sm-7">
             <form name="searchForm" class="form-inline">
                 <div class="input-group w-100 mt-3">
                     <input type="text" class="form-control" [(ngModel)]="currentSearch" id="currentSearch" name="currentSearch" (ngModelChange)="search(currentSearch)" placeholder="{{ 'g2SitApp.outStock.home.search' | translate }}">
@@ -23,9 +23,26 @@
                 </div>
             </form>
         </div>
+        <div class=" col-sm-3 form-check custom-imp">
+            <label class="form-check-label">
+                <input class="form-check-input" type="checkbox"  [(ngModel)]="modeimp">
+                Mode impression
+            </label>
+        </div>
+        <div class="col-sm-2 " [hidden]="!modeimp" >
+            <essence-ng2-print
+                [btnText]="'Imprimer'"
+                [btnClass]="{'btn': true, 'btn-success': true, 'custom-imp':true}"
+                [printHTML]="print_out"
+                [printStyle]="printStyle"
+                [printCSS]="printCSS"
+                (printComplete)="printComplete()">
+            </essence-ng2-print>
+        </div>
     </div>
     <br/>
-    <div class="table-responsive" *ngIf="outStocks">
+<div id="print_out" #print_out>
+    <div class="table-responsive" *ngIf="outStocks"  >
         <table class="table table-striped">
             <thead>
             <tr jhiSort [(predicate)]="predicate" [(ascending)]="reverse" [callback]="transition.bind(this)">
@@ -58,7 +75,7 @@
                         <a [routerLink]="['../produits', outStock.produit?.id ]" >{{outStock.produit?.nameProduit}}</a>
                     </div>
                 </td>
-                <td class="text-right">
+                <td class="text-right" [hidden]="modeimp">
                     <div class="btn-group flex-btn-group-container">
                         <button type="submit"
                                 [routerLink]="['../out-stock', outStock.id ]"
@@ -86,6 +103,7 @@
             </tbody>
         </table>
     </div>
+</div>
         <!-- Pager is not implemented yet, so this is normal pagination instead -->
         <div *ngIf="outStocks && outStocks.length">
             <div class="row justify-content-center">

@@ -15,6 +15,7 @@ import {
     outStockPopupRoute,
     OutStockResolvePagingParams,
 } from './';
+import {EssenceNg2PrintModule} from 'essence-ng2-print';
 
 const ENTITY_STATES = [
     ...outStockRoute,
@@ -24,6 +25,7 @@ const ENTITY_STATES = [
 @NgModule({
     imports: [
         G2SitSharedModule,
+        EssenceNg2PrintModule,
         RouterModule.forRoot(ENTITY_STATES, { useHash: true })
     ],
     declarations: [

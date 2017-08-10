@@ -11,6 +11,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 
+import java.math.BigDecimal;
 import java.time.Instant;
 
 import static org.elasticsearch.index.query.QueryBuilders.*;
@@ -95,6 +96,8 @@ public class OutStockService {
         return result;
     }
 
+    //custom
+
     public Page<OutStock> findByDates(Instant fromDate, Instant toDate, Pageable pageable) {
       return   outStockSearchRepository.findAllByDatesortirBetween(fromDate, toDate, pageable);
     }
@@ -108,4 +111,7 @@ public class OutStockService {
         }
         return auditEvents;
     }*/
+ public long countAll(){
+     return outStockRepository.count();
+ }
 }

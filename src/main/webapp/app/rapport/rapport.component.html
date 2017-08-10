@@ -103,10 +103,15 @@
     </div>
 </div>
 -->
-<div >
-    <h2 jhiTranslate="audits.title">Audits</h2>
+
+
+<div>
+<!--<div [@routerTransition]>-->
+    <h2 >Rapport</h2>
 
     <div class="row">
+
+        <!--<jhi-print [section]="'print-section'"></jhi-print>-->
         <div class="col-md-5">
             <h4 jhiTranslate="audits.filter.title">Filter by date</h4>
             <p class="d-flex">
@@ -114,32 +119,67 @@
                 <input type="date" class="form-control" name="start" [(ngModel)]="fromDate" (ngModelChange)="onChangeDate($event)" required/>
                 <span jhiTranslate="audits.filter.to" class="input-group-addon">to</span>
                 <input type="date" class="form-control" name="end" [(ngModel)]="toDate" (ngModelChange)="onChangeDate($event)" required/>
+                <span  class="input-group-addon">Produits</span>
+
+                <select (ngModelChange)="onChange($event)"  class="custom-select mb-2 mr-sm-2 mb-sm-0" id="field_produit" name="produit" [(ngModel)]="produit" >
+                    <option value="all">Tous</option>
+                    <option [ngValue]="produitsOption.id " *ngFor="let produitsOption of produits; trackBy: trackProduitsById">{{produitsOption.nameProduit}}</option>
+                </select>
+
             </p>
+            <div class="form-check custom-imp-repport-checkbox">
+                <label class="form-check-label">
+                    <input class="form-check-input" type="checkbox"  [(ngModel)]="modeAll" (change)="starMode($event)" >
+                    Afficher tous
+                </label>
+            </div>
         </div>
+        <div class="col-md-2 col-xl-2 col-2 col-lg-pull-5 imp">
+
+            <!--<button class="btn btn-sm btn-primary " (click)="print()">Imprimer</button>-->
+            <essence-ng2-print
+                [btnText]="'Imprimer'"
+                [btnClass]="{'btn': true, 'btn-success': true, 'custom-imp-repport':true}"
+                [printHTML]="print_section"
+                [printStyle]="printStyle"
+                [printCSS]="printCSS"
+                [popTitle]="titleRepport"
+                (printComplete)="printComplete()">
+            </essence-ng2-print>
+        </div>
+
     </div>
 
+<!--
     <div class="table-responsive">
         <table class="table table-condensed table-striped table-bordered">
             <thead>
             <tr>
-                <th (click)="orderProp = 'timestamp'; reverse=!reverse"><span jhiTranslate="audits.table.header.date">Date</span></th>
-                <th (click)="orderProp = 'principal'; reverse=!reverse"><span jhiTranslate="audits.table.header.principal">User</span></th>
-                <th (click)="orderProp = 'type'; reverse=!reverse"><span jhiTranslate="audits.table.header.status">State</span></th>
-                <th (click)="orderProp = 'data.message'; reverse=!reverse"><span jhiTranslate="audits.table.header.data">Extra data</span></th>
+                <th (click)="orderProp = 'datesortir'; reverse=!reverse"><span>Date de Sortir</span></th>
+                <th (click)="orderProp = 'produit.nameProduit'; reverse=!reverse"><span >Nom du produit </span></th>
+                <th (click)="orderProp = 'client'; reverse=!reverse"><span >Client</span></th>
+                <th (click)="orderProp = 'cause'; reverse=!reverse"><span >Projet</span></th>
             </tr>
+            &lt;!&ndash; <tr>
+                <th (click)="orderProp = 'datesortir'; reverse=!reverse"><span jhiTranslate="audits.table.header.date">Date</span></th>
+                <th (click)="orderProp = 'produit.nameProduit'; reverse=!reverse"><span jhiTranslate="audits.table.header.principal">User</span></th>
+                <th (click)="orderProp = 'client'; reverse=!reverse"><span jhiTranslate="audits.table.header.status">State</span></th>
+                <th (click)="orderProp = 'cause'; reverse=!reverse"><span jhiTranslate="audits.table.header.data">Extra data</span></th>
+            </tr>&ndash;&gt;
             </thead>
-            <tr *ngFor="let audit of getAudits()">
-                <td><span>{{audit.datesortir| date:'medium'}}</span></td>
-                <td><small>{{audit.quantite}}</small></td>
-                <td>{{audit.type}}</td>
+            <tr *ngFor="let rapport of getRapport()">
+                <td><span>{{rapport.datesortir| date:'medium'}}</span></td>
+                <td><small>{{rapport.quantite}}</small></td>
+                <td>{{rapport.type}}</td>
                 <td>
-                    <span *ngIf="audit.produit" ng-show="audit.data.message">{{audit.produit.nameProduit}}</span>
-                    <span *ngIf="audit.produit" ng-show="audit.data.remoteAddress"><span jhiTranslate="audits.table.data.remoteAddress">Remote Address</span> {{audit.produit.nameProduit}}</span>
+                    <span *ngIf="rapport.produit">{{rapport.produit.nameProduit}}</span>
+                    <span *ngIf="rapport.produit" >{{rapport.produit.nameProduit}}</span>
                 </td>
             </tr>
         </table>
     </div>
-    <div *ngIf="audits">
+    &lt;!&ndash;<div *ngIf="audits">&ndash;&gt;
+    <div>
         <div class="row justify-content-center">
             <jhi-item-count [page]="page" [total]="totalItems" [itemsPerPage]="itemsPerPage"></jhi-item-count>
         </div>
@@ -148,4 +188,161 @@
         </div>
     </div>
 </div>
+-->
+    <div>
+        <jhi-alert></jhi-alert>
+       <!-- <div class="row">
+            <div class="col-sm-12">
+                <form name="searchForm" class="form-inline">
+                    <div class="input-group w-100 mt-3">
+                        <input type="text" class="form-control" [(ngModel)]="currentSearch" id="currentSearch" name="currentSearch" placeholder="{{ 'g2SitApp.historiques.home.search' | translate }}">
+                        <button class="input-group-addon btn btn-info" (click)="search(currentSearch)">
+                            <span class="fa fa-search"></span>
+                        </button>
+                        <button class="input-group-addon btn btn-danger" (click)="clear()" *ngIf="currentSearch">
+                            <span class="fa fa-trash-o"></span>
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>-->
+        <br/>
 
+
+        <div class="table-responsive"  id="print_section" #print_section>
+            <table class="table table-striped table-hover">
+                <thead class="thead-inverse">
+                <tr>
+                    <th (click)="orderProp = 'i'; reverse=!reverse"><span >N°</span> <span class="fa fa-sort"></span></th>
+                    <!--<th (click)="orderProp = 'id'; reverse=!reverse"><span jhiTranslate="global.field.id">ID</span> <span class="fa fa-sort"></span></th>-->
+                    <th (click)="orderProp = 'operation'; reverse=!reverse"><span jhiTranslate="g2SitApp.historiques.operation">Operation</span> <span class="fa fa-sort"></span></th>
+                    <th (click)="orderProp = 'outs.produit.da'; reverse=!reverse"><span >Date</span> <span class="fa fa-sort"></span></th>
+                    <!--<th (click)="orderProp = 'date'; reverse=!reverse"><span jhiTranslate="g2SitApp.historiques.date">Date</span> <span class="fa fa-sort"></span></th>-->
+                    <th (click)="orderProp = 'user.login'; reverse=!reverse"><span jhiTranslate="g2SitApp.historiques.user">User</span> <span class="fa fa-sort"></span></th>
+                    <th (click)="orderProp = 'historiques.stocks ?(historiques.stocks?.produit.nameProduit )  : historiques.outs?.produit.nameProduit'; reverse=!reverse"><span >Produits</span> <span class="fa fa-sort"></span></th>
+                    <th (click)="orderProp = 'historiques.stocks ?(historiques.stocks?.produit.categorie.nameCategorie )  : historiques.outs?.produit.categorie.nameCategorie'; reverse=!reverse"><span >Catégories</span> <span class="fa fa-sort"></span></th>
+                    <th (click)="orderProp = 'historiques.stocks ?(historiques.stocks?.operantst?.fistname )  : historiques.outs?.operantst?.fistname'; reverse=!reverse"><span >Personel</span> <span class="fa fa-sort"></span></th>
+                    <th></th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr *ngFor="let historiques of getRapport() let i=index ">
+                    <td>{{i+1}}</td>
+                    <!--<td><a [routerLink]="['../historiques', historiques.id ]">{{historiques.id}}</a></td>-->
+                    <td>{{historiques.operation}}</td>
+                    <td>{{ historiques.stocks ?(historiques.stocks?.dateentrer | date:'medium' )  : historiques.outs?.datesortir | date:'medium'}}</td>
+
+                    <!--<td>{{historiques.date | date:'medium'}}</td>-->
+                    <td>
+                        {{historiques.user?.login}}
+                    </td>
+                    <td>{{ historiques.stocks ?(historiques.stocks?.produit.nameProduit )  : historiques.outs?.produit.nameProduit}}</td>
+                    <td>{{ historiques.stocks ?(historiques.stocks?.produit.categorie.nameCategorie )  : historiques.outs?.produit.categorie.nameCategorie}}</td>
+                    <td>{{ historiques.stocks ?(historiques.stocks?.operantst?.fistname )  : historiques.outs?.operantst?.fistname }}</td>
+                   <!-- <td>
+                        <div *ngIf="historiques.stocks">
+                            <a [routerLink]="['../stock', historiques.stocks?.id ]" >{{historiques.stocks?.produit.nameProduit}}</a>
+                            <a [routerLink]="['../stock', historiques.stocks?.id ]" >{{historiques.stocks?.produit.nameProduit}}</a>
+                        </div>
+                    </td>-->
+                   <!-- <td>
+                        <div *ngIf="historiques.outs">
+                            <a [routerLink]="['../out-stock', historiques.outs?.id ]" >{{historiques.outs?.produit.nameProduit}}</a>
+                        </div>
+                    </td>-->
+                    <!--<td>{{  historiques.stocks?.dateentrer ? historiques.outs?.datesortir : historiques.outs   | date:'medium'}}</td>-->
+                   <!-- <td class="text-right" [hidden]="isprintable" >
+                        <div class="btn-group flex-btn-group-container">
+                            <button type="submit"
+                                    [routerLink]="['../historiques', historiques.id ]"
+                                    class="btn btn-info btn-sm">
+                                <span class="fa fa-eye"></span>
+                                <span class="hidden-md-down" jhiTranslate="entity.action.view">View</span>
+                            </button>
+
+                        </div>
+                    </td>-->
+                </tr>
+                </tbody>
+            </table>
+        </div>
+        <!-- Pager is not implemented yet, so this is normal pagination instead -->
+        <div *ngIf="out_rapport && out_rapport.length">
+            <div class="row justify-content-center">
+                <jhi-item-count [page]="page" [total]="queryCount" [itemsPerPage]="itemsPerPage"></jhi-item-count>
+            </div>
+            <div class="row justify-content-center">
+                <ngb-pagination [collectionSize]="totalItems" [(page)]="page"  (pageChange)="loadPage(page)"></ngb-pagination>
+            </div>
+        </div>
+    </div><!-- <div class="table-responsive" >
+            <table class="table table-striped">
+                <thead>
+                <tr jhiSort [(predicate)]="predicate" [(ascending)]="reverse" [callback]="transition.bind(this)">
+                    <th jhiSortBy="id"><span jhiTranslate="global.field.id">ID</span> <span class="fa fa-sort"></span></th>
+                    <th jhiSortBy="operation"><span jhiTranslate="g2SitApp.historiques.operation">Operation</span> <span class="fa fa-sort"></span></th>
+                    <th jhiSortBy="date"><span jhiTranslate="g2SitApp.historiques.date">Date</span> <span class="fa fa-sort"></span></th>
+                    <th jhiSortBy="user.login"><span jhiTranslate="g2SitApp.historiques.user">User</span> <span class="fa fa-sort"></span></th>
+                    <th jhiSortBy="stocks.produit.nameProduit"><span jhiTranslate="g2SitApp.historiques.stocks">Stocks</span> <span class="fa fa-sort"></span></th>
+                    <th jhiSortBy="outs.produit.nameProduit"><span jhiTranslate="g2SitApp.historiques.outs">Outs</span> <span class="fa fa-sort"></span></th>
+                    <th></th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr *ngFor="let historiques of out_rapport">
+                    <td><a [routerLink]="['../historiques', historiques.id ]">{{historiques.id}}</a></td>
+                    <td>{{historiques.operation}}</td>
+                    <td>{{historiques.date | date:'medium'}}</td>
+                    <td>
+                        {{historiques.user?.login}}
+                    </td>
+                    <td>
+                        <div *ngIf="historiques.stocks">
+                            <a [routerLink]="['../stock', historiques.stocks?.id ]" >{{historiques.stocks?.produit.nameProduit}}</a>
+                        </div>
+                    </td>
+                    <td>
+                        <div *ngIf="historiques.outs">
+                            <a [routerLink]="['../out-stock', historiques.outs?.id ]" >{{historiques.outs?.produit.nameProduit}}</a>
+                        </div>
+                    </td>
+                    <td class="text-right">
+                        <div class="btn-group flex-btn-group-container">
+                            <button type="submit"
+                                    [routerLink]="['../historiques', historiques.id ]"
+                                    class="btn btn-info btn-sm">
+                                <span class="fa fa-eye"></span>
+                                <span class="hidden-md-down" jhiTranslate="entity.action.view">View</span>
+                            </button>
+                            <button type="submit"
+                                    [routerLink]="['/', { outlets: { popup: 'historiques/'+ historiques.id + '/edit'} }]"
+                                    replaceUrl="true"
+                                    class="btn btn-primary btn-sm">
+                                <span class="fa fa-pencil"></span>
+                                <span class="hidden-md-down" jhiTranslate="entity.action.edit">Edit</span>
+                            </button>
+                            <button type="submit"
+                                    [routerLink]="['/', { outlets: { popup: 'historiques/'+ historiques.id + '/delete'} }]"
+                                    replaceUrl="true"
+                                    class="btn btn-danger btn-sm">
+                                <span class="fa fa-remove"></span>
+                                <span class="hidden-md-down" jhiTranslate="entity.action.delete">Delete</span>
+                            </button>
+                        </div>
+                    </td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+        &lt;!&ndash; Pager is not implemented yet, so this is normal pagination instead &ndash;&gt;
+        <div *ngIf="out_rapport && out_rapport.length">
+            <div class="row justify-content-center">
+                <jhi-item-count [page]="page" [total]="queryCount" [itemsPerPage]="itemsPerPage"></jhi-item-count>
+            </div>
+            <div class="row justify-content-center">
+                <ngb-pagination [collectionSize]="totalItems" [(page)]="page"  (pageChange)="loadPage(page)"></ngb-pagination>
+            </div>
+        </div>
+    </div>-->
+
+</div>

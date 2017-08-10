@@ -150,5 +150,15 @@ public class ProduitsResource {
         HttpHeaders headers = PaginationUtil.generateSearchPaginationHttpHeaders(query, page, "/api/_search/produits");
         return new ResponseEntity<>(page.getContent(), headers, HttpStatus.OK);
     }
+    //Custome
+
+    @GetMapping("/produits/countAll")
+    @Timed
+    public long getCountProduits() {
+        log.debug("REST request to get count of Produits");
+        long count  = produitsService.count();
+
+        return count;
+    }
 
 }

@@ -1,5 +1,6 @@
 package bj.softit.g2sit.web.rest;
 
+import bj.softit.g2sit.service.HistoriqueServiceExtend;
 import com.codahale.metrics.annotation.Timed;
 import bj.softit.g2sit.domain.Historiques;
 import bj.softit.g2sit.service.HistoriquesService;
@@ -16,15 +17,13 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import javax.validation.Valid;
 import java.net.URI;
 import java.net.URISyntaxException;
 
+import java.time.LocalDate;
+import java.time.ZoneId;
 import java.util.List;
 import java.util.Optional;
-import java.util.stream.StreamSupport;
-
-import static org.elasticsearch.index.query.QueryBuilders.*;
 
 /**
  * REST controller for managing Historiques.
@@ -38,9 +37,11 @@ public class HistoriquesResource {
     private static final String ENTITY_NAME = "historiques";
 
     private final HistoriquesService historiquesService;
+    private final HistoriqueServiceExtend historiqueServiceExtend;
 
-    public HistoriquesResource(HistoriquesService historiquesService) {
+    public HistoriquesResource(HistoriquesService historiquesService, HistoriqueServiceExtend historiqueServiceExtend) {
         this.historiquesService = historiquesService;
+        this.historiqueServiceExtend = historiqueServiceExtend;
     }
 
     /**
@@ -52,7 +53,7 @@ public class HistoriquesResource {
      */
     @PostMapping("/historiques")
     @Timed
-    public ResponseEntity<Historiques> createHistoriques(@Valid @RequestBody Historiques historiques) throws URISyntaxException {
+    public ResponseEntity<Historiques> createHistoriques(@RequestBody Historiques historiques) throws URISyntaxException {
         log.debug("REST request to save Historiques : {}", historiques);
         if (historiques.getId() != null) {
             return ResponseEntity.badRequest().headers(HeaderUtil.createFailureAlert(ENTITY_NAME, "idexists", "A new historiques cannot already have an ID")).body(null);
@@ -74,7 +75,7 @@ public class HistoriquesResource {
      */
     @PutMapping("/historiques")
     @Timed
-    public ResponseEntity<Historiques> updateHistoriques(@Valid @RequestBody Historiques historiques) throws URISyntaxException {
+    public ResponseEntity<Historiques> updateHistoriques(@RequestBody Historiques historiques) throws URISyntaxException {
         log.debug("REST request to update Historiques : {}", historiques);
         if (historiques.getId() == null) {
             return createHistoriques(historiques);
@@ -144,5 +145,45 @@ public class HistoriquesResource {
         HttpHeaders headers = PaginationUtil.generateSearchPaginationHttpHeaders(query, page, "/api/_search/historiques");
         return new ResponseEntity<>(page.getContent(), headers, HttpStatus.OK);
     }
+//custom
+    @GetMapping(path = "/historiqueBetwenToDate",params = {"fromDate", "toDate"})
+    @Timed
+    public ResponseEntity<List<Historiques>> getAllOutStocksByDate(@RequestParam(value = "fromDate") LocalDate fromDate,
+                                                            @RequestParam(value = "toDate") LocalDate toDate,
+                                                            @ApiParam Pageable pageable) {
+    log.debug("REST request to get a page of historique by date "+fromDate);
+//        ZonedDateTime zdt = fromDate.atStartOfDay(ZoneId.systemDefault());
+    Page<Historiques> page = historiquesService.findByDatesBetween(
+        fromDate.atStartOfDay(ZoneId.systemDefault()),
+        toDate.atStartOfDay(ZoneId.systemDefault()).plusDays(1),
+        pageable);
+        HttpHeaders headers = PaginationUtil.generatePaginationHttpHeaders(page, "/api/historiqueBetwenToDate");
+        return new ResponseEntity<>(page.getContent(), headers, HttpStatus.OK);
+   /* HttpHeaders headers = PaginationUtil.generatePaginationHttpHeaders(page, "/api/historiqueBetwenToDate");
+    return new ResponseEntity<>(page.getContent(), headers, HttpStatus.OK);*/
+    }
+    @GetMapping(path = "/historiqueBetwenToDateProduit",params = {"fromDate", "toDate","produitId"})
+    @Timed
+    public ResponseEntity<List<Historiques>> getAllOutStocksByDateAndProduit(@RequestParam(value = "fromDate") LocalDate fromDate,
+                                                            @RequestParam(value = "toDate") LocalDate toDate,@RequestParam(value = "produitId") long id,
+                                                            @ApiParam Pageable pageable) {
+    log.debug("REST request to get a page of historique by date ");
+    Page<Historiques> page = historiquesService.findByDatesBetweenAndProduit(
+        fromDate.atStartOfDay(ZoneId.systemDefault()),
+        toDate.atStartOfDay(ZoneId.systemDefault()).plusDays(1),id,
+        pageable);
+        HttpHeaders headers = PaginationUtil.generatePaginationHttpHeaders(page, "/api/historiqueBetwenToDateProduit");
+        return new ResponseEntity<>(page.getContent(), headers, HttpStatus.OK);
+   /* HttpHeaders headers = PaginationUtil.generatePaginationHttpHeaders(page, "/api/historiqueBetwenToDate");
+    return new ResponseEntity<>(page.getContent(), headers, HttpStatus.OK);*/
+    }
 
+    @GetMapping(path = "/countAllRepportBetwenDate",params = {"fromDate", "toDate"})
+    @Timed
+   public long countAllReportBetwenToDate(@RequestParam(value = "fromDate") LocalDate fromDate,
+                                    @RequestParam(value = "toDate") LocalDate toDate){
+        long count = historiqueServiceExtend.countAllRepportBetwenToDate(fromDate.atStartOfDay(ZoneId.systemDefault()),
+           toDate.atStartOfDay(ZoneId.systemDefault()).plusDays(1));
+        return count;
+    }
 }

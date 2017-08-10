@@ -10,7 +10,7 @@ import {StatModule} from '../shared/stat/stat.module';
     imports: [
         G2SitSharedModule,
         StatModule,
-        RouterModule.forRoot([ HOME_ROUTE ], { useHash: true })
+        RouterModule.forRoot([ HOME_ROUTE ], { useHash: true }),
     ],
     declarations: [
         HomeComponent,

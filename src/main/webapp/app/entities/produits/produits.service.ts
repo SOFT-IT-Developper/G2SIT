@@ -58,4 +58,9 @@ export class ProduitsService {
         const copy: Produits = Object.assign({}, produits);
         return copy;
     }
+    // custome
+  cont() {
+      return this.http.get(`${this.resourceUrl}/countAll`).map((res) => res.json());
+    }
+
 }

@@ -1,6 +1,6 @@
 import { NgModule, CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import { RouterModule } from '@angular/router';
-
+import {EssenceNg2PrintModule} from 'essence-ng2-print';
 import { G2SitSharedModule } from '../../shared';
 import {
     StockService,
@@ -25,6 +25,7 @@ const ENTITY_STATES = [
 @NgModule({
     imports: [
         G2SitSharedModule,
+        EssenceNg2PrintModule,
         RouterModule.forRoot(ENTITY_STATES, { useHash: true })
     ],
     declarations: [

@@ -10,8 +10,9 @@
                 "categorie": "Categorie",
                 "produits": "Produits",
                 "stock": "Stock",
-                "operant": "Operant",
-                "outStock": "Out Stock",
+                "operant": "Personnel",
+                "outStock": "Sortir stock",
+                "rapport": "Rapport",
                 "historiques": "Historiques",
                 "jhipster-needle-menu-add-entry": "JHipster will add additional entities here (do not translate!)"
             },
@@ -52,9 +53,9 @@
         "messages": {
             "info": {
                 "authenticated": {
-                    "prefix": "Si vous voulez vous ",
-                    "link": "connecter",
-                    "suffix": ", vous pouvez utiliser les comptes par défaut : <br/> - Administrateur (nom d'utilisateur=\"admin\" et mot de passe =\"admin\") <br/> - Utilisateur (nom d'utilisateur=\"user\" et mot de passe =\"user\")."
+                    "prefix": "cliquer ",
+                    "link": "ici",
+                    "suffix": "pour vous connecter"
                 },
                 "register": {
                     "noaccount": "Vous n'avez pas encore de compte ?",
@@ -85,7 +86,7 @@
             }
         },
         "field": {
-            "id": "ID"
+            "id": "#"
         },
         "ribbon": {
             "dev":"Développement"
@@ -142,6 +143,7 @@
         "produit" : "Produits",
         "stockenter" : "Entrer Stock",
         "stocksortir" : "Sortir Stock",
+        "creat" : "Ajouter",
         "rapport" : "Rapport"
     }
 }
