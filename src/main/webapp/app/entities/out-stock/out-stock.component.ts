@@ -29,6 +29,13 @@ currentAccount: any;
     predicate: any;
     previousPage: any;
     reverse: any;
+    // custom
+    showHead = true;
+    hideTable1 = false;
+    datas: any[];
+    printCSS: string[];
+    printStyle: string;
+    modeimp: true;
 
     constructor(
         private outStockService: OutStockService,
@@ -48,6 +55,9 @@ currentAccount: any;
             this.reverse = data['pagingParams'].ascending;
             this.predicate = data['pagingParams'].predicate;
         });
+        // this.printCSS = ['http://localhost:9000/content/scss/bootstrap.min.css'];
+        this.printCSS = ['http://cdn.bootcss.com/bootstrap/3.3.7/css/bootstrap.min.css'];
+
         this.currentSearch = activatedRoute.snapshot.params['search'] ? activatedRoute.snapshot.params['search'] : '';
     }
 
@@ -146,5 +156,10 @@ currentAccount: any;
     }
     private onError(error) {
         this.alertService.error(error.message, null, null);
+    }
+    printComplete() {
+        console.log('L\'impression est terminée!！');
+        this.showHead = true;
+        this.hideTable1 = false;
     }
 }

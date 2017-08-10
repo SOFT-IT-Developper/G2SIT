@@ -3,9 +3,9 @@
         "stock" : {
             "home": {
                 "title": "Stocks",
-                "createLabel": "Créer un nouveau Stock",
+                "createLabel": "Ajouter un nouveau Stock",
                 "createOrEditLabel": "Créer ou éditer un Stock",
-                "search": "Recherche pour Stock"
+                "search": "Recherche parmi le Stock"
             },
             "created": "Un nouveau Stock a été créé avec l'identifiant {{ param }}",
             "updated": "Le Stock avec l'identifiant {{ param }} a été mis à jour",
@@ -16,11 +16,11 @@
             "detail": {
                 "title": "Stock"
             },
-            "quantite": "Quantite",
+            "quantite": "Quantité",
             "description": "Description",
-            "dateentrer": "Dateentrer",
-            "retour": "Retour",
-            "comment": "Comment",
+            "dateentrer": "Date",
+            "retour": "Rétour",
+            "comment": "Commentaire",
             "produit": "Produit",
             "operantst": "Personnel",
             "new_quantite" : "Quantitée à ajouter",

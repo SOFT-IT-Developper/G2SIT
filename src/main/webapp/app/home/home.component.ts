@@ -6,7 +6,6 @@ import { Account, LoginModalService, Principal } from '../shared';
 import {ProduitsService} from '../entities/produits/produits.service';
 import {StockService} from '../entities/stock/stock.service';
 import {OutStockService} from '../entities/out-stock/out-stock.service';
-
 @Component({
     selector: 'jhi-home',
     templateUrl: './home.component.html',

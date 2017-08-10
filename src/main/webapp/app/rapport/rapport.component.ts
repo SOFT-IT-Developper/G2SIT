@@ -9,6 +9,7 @@ import {Historiques} from '../entities/historiques/historiques.model';
 import {HistoriquesService} from '../entities/historiques/historiques.service';
 import {ProduitsService} from '../entities/produits/produits.service';
 import {Produits} from '../entities/produits/produits.model';
+import {EssenceNg2PrintComponent} from 'essence-ng2-print';
 // import {routerTransition} from '../router.animations';
 
 declare var $;
@@ -41,6 +42,10 @@ export class RapportComponent implements OnInit {
     produit: any;
     showDate: any;
     isprintable = false;
+    printCSS: string[];
+    printStyle: string;
+    modeAll: true;
+    titleRepport: string;
 
     constructor(private outService: OutStockService,
                 private produitsService: ProduitsService,
@@ -52,6 +57,8 @@ export class RapportComponent implements OnInit {
         this.page = 1;
         this.reverse = false;
         this.orderProp = 'datesortir';
+        this.printCSS = ['http://cdn.bootcss.com/bootstrap/3.3.7/css/bootstrap.min.css'];
+
     }
 
     getRapport() {
@@ -74,6 +81,7 @@ export class RapportComponent implements OnInit {
     }
 
     onChangeDate() {
+        this.titleRepport = `Rapport des opérations de ${this.datePipe.transform( this.fromDate,'dd  MMMM  y' ) } à ${this.datePipe.transform( this.toDate,'dd  MMMM  y' ) }   `;
         console.log(this.fromDate);
         console.log(this.toDate);
         if (this.produit != null) {
@@ -222,5 +230,21 @@ export class RapportComponent implements OnInit {
         );
         popupWin.document.close();
     }
+    printComplete() {
+        console.log('L\'impression est terminée!！');
+       // this.showHead = true;
+       // this.hideTable1 = false;
+    }
+    starMode(event) {
+        console.log(event);
+        if ( this.modeAll ) {
+            this.itemsPerPage = 10000 * 10000 ;
+            this.onChangeDate();
+        } else {
+            this.itemsPerPage = 20;
+            this.onChangeDate();
+        }
+        console.log(this.modeAll);
 
+    };
 }
