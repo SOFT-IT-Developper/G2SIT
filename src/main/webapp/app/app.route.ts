@@ -1,4 +1,4 @@
-import { Route } from '@angular/router';
+import { Route, Routes } from '@angular/router';
 
 import { NavbarComponent } from './layouts';
 
@@ -7,3 +7,6 @@ export const navbarRoute: Route = {
     component: NavbarComponent,
     outlet: 'navbar'
 };
+export const routeAllLazy : Routes =[
+    {path : '', redirectTo : '' , component :}
+]

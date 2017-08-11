@@ -20,7 +20,7 @@ export class ChartsComponent implements OnInit {
         { data: [28, 48, 40, 19, 86, 27, 90], label: 'Sorties' }
     ];
     // Doughnut
-    public doughnutChartLabels: string[] = ['Download Sales', 'In-Store Sales', 'Mail-Order Sales'];
+    public doughnutChartLabels: string[] = ['Entrées', 'Sorties', 'Produits'];
     public doughnutChartData: number[] = [350, 450, 100];
     public doughnutChartType: string = 'doughnut';
     // Radar
