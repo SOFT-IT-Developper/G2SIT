@@ -12,7 +12,7 @@ import { G2SitEntityModule } from './entities/entity.module';
 
 import { customHttpProvider } from './blocks/interceptor/http.provider';
 import { PaginationConfig } from './blocks/config/uib-pagination.config';
-
+import { ChartsModule } from 'ng2-charts';
 // jhipster-needle-angular-add-module-import JHipster will add new module here
 
 import {
@@ -27,10 +27,14 @@ import {
 } from './layouts';
 import {SidebarComponent} from './shared/sidebar/sidebar.component';
 import {G2SitRapportModule} from './rapport/rapport.module';
+import {ChartsRoutingModule} from './shared/charts/charts-routing.module';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { BarChartComponent } from './charts/bar-chart/bar-chart.component';
 
 @NgModule({
     imports: [
         BrowserModule,
+        BrowserAnimationsModule,
         LayoutRoutingModule,
         Ng2Webstorage.forRoot({ prefix: 'jhi', separator: '-'}),
         G2SitSharedModule,
@@ -39,6 +43,9 @@ import {G2SitRapportModule} from './rapport/rapport.module';
         G2SitAccountModule,
         G2SitEntityModule,
         G2SitRapportModule,
+        ChartsModule,
+
+
         // jhipster-needle-angular-add-module JHipster will add new module here
     ],
     declarations: [
@@ -49,6 +56,7 @@ import {G2SitRapportModule} from './rapport/rapport.module';
         ActiveMenuDirective,
         FooterComponent,
         SidebarComponent,
+        BarChartComponent,
     ],
     providers: [
         ProfileService,

@@ -22,7 +22,8 @@ import {JhiLanguageService} from 'ng-jhipster';
 @NgModule({
     imports: [
         G2SitSharedLibsModule,
-        G2SitSharedCommonModule
+        G2SitSharedCommonModule,
+
     ],
     declarations: [
         JhiLoginModalComponent,

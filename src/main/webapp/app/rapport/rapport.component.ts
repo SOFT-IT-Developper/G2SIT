@@ -57,7 +57,7 @@ export class RapportComponent implements OnInit {
         this.page = 1;
         this.reverse = false;
         this.orderProp = 'datesortir';
-        this.printCSS = ['http://cdn.bootcss.com/bootstrap/3.3.7/css/bootstrap.min.css'];
+        // this.printCSS = ['http://cdn.bootcss.com/bootstrap/3.3.7/css/bootstrap.min.css'];
 
     }
 
