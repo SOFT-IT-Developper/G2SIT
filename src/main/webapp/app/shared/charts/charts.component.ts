@@ -1,11 +1,9 @@
 import { Component, OnInit } from '@angular/core';
-import { routerTransition } from '../../router.animations';
 
 @Component({
     selector: 'jhi-charts',
     templateUrl: './charts.component.html',
     styleUrls: ['./charts.component.scss'],
-    animations: [routerTransition()]
 })
 export class ChartsComponent implements OnInit {
     // bar chart
@@ -18,8 +16,8 @@ export class ChartsComponent implements OnInit {
     public barChartLegend: boolean = true;
 
     public barChartData: any[] = [
-        { data: [65, 59, 80, 81, 56, 55, 40], label: 'Series A' },
-        { data: [28, 48, 40, 19, 86, 27, 90], label: 'Series B' }
+        { data: [65, 59, 80, 81, 56, 55, 40], label: 'Entrés' },
+        { data: [28, 48, 40, 19, 86, 27, 90], label: 'Sorties' }
     ];
     // Doughnut
     public doughnutChartLabels: string[] = ['Download Sales', 'In-Store Sales', 'Mail-Order Sales'];

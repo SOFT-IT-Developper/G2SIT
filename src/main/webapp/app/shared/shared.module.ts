@@ -18,16 +18,20 @@ import {
 import { SidebarComponent } from './sidebar/sidebar.component';
 import {JhiLanguageHelper} from './language/language.helper';
 import {JhiLanguageService} from 'ng-jhipster';
+import {BarChartComponent} from '../charts/bar-chart/bar-chart.component';
+import {ChartsModule} from './charts/charts.module';
 
 @NgModule({
     imports: [
         G2SitSharedLibsModule,
         G2SitSharedCommonModule,
+        ChartsModule
 
     ],
     declarations: [
         JhiLoginModalComponent,
         HasAnyAuthorityDirective,
+        BarChartComponent
 
     ],
     providers: [
@@ -47,7 +51,7 @@ import {JhiLanguageService} from 'ng-jhipster';
         G2SitSharedCommonModule,
         JhiLoginModalComponent,
         HasAnyAuthorityDirective,
-        DatePipe
+        DatePipe, BarChartComponent, ChartsModule
     ],
     schemas: [CUSTOM_ELEMENTS_SCHEMA]
 
