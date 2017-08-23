@@ -5,6 +5,8 @@ import org.springframework.stereotype.Repository;
 
 import org.springframework.data.jpa.repository.*;
 
+import java.util.List;
+
 
 /**
  * Spring Data JPA repository for the Produits entity.
@@ -14,4 +16,6 @@ import org.springframework.data.jpa.repository.*;
 public interface ProduitsRepository extends JpaRepository<Produits,Long> {
     @Override
     long count();
+    Produits findByNameProduit(String name);
+   List<Produits>  findAllByNameProduitOrDescription(String name, String description);
 }

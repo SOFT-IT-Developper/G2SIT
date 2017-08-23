@@ -18,6 +18,7 @@ import java.util.List;
 public interface StockRepository extends JpaRepository<Stock,Long> {
 
     Stock findByProduit_Id(Long id);
+    Stock findByProduit_NameProduit(String name);
     List<Stock> findAllByProduit_Id(long id);
     List<Stock> findByDateentrerBetween(ZonedDateTime d1, ZonedDateTime d2);
     long countAllByQuantiteIsAfter(BigDecimal q);

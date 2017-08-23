@@ -1,0 +1,6 @@
+Stock{id=1, quantite='5.00', description='gf', dateentrer='2017-07-20T12:02+01:00[Africa/Luanda]', retour='false', comment='g'}
+Stock{id=2, quantite='91.00', description='null', dateentrer='2017-07-24T11:02+01:00[Africa/Luanda]', retour='false', comment='null'}
+Stock{id=3, quantite='48.00', description='null', dateentrer='2017-08-07T12:02+01:00[Africa/Luanda]', retour='true', comment='null'}
+Stock{id=8, quantite='7.00', description='null', dateentrer='2017-08-22T12:00+01:00[Africa/Luanda]', retour='null', comment='null'}
+Stock{id=10, quantite='1.00', description='null', dateentrer='2017-08-22T00:00+01:00[Africa/Luanda]', retour='null', comment='null'}
+Stock{id=9, quantite='50.00', description='null', dateentrer='2017-08-21T00:00+01:00[Africa/Luanda]', retour='null', comment='null'}

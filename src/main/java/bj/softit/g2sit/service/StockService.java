@@ -102,6 +102,10 @@ public class StockService {
         log.debug("Request to get Stock produit id : {}", id);
         return stockRepository.findByProduit_Id(id);
     }
+    public Stock findByProduitName(String name) {
+        log.debug("Request to get Stock produit id : {}", name);
+        return stockRepository.findByProduit_NameProduit(name);
+    }
 
     public List<Stock> findByBetwenToDate(ZonedDateTime d1, ZonedDateTime d2) {
        return stockRepository.findByDateentrerBetween(d1,d2);

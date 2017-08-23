@@ -113,4 +113,10 @@ public class ProduitsService {
     public long count() {
         return produitsRepository.count();
     }
+
+    @Transactional(readOnly = true)
+    public Produits findByProduitName(String nom) {
+        log.debug("Request to get Produits By Name : {}", nom);
+        return produitsRepository.findByNameProduit(nom);
+    }
 }

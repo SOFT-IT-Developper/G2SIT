@@ -29,6 +29,7 @@ import {G2SitRapportModule} from './rapport/rapport.module';
 import {ChartsRoutingModule} from './shared/charts/charts-routing.module';
 import { BarChartComponent } from './charts/bar-chart/bar-chart.component';
 import { ChartsModule as Ng2Charts } from 'ng2-charts';
+import {UploadFileModule} from './component/upload-file/upload-file.module';
 @NgModule({
     imports: [
         BrowserModule,
@@ -41,7 +42,7 @@ import { ChartsModule as Ng2Charts } from 'ng2-charts';
         G2SitEntityModule,
         G2SitRapportModule,
         Ng2Charts,
-
+        UploadFileModule,
 
         // jhipster-needle-angular-add-module JHipster will add new module here
     ],
@@ -53,6 +54,7 @@ import { ChartsModule as Ng2Charts } from 'ng2-charts';
         ActiveMenuDirective,
         FooterComponent,
         SidebarComponent,
+
     ],
     providers: [
         ProfileService,

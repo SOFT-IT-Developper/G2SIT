@@ -6,6 +6,7 @@ import { Account, LoginModalService, Principal } from '../shared';
 import {ProduitsService} from '../entities/produits/produits.service';
 import {StockService} from '../entities/stock/stock.service';
 import {OutStockService} from '../entities/out-stock/out-stock.service';
+import {FileUploader} from 'ng2-file-upload';
 @Component({
     selector: 'jhi-home',
     templateUrl: './home.component.html',
@@ -21,7 +22,9 @@ export class HomeComponent implements OnInit {
     nbStock: any;
     nbStockManquant: any;
     nboutStock: any;
-
+    public uploader: FileUploader = new FileUploader({url: '/api/upload'});
+    public hasBaseDropZoneOver = false;
+    public hasAnotherDropZoneOver = false;
     constructor(
         private principal: Principal,
         private stockService: StockService,

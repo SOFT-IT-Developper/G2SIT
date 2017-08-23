@@ -13,6 +13,9 @@ import java.util.Objects;
 /**
  * A Stock.
  */
+@NamedQueries({
+    @NamedQuery(name = "Stock.findAll", query = "select s from Stock s")
+})
 @Entity
 @Table(name = "stock")
 @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)

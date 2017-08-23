@@ -11,6 +11,8 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 
+import java.util.List;
+
 import static org.elasticsearch.index.query.QueryBuilders.*;
 
 /**
@@ -66,6 +68,11 @@ public class CategorieService {
     public Categorie findOne(Long id) {
         log.debug("Request to get Categorie : {}", id);
         return categorieRepository.findOne(id);
+    }
+    @Transactional(readOnly = true)
+    public Categorie findByNameCategorie(String nom) {
+        log.debug("Request to get Categorie by name : {}", nom);
+        return categorieRepository.findCategorieByNameCategorie(nom);
     }
 
     /**
